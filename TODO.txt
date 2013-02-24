@@ -1,2 +1,2 @@
--Dodati strukturu igre
+-Napraviti test za igru
 -Napraviti metodu koja nalazi najbolji potez na igri
