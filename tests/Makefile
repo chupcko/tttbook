@@ -3,7 +3,8 @@ LIBRARY_DIR = ../library
 
 SOURCES = $(wildcard *.cpp)
 TARGETS = $(SOURCES:.cpp=.t)
-INCLUDES = $(wildcars $(INCLUDE_DIR)/*.hpp)
+INCLUDES = $(wildcard $(INCLUDE_DIR)/*.hpp)
+INCLUDES += $(wildcard *.hpp)
 LIBRARY = $(LIBRARY_DIR)/libtttbook.a
 COMPILER = g++
 COMPILER_FLAGS = -std=c++11 -I./ -I$(INCLUDE_DIR)

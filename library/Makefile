@@ -3,7 +3,7 @@ TARGET = libtttbook.a
 
 SOURCES = $(wildcard *.cpp)
 OBJECTS = $(SOURCES:.cpp=.o)
-INCLUDES = $(wildcars $(INCLUDE_DIR)/*.hpp)
+INCLUDES = $(wildcard $(INCLUDE_DIR)/*.hpp)
 COMPILER = g++
 COMPILER_FLAGS = -std=c++11 -I./ -I$(INCLUDE_DIR)
 ARCHIVER = ar
