@@ -1,1 +1,1 @@
-make && ./do_tests
+make do_tests

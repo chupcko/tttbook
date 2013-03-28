@@ -11,6 +11,13 @@ all: $(DIRS)
 .PHONY: clean
 clean: $(DIRS)
 
+.PHONY: do_tests
+do_tests:
+ifeq ($(wildcard tests/*.t), )
+	$(MAKE)
+endif
+	@tools/do_tests
+
 .PHONY: $(DIRS)
 $(DIRS):
-	$(MAKE) -C $@ $(MAKEFLAGS) $(MAKECMDGOALS)
+	$(MAKE) -C $@ $(MAKECMDGOALS)

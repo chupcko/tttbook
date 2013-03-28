@@ -18,7 +18,7 @@ namespace tttbook
         }
       if(all)
         return true;
-      all = 1;
+      all = true;
       for(int y = 0; y < size; y++)
         if(fields[y][x].get_value() != field_value)
         {
