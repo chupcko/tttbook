@@ -1,7 +1,7 @@
 #ifndef __TRIPLET_HPP__
 #define __TRIPLET_HPP__
 
-namespace test_util
+namespace test_utility
 {
 
   template <class C1, class C2, class C3>

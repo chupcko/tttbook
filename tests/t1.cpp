@@ -8,31 +8,39 @@
 
 using namespace std;
 using namespace tttbook;
-using namespace test_util;
+using namespace test_utility;
 
 typedef vector<pair<int, int>> moves_t;
-typedef triplet<int, array<bool, 3>, moves_t> test_t;
+typedef array<bool, 3> except_t;
+typedef triplet<int, moves_t, except_t> test_t;
 
 int main()
 {
+  int test_number = 0;
   vector<test_t> tests =
   {
-    { 1, {{ false, true, false }},  { {0, 0}, {0, 2}, {1, 0}, {1, 2}, {2, 0} } },
+    { test_number++, { {0, 0}, {0, 2}, {1, 0}, {1, 2}, {2, 0} }, { { false, true, false } } },
+    { test_number++, { {0, 0}, {0, 2}, {1, 0}, {1, 2}, {2, 0} }, { { false, true, true } } },
+    { test_number++, { {0, 0}, {0, 2}, {1, 0}, {1, 2}, {2, 0} }, { { false, true, true } } },
+    { test_number++, { {0, 0}, {0, 2}, {1, 0}, {1, 2}, {2, 0} }, { { false, true, true } } },
   };
-  table m;
-
-
+  table test_table;
 
   for(auto& test: tests)
   {
-    m.init();
+    test_table.init();
     auto& number = get<0>(test);
-    auto& except = get<1>(test);
-    auto& moves = get<2>(test);
+    auto& moves = get<1>(test);
+    auto& except = get<2>(test);
     for(auto& move: moves)
-      m.play(move.first, move.second);
-    cout << "Ocekivano " << except[0] << ' ' << except[1] << ' ' << except[2] << '\n';
-    cout << "Dobio " << m.is_draw() << ' ' << m.is_win(m.GAMER_X) << ' ' << m.is_win(m.GAMER_O) << '\n';
+      test_table.play(move.first, move.second);
+    if
+    (
+      test_table.is_draw() != except[0] ||
+      test_table.is_win(m.GAMER_X) != except[1] ||
+      test_table.is_win(m.GAMER_O) != except[2]
+    )
+      cout << "FAIL " << __FILE__ << " " <<  number << endl;
   }
 
   return 0;
