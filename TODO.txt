@@ -1,2 +1,3 @@
+-Dodaj u table i istoriju poteza
 -Napraviti test za igru
 -Napraviti metodu koja nalazi najbolji potez na igri

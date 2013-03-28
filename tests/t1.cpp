@@ -37,10 +37,23 @@ int main()
     if
     (
       test_table.is_draw() != except[0] ||
-      test_table.is_win(m.GAMER_X) != except[1] ||
-      test_table.is_win(m.GAMER_O) != except[2]
+      test_table.is_win(table::GAMER_X) != except[1] ||
+      test_table.is_win(table::GAMER_O) != except[2]
     )
-      cout << "FAIL " << __FILE__ << " " <<  number << endl;
+      cout <<
+        boolalpha <<
+        "FAIL file=" <<
+        __FILE__ <<
+        " test=" <<
+        number <<
+        " except={ " << 
+        test_table.is_draw() <<
+        ", " <<
+        test_table.is_win(table::GAMER_X) <<
+        ", " <<
+        test_table.is_win(table::GAMER_O) <<
+        " }" <<
+        endl;
   }
 
   return 0;
