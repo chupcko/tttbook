@@ -19,6 +19,8 @@ COMPILER_FLAGS = -std=c++11 -I./ -I$(INCLUDE_DIR)
 ARCHIVER = ar
 ARCHIVER_FLAGS = csr
 
+.DEFAULT_GOAL := all
+
 .PHONY: all
 all: $(TARGET)
 

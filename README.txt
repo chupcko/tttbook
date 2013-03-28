@@ -1,0 +1,1 @@
+make && ./do_tests

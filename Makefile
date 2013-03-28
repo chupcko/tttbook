@@ -1,7 +1,7 @@
 DIRS =          \
 	library \
 	source  \
-	test    \
+	tests   \
 
 .DEFAULT_GOAL := all
 

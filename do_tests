@@ -1,0 +1,21 @@
+#!/bin/sh
+
+DIR=$(dirname $(readlink -f ${0}))
+
+for PROGRAM in $(find ${DIR}/tests -type f -perm -u+x -print)
+do
+  NAME=$(basename ${PROGRAM})
+  cat << EOI
+#
+# ${NAME}
+# {
+
+EOI
+  ${PROGRAM}
+  cat << EOI
+
+# }
+#
+
+EOI
+done
