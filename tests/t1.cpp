@@ -46,14 +46,15 @@ int main()
         __FILE__ <<
         " test=" <<
         number <<
-        " except={ " << 
+        " except={ " <<
         test_table.is_draw() <<
         ", " <<
         test_table.is_win(table::GAMER_X) <<
         ", " <<
         test_table.is_win(table::GAMER_O) <<
         " }" <<
-        endl;
+        endl <<
+        test_table;
   }
 
   return 0;

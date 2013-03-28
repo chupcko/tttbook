@@ -12,10 +12,7 @@ all: $(DIRS)
 clean: $(DIRS)
 
 .PHONY: do_tests
-do_tests:
-ifeq ($(wildcard tests/*.t), )
 	$(MAKE)
-endif
 	@tools/do_tests
 
 .PHONY: $(DIRS)
