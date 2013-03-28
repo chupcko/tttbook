@@ -1,8 +1,16 @@
-CPPFLAGS = -std=c++11
+DIRS =          \
+	library \
+	source  \
+	test    \
+
+.DEFAULT_GOAL := all
 
 .PHONY: all
-all: main
+all: $(DIRS)
 
 .PHONY: clean
-clean:
-	rm -rf main
+clean: $(DIRS)
+
+.PHONY: $(DIRS)
+$(DIRS):
+	$(MAKE) -C $@ $(MAKEFLAGS) $(MAKECMDGOALS)

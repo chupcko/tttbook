@@ -1,77 +1,59 @@
-#include <iostream>
+#include "tttbook.hpp"
 
-#include "field.cpp"
-
-class table
+namespace tttbook
 {
 
-public:
-
-  enum gamer_t
+  bool table::is_win_helper(field::field_t field_value) const
   {
-    GAMER_X = 1,
-    GAMER_O = 2
-  };
-  static const int size = 3;
+    bool all;
 
-private:
-
-  field fields[size][size];
-  gamer_t on_move;
-
-  int is_win_helper(field::field_t field_value)
-  {
-    int all;
-    
     for(int x = 0; x < size; x++)
     {
-      all = 1;
+      all = true;
       for(int y = 0; y < size; y++)
         if(fields[x][y].get_value() != field_value)
         {
-          all = 0;
+          all = false;
           break;
         }
       if(all)
-        return 1;
+        return true;
       all = 1;
       for(int y = 0; y < size; y++)
         if(fields[y][x].get_value() != field_value)
         {
-          all = 0;
+          all = false;
           break;
         }
       if(all)
-        return 1;
+        return true;
     }
-    all = 1;
+    all = true;
     for(int x = 0; x < size; x++)
       if(fields[x][x].get_value() != field_value)
       {
-        all = 0;
+        all = false;
         break;
       }
     if(all)
-      return 1;
+      return true;
     for(int x = 0; x < size; x++)
       if(fields[x][size-1-x].get_value() != field_value)
       {
-        all = 0;
+        all = false;
         break;
       }
     if(all)
-      return 1;
-    return 0;
+      return true;
+    return false;
   }
 
-public:
-
-  table()
+  table::table()
   {
     init();
   };
-  
-  void init()
+
+  void table::init()
   {
     for(int x = 0; x < size; x++)
       for(int y = 0; y < size; y++)
@@ -79,7 +61,7 @@ public:
     on_move = GAMER_X;
   }
 
-  int play(int x, int y)
+  bool table::play(int x, int y)
   {
     if
     (
@@ -89,7 +71,7 @@ public:
       y >= size ||
       !fields[x][y].is_clean()
     )
-      return 0;
+      return false;
 
     switch(on_move)
     {
@@ -102,19 +84,19 @@ public:
         on_move = GAMER_X;
         break;
     }
-    return 1;
+    return true;
   }
 
-  int is_draw()
+  bool table::is_draw() const
   {
     for(int x = 0; x < size; x++)
       for(int y = 0; y < size; y++)
         if(fields[x][y].is_clean())
-          return 0;
-    return 1;
+          return false;
+    return true;
   }
-  
-  int is_win(gamer_t who)
+
+  bool table::is_win(table::gamer_t who) const
   {
     switch(who)
     {
@@ -125,31 +107,31 @@ public:
     }
   }
 
-  int is_win_x()
+  bool table::is_win_x() const
   {
     return is_win_helper(field::FIELD_X);
   }
 
-  int is_win_o()
+  bool table::is_win_o() const
   {
     return is_win_helper(field::FIELD_O);
   }
 
-  friend std::ostream& operator<< (std::ostream& out, const table& self)
+  std::ostream& operator<< (std::ostream& out, const table& self)
   {
-    for(int x = 0; x < size; x++)
+    for(int x = 0; x < self.size; x++)
     {
-      for(int y = 0; y < size; y++)
+      for(int y = 0; y < self.size; y++)
       {
         out << " " << self.fields[x][y];
-        if(y != size-1)
+        if(y != self.size-1)
           out << " |";
       }
-      if(x != size-1)
+      if(x != self.size-1)
         out << "\n---+---+---\n";
     }
     out << "\n";
     return out;
-  };
+  }
 
-};
+}
