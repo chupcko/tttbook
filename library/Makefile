@@ -1,21 +1,11 @@
+INCLUDE_DIR = ../include
 TARGET = libtttbook.a
 
-SOURCES =         \
-	field.cpp \
-	table.cpp \
-
-INCLUDE_DIR = ../include
-
-INCLUDES =                         \
-	$(INCLUDE_DIR)/field.hpp   \
-	$(INCLUDE_DIR)/table.hpp   \
-	$(INCLUDE_DIR)/tttbook.hpp \
-	
+SOURCES = $(wildcard *.cpp)
 OBJECTS = $(SOURCES:.cpp=.o)
-
+INCLUDES = $(wildcars $(INCLUDE_DIR)/*.hpp)
 COMPILER = g++
 COMPILER_FLAGS = -std=c++11 -I./ -I$(INCLUDE_DIR)
-
 ARCHIVER = ar
 ARCHIVER_FLAGS = csr
 
