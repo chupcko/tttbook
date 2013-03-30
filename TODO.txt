@@ -1,4 +1,4 @@
--Dodaj debug u Makefile
+-Sredi root Makefile da radi po pravilima
 -Dodaj u table i istoriju poteza
 -Napraviti metodu koja nalazi najbolji potez na igri
 -Zavrsi testove

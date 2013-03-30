@@ -1,3 +1,5 @@
 all:
 
+debug:
+
 clean:
