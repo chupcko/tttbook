@@ -59,6 +59,7 @@ namespace tttbook
       for(int y = 0; y < size; y++)
         fields[x][y].clean();
     on_move = GAMER_X;
+    moves_number = 0;
   }
 
   bool table::play(int x, int y)
@@ -72,7 +73,6 @@ namespace tttbook
       !fields[x][y].is_clean()
     )
       return false;
-
     switch(on_move)
     {
       case GAMER_X:
@@ -84,6 +84,8 @@ namespace tttbook
         on_move = GAMER_X;
         break;
     }
+    moves[moves_number] = std::make_pair(x, y);
+    moves_number++;
     return true;
   }
 
@@ -119,6 +121,14 @@ namespace tttbook
 
   std::ostream& operator<< (std::ostream& out, const table& self)
   {
+    out << "[ ";
+    for(int i = 0; i < self.moves_number; i++)
+    {
+      if(i != 0)
+        out << ", ";
+      out << "(" << self.moves[i].first << "," << self.moves[i].second << ")";
+    }
+    out << " ]" << std::endl;
     for(int x = 0; x < self.size; x++)
     {
       for(int y = 0; y < self.size; y++)
@@ -128,9 +138,9 @@ namespace tttbook
           out << " |";
       }
       if(x != self.size-1)
-        out << "\n---+---+---\n";
+        out << std::endl << "---+---+---" << std::endl;
     }
-    out << "\n";
+    out << std::endl;
     return out;
   }
 

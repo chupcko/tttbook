@@ -15,6 +15,8 @@ namespace tttbook
   private:
     field fields[size][size];
     gamer_t on_move;
+    std::array<std::pair<int, int>, size*size> moves;
+    int moves_number;
     bool is_win_helper(field::field_t field_value) const;
   public:
     table();

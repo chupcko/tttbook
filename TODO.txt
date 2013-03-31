@@ -1,4 +1,4 @@
+-Dodaj status table i proveravaj status stalno kada se odigra potez
 -Sredi root Makefile da radi po pravilima
--Dodaj u table i istoriju poteza
 -Napraviti metodu koja nalazi najbolji potez na igri
 -Zavrsi testove
