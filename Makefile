@@ -12,27 +12,25 @@ clean: library-clean source-clean tests-clean
 do_tests: tests-clean tests-debug
 	tools/do_tests
 
-GET_DIR = $(word 1, $(subst -, , $(1)))
-GET_GOAL = $(word 2, $(subst -, , $(1)))
-GOALS :=               \
-	library-      \
-	library-debug \
-	library-clean \
-	source-       \
-	source-debug  \
-	source-clean  \
-	tests-        \
-	tests-debug   \
-	tests-clean   \
+define GENERATE_GOALS_CORE =
+  GOALS += $(1)-$(2:all=)
+endef
+define GENERATE_GOALS =
+  $(foreach goal,all debug clean,$(eval $(call GENERATE_GOALS_CORE,$(1),$(goal))))
+endef
+$(foreach dir,library source tests,$(call GENERATE_GOALS,$(dir)))
 
 .PHONY: $(GOALS)
-$(GOALS):
-	$(MAKE) -C $(call GET_DIR, $@) $(call GET_GOAL, $@)
 
-define GENERATE_GOAL_RULES =
-  $(1)-: library-
-  $(1)-debug: library-debug
-  $(1)-clean: library-clean
+define GENERATE_RULES_CORE =
+  $(1)-$(2:all=): library-$(2:all=)
 endef
+define GENERATE_RULES =
+  $(foreach goal,all debug clean,$(eval $(call GENERATE_RULES_CORE,$(1),$(goal))))
+endef
+$(foreach dir,source tests,$(call GENERATE_RULES,$(dir)))
 
-$(foreach dir, source tests, $(eval $(call GENERATE_GOAL_RULES, $(dir))))
+GET_DIR = $(word 1,$(subst -, ,$(1)))
+GET_GOAL = $(word 2,$(subst -, ,$(1)))
+$(GOALS):
+	$(MAKE) -C $(call GET_DIR,$@) $(call GET_GOAL,$@)
