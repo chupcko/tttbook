@@ -1,4 +1,3 @@
--Neka se GOALS u Makefile generise
 -Dodaj status table i proveravaj status stalno kada se odigra potez
 -Napraviti metodu koja nalazi najbolji potez na igri
 -Zavrsi testove
