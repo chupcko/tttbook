@@ -48,11 +48,6 @@ namespace tttbook
     return false;
   }
 
-  table::table()
-  {
-    init();
-  };
-
   void table::init()
   {
     for(int x = 0; x < size; x++)
@@ -96,27 +91,6 @@ namespace tttbook
         if(fields[x][y].is_clean())
           return false;
     return true;
-  }
-
-  bool table::is_win(table::gamer_t who) const
-  {
-    switch(who)
-    {
-      case GAMER_X:
-        return is_win_helper(field::FIELD_X);
-      case GAMER_O:
-        return is_win_helper(field::FIELD_O);
-    }
-  }
-
-  bool table::is_win_x() const
-  {
-    return is_win_helper(field::FIELD_X);
-  }
-
-  bool table::is_win_o() const
-  {
-    return is_win_helper(field::FIELD_O);
   }
 
   std::ostream& operator<< (std::ostream& out, const table& self)
