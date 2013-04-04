@@ -3,7 +3,7 @@
 namespace tttbook
 {
 
-  bool table::is_win_helper(field::field_t field_value) const
+  bool table::is_win_helper(field::field_t field_value) const noexcept
   {
     bool all;
 
@@ -48,7 +48,7 @@ namespace tttbook
     return false;
   }
 
-  void table::init()
+  void table::init() noexcept
   {
     for(int x = 0; x < size; x++)
       for(int y = 0; y < size; y++)
@@ -57,17 +57,18 @@ namespace tttbook
     moves_number = 0;
   }
 
-  bool table::play(int x, int y)
+  void table::play(int x, int y)
   {
     if
     (
       x < 0 ||
       x >= size ||
       y < 0 ||
-      y >= size ||
-      !fields[x][y].is_clean()
+      y >= size
     )
-      return false;
+      throw error_index();
+    if(!fields[x][y].is_clean())
+      throw error_filled();
     switch(on_move)
     {
       case GAMER_X:
@@ -81,10 +82,9 @@ namespace tttbook
     }
     moves[moves_number] = std::make_pair(x, y);
     moves_number++;
-    return true;
   }
 
-  bool table::is_draw() const
+  bool table::is_draw() const noexcept
   {
     for(int x = 0; x < size; x++)
       for(int y = 0; y < size; y++)

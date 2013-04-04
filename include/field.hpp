@@ -20,32 +20,32 @@ namespace tttbook
 
   public:
 
-    field()
+    field() noexcept
     {
       value = FIELD_EMPTY;
     };
 
-    void clean()
+    void clean() noexcept
     {
       value = FIELD_EMPTY;
     };
 
-    void play_as_x()
+    void play_as_x() noexcept
     {
       value = FIELD_X;
     };
 
-    void play_as_o()
+    void play_as_o() noexcept
     {
       value = FIELD_O;
     };
 
-    field_t get_value() const
+    field_t get_value() const noexcept
     {
       return value;
     };
 
-    bool is_clean() const
+    bool is_clean() const noexcept
     {
       return value == FIELD_EMPTY;
     };

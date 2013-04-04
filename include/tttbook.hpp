@@ -2,6 +2,7 @@
 #define __TTTBOOK_HPP__
 
 #include <array>
+#include <exception>
 #include <iostream>
 #include <utility>
 
