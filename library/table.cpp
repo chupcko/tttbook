@@ -3,7 +3,16 @@
 namespace tttbook
 {
 
-  bool table::is_win_helper(field::field_t field_value) const noexcept
+  bool table::helper_is_draw() const noexcept
+  {
+    for(int x = 0; x < size; x++)
+      for(int y = 0; y < size; y++)
+        if(fields[x][y].is_empty())
+          return false;
+    return true;
+  }
+
+  bool table::helper_is_win(table_field::field_t field_value) const noexcept
   {
     bool all;
 
@@ -48,16 +57,36 @@ namespace tttbook
     return false;
   }
 
+  void table::calculate_status() noexcept
+  {
+    if(helper_is_draw())
+    {
+      status.set_draw();
+      return;
+    }
+    if(helper_is_win(table_field::FIELD_X))
+    {
+      status.set_win_x();
+      return;
+    }
+    if(helper_is_win(table_field::FIELD_O))
+    {
+      status.set_win_o();
+      return;
+    }
+  }
+
   void table::init() noexcept
   {
+    status.set_in_game();
     for(int x = 0; x < size; x++)
       for(int y = 0; y < size; y++)
-        fields[x][y].clean();
+        fields[x][y].set_empty();
     on_move = GAMER_X;
     moves_number = 0;
   }
 
-  void table::play(int x, int y)
+  const table_status& table::play(int x, int y)
   {
     if
     (
@@ -67,7 +96,9 @@ namespace tttbook
       y >= size
     )
       throw error_index();
-    if(!fields[x][y].is_clean())
+    if(!status.is_in_game())
+      throw error_status();
+    if(!fields[x][y].is_empty())
       throw error_filled();
     switch(on_move)
     {
@@ -82,20 +113,13 @@ namespace tttbook
     }
     moves[moves_number] = std::make_pair(x, y);
     moves_number++;
-  }
-
-  bool table::is_draw() const noexcept
-  {
-    for(int x = 0; x < size; x++)
-      for(int y = 0; y < size; y++)
-        if(fields[x][y].is_clean())
-          return false;
-    return true;
+    calculate_status();
+    return status;
   }
 
   std::ostream& operator<< (std::ostream& out, const table& self)
   {
-    out << "[ ";
+    out << self.status << " [ ";
     for(int i = 0; i < self.moves_number; i++)
     {
       if(i != 0)

@@ -22,7 +22,7 @@ int main()
     { test_number++, { {0, 0}, {0, 2}, {1, 0}, {1, 2}, {2, 0} }, { { false, true, false } } },
     { test_number++, { {0, 0}, {0, 2}, {1, 0}, {1, 2}, {2, 0} }, { { false, true, true } } },
     { test_number++, { {0, 0}, {0, 2}, {1, 0}, {1, 2}, {2, 0} }, { { false, true, true } } },
-    { test_number++, { {0, 0}, {0, 2}, {1, 0}, {1, 2}, {2, 0} }, { { false, true, true } } },
+    { test_number++, { {0, 0}, {0, 2}, {1, 0}, {1, 2}, {2, 0},  {2, 2} }, { { false, true, true } } },
   };
   table test_table;
 
@@ -37,8 +37,8 @@ int main()
     if
     (
       test_table.is_draw() != except[0] ||
-      test_table.is_win(table::GAMER_X) != except[1] ||
-      test_table.is_win(table::GAMER_O) != except[2]
+      test_table.is_win_x() != except[1] ||
+      test_table.is_win_o() != except[2]
     )
       cout <<
         boolalpha <<
@@ -49,9 +49,9 @@ int main()
         " except={ " <<
         test_table.is_draw() <<
         ", " <<
-        test_table.is_win(table::GAMER_X) <<
+        test_table.is_win_x() <<
         ", " <<
-        test_table.is_win(table::GAMER_O) <<
+        test_table.is_win_o() <<
         " }" <<
         endl <<
         test_table;

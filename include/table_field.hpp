@@ -1,9 +1,9 @@
-#ifndef __FIELD_HPP__
-#define __FIELD_HPP__
+#ifndef __TABLE_FIELD_HPP__
+#define __TABLE_FIELD_HPP__
 
 namespace tttbook
 {
-  class field
+  class table_field
   {
   public:
 
@@ -20,12 +20,12 @@ namespace tttbook
 
   public:
 
-    field() noexcept
+    table_field() noexcept
     {
-      value = FIELD_EMPTY;
+      set_empty();
     };
 
-    void clean() noexcept
+    void set_empty() noexcept
     {
       value = FIELD_EMPTY;
     };
@@ -45,12 +45,12 @@ namespace tttbook
       return value;
     };
 
-    bool is_clean() const noexcept
+    bool is_empty() const noexcept
     {
       return value == FIELD_EMPTY;
     };
 
-    friend std::ostream& operator<< (std::ostream&, const field&);
+    friend std::ostream& operator<< (std::ostream&, const table_field&);
 
   };
 }

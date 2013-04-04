@@ -6,7 +6,8 @@
 #include <iostream>
 #include <utility>
 
-#include "field.hpp"
+#include "table_status.hpp"
+#include "table_field.hpp"
 #include "table.hpp"
 
 #endif

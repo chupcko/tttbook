@@ -1,3 +1,7 @@
--Dodaj status table i proveravaj status stalno kada se odigra potez
+-Napravi test za onsovne stvari u igri
+-Mozda da dodas status EMPTY
+-Gamer da bude klasa
+-Hvataj exception u testovima
+-Napravi test za exception
 -Napraviti metodu koja nalazi najbolji potez na igri
 -Zavrsi testove

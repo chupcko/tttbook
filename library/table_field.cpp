@@ -3,17 +3,17 @@
 namespace tttbook
 {
 
-  std::ostream& operator<< (std::ostream& out, const field& self)
+  std::ostream& operator<< (std::ostream& out, const table_field& self)
   {
     switch(self.value)
     {
-      case field::FIELD_EMPTY:
+      case table_field::FIELD_EMPTY:
         out << ' ';
         break;
-      case field::FIELD_X:
+      case table_field::FIELD_X:
         out << 'x';
         break;
-      case field::FIELD_O:
+      case table_field::FIELD_O:
         out << 'o';
         break;
     }
