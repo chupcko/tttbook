@@ -1,5 +1,5 @@
-#ifndef __TABLE_STATUS_HPP__
-#define __TABLE_STATUS_HPP__
+#ifndef __TABLE_STATUS__HPP__
+#define __TABLE_STATUS__HPP__
 
 namespace tttbook
 {

@@ -1,5 +1,5 @@
-#ifndef __TTTBOOK_HPP__
-#define __TTTBOOK_HPP__
+#ifndef __TTTBOOK__HPP__
+#define __TTTBOOK__HPP__
 
 #include <array>
 #include <exception>

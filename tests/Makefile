@@ -6,7 +6,7 @@ TARGETS = $(SOURCES:.cpp=.t)
 INCLUDES = $(wildcard $(INCLUDE_DIR)/*.hpp) $(wildcard *.hpp)
 LIBRARY = $(LIBRARY_DIR)/libtttbook.a
 COMPILER = g++
-COMPILER_FLAGS = -std=c++11 -I./ -I$(INCLUDE_DIR)
+COMPILER_FLAGS = -std=c++11 -I. -I$(INCLUDE_DIR)
 
 .DEFAULT_GOAL := all
 .PHONY: all

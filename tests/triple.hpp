@@ -1,5 +1,5 @@
-#ifndef __TRIPLET_HPP__
-#define __TRIPLET_HPP__
+#ifndef __TRIPLET__HPP__
+#define __TRIPLET__HPP__
 
 namespace test_utility
 {
