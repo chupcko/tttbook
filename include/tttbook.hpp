@@ -2,12 +2,17 @@
 #define __TTTBOOK__HPP__
 
 #include <array>
-#include <exception>
 #include <iostream>
-#include <utility>
 
-#include "table_status.hpp"
-#include "table_field.hpp"
+/*
+#include <exception>
+#include <utility>
+*/
+
+#include "player.hpp"
+#include "field.hpp"
+#include "move.hpp"
+#include "status.hpp"
 #include "table.hpp"
 
 #endif

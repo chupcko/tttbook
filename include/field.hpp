@@ -1,9 +1,9 @@
-#ifndef __TABLE_FIELD__HPP__
-#define __TABLE_FIELD__HPP__
+#ifndef __FIELD__HPP__
+#define __FIELD__HPP__
 
 namespace tttbook
 {
-  class table_field
+  class field_c
   {
   public:
 
@@ -20,7 +20,7 @@ namespace tttbook
 
   public:
 
-    table_field() noexcept
+    field_c() noexcept
     {
       set_empty();
     };
@@ -30,12 +30,12 @@ namespace tttbook
       value = FIELD_EMPTY;
     };
 
-    void play_as_x() noexcept
+    void set_x() noexcept
     {
       value = FIELD_X;
     };
 
-    void play_as_o() noexcept
+    void set_o() noexcept
     {
       value = FIELD_O;
     };
@@ -50,9 +50,27 @@ namespace tttbook
       return value == FIELD_EMPTY;
     };
 
-    friend std::ostream& operator<< (std::ostream&, const table_field&);
+    bool is_x() const noexcept
+    {
+      return value == FIELD_X;
+    };
 
+    bool is_o() const noexcept
+    {
+      return value == FIELD_O;
+    };
+
+    void fill(player_c player) noexcept
+    {
+      if(player.is_x())
+        set_x();
+      if(player.is_o())
+        set_o();
+    }
+
+    friend std::ostream& operator<< (std::ostream&, const field_c&);
   };
+
 }
 
 #endif

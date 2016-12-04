@@ -1,15 +1,15 @@
-#ifndef __TABLE_STATUS__HPP__
-#define __TABLE_STATUS__HPP__
+#ifndef __STATUS__HPP__
+#define __STATUS__HPP__
 
 namespace tttbook
 {
-  class table_status
+  class status_c
   {
   public:
 
     enum status_t
     {
-      STATUS_IN_GAME,
+      STATUS_PLAYABLE,
       STATUS_DRAW,
       STATUS_WIN_X,
       STATUS_WIN_O
@@ -21,14 +21,14 @@ namespace tttbook
 
   public:
 
-    table_status() noexcept
+    status_c() noexcept
     {
-      set_in_game();
+      set_playable();
     };
 
-    void set_in_game() noexcept
+    void set_playable() noexcept
     {
-      value = STATUS_IN_GAME;
+      value = STATUS_PLAYABLE;
     };
 
     void set_draw() noexcept
@@ -51,9 +51,9 @@ namespace tttbook
       return value;
     };
 
-    bool is_in_game() const noexcept
+    bool is_playable() const noexcept
     {
-      return value == STATUS_IN_GAME;
+      return value == STATUS_PLAYABLE;
     };
 
     bool is_draw() const noexcept
@@ -71,9 +71,9 @@ namespace tttbook
       return value == STATUS_WIN_O;
     };
 
-    friend std::ostream& operator<< (std::ostream&, const table_status&);
-
+    friend std::ostream& operator<< (std::ostream&, const status_c&);
   };
+
 }
 
 #endif

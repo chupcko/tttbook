@@ -4,59 +4,49 @@
 namespace tttbook
 {
 
-#define MAKE_ERROR(name, text)      \
-class name : error                  \
-{                                   \
-  const char* what() const noexcept \
-  {                                 \
-    return text;                    \
-  }                                 \
-}                                   \
+#define MAKE_ERROR(name, text)             \
+class name : public std::exception         \
+{                                          \
+  virtual const char* what() const throw() \
+  {                                        \
+    return text;                           \
+  }                                        \
+}                                          \
 
-  class table
+  MAKE_ERROR(error_bad_index,      "Bad index");
+  MAKE_ERROR(error_not_playable,   "Not playable");
+  MAKE_ERROR(error_already_filled, "Already filled");
+
+  class table_c
   {
   public:
 
-    class error : std::exception
-    {
-    };
-
-    MAKE_ERROR(error_index,  "Bad index");
-    MAKE_ERROR(error_filled, "Already filled");
-    MAKE_ERROR(error_status, "Bad status");
-
-    static const int size = 3;
-    enum gamer_t
-    {
-      GAMER_X = 1,
-      GAMER_O = 2
-    };
+    static const coordinate_t size = 3;
 
   private:
 
-    table_status status;
-    table_field fields[size][size];
-    gamer_t on_move;
-    std::array<std::pair<int, int>, size*size> moves;
+    status_c status;
+    field_c fields[size][size];
+    player_c player;
+    move_c moves[size*size];
     int moves_number;
 
-    bool helper_is_draw() const noexcept;
-    bool helper_is_win(table_field::field_t field_value) const noexcept;
-    void calculate_status() noexcept;
+    bool recalculate_status_is_draw() const noexcept;
+    bool recalculate_status_is_win(field_c::field_t field_value) const noexcept;
+    void recalculate_status() noexcept;
 
   public:
 
-    table() noexcept
+    table_c() noexcept
     {
       init();
     };
 
     void init() noexcept;
-    const table_status& play(int x, int y);
 
-    bool is_in_game() const noexcept
+    bool is_playable() const noexcept
     {
-      return status.is_in_game();
+      return status.is_playable();
     }
 
     bool is_draw() const noexcept
@@ -74,9 +64,10 @@ class name : error                  \
       return status.is_win_o();
     };
 
-    friend std::ostream& operator<< (std::ostream&, const table&);
-
+    const status_c& play(coordinate_t x, coordinate_t y);
+    friend std::ostream& operator<< (std::ostream&, const table_c&);
   };
+
 }
 
 #endif

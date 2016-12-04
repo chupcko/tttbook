@@ -3,23 +3,23 @@
 namespace tttbook
 {
 
-  bool table::helper_is_draw() const noexcept
+  bool table_c::recalculate_status_is_draw() const noexcept
   {
-    for(int x = 0; x < size; x++)
-      for(int y = 0; y < size; y++)
+    for(coordinate_t x = 0; x < size; x++)
+      for(coordinate_t y = 0; y < size; y++)
         if(fields[x][y].is_empty())
           return false;
     return true;
   }
 
-  bool table::helper_is_win(table_field::field_t field_value) const noexcept
+  bool table_c::recalculate_status_is_win(field_c::field_t field_value) const noexcept
   {
     bool all;
 
-    for(int x = 0; x < size; x++)
+    for(coordinate_t x = 0; x < size; x++)
     {
       all = true;
-      for(int y = 0; y < size; y++)
+      for(coordinate_t y = 0; y < size; y++)
         if(fields[x][y].get_value() != field_value)
         {
           all = false;
@@ -28,7 +28,7 @@ namespace tttbook
       if(all)
         return true;
       all = true;
-      for(int y = 0; y < size; y++)
+      for(coordinate_t y = 0; y < size; y++)
         if(fields[y][x].get_value() != field_value)
         {
           all = false;
@@ -38,7 +38,7 @@ namespace tttbook
         return true;
     }
     all = true;
-    for(int x = 0; x < size; x++)
+    for(coordinate_t x = 0; x < size; x++)
       if(fields[x][x].get_value() != field_value)
       {
         all = false;
@@ -46,7 +46,7 @@ namespace tttbook
       }
     if(all)
       return true;
-    for(int x = 0; x < size; x++)
+    for(coordinate_t x = 0; x < size; x++)
       if(fields[x][size-1-x].get_value() != field_value)
       {
         all = false;
@@ -57,36 +57,36 @@ namespace tttbook
     return false;
   }
 
-  void table::calculate_status() noexcept
+  void table_c::recalculate_status() noexcept
   {
-    if(helper_is_draw())
+    if(recalculate_status_is_draw())
     {
       status.set_draw();
       return;
     }
-    if(helper_is_win(table_field::FIELD_X))
+    if(recalculate_status_is_win(field_c::FIELD_X))
     {
       status.set_win_x();
       return;
     }
-    if(helper_is_win(table_field::FIELD_O))
+    if(recalculate_status_is_win(field_c::FIELD_O))
     {
       status.set_win_o();
       return;
     }
   }
 
-  void table::init() noexcept
+  void table_c::init() noexcept
   {
-    status.set_in_game();
-    for(int x = 0; x < size; x++)
-      for(int y = 0; y < size; y++)
+    status.set_playable();
+    for(coordinate_t x = 0; x < size; x++)
+      for(coordinate_t y = 0; y < size; y++)
         fields[x][y].set_empty();
-    on_move = GAMER_X;
+    player.set_x();
     moves_number = 0;
   }
 
-  const table_status& table::play(int x, int y)
+  const status_c& table_c::play(coordinate_t x, coordinate_t y)
   {
     if
     (
@@ -95,48 +95,39 @@ namespace tttbook
       y < 0 ||
       y >= size
     )
-      throw error_index();
-    if(!status.is_in_game())
-      throw error_status();
+      throw error_bad_index();
+    if(!status.is_playable())
+      throw error_not_playable();
     if(!fields[x][y].is_empty())
-      throw error_filled();
-    switch(on_move)
-    {
-      case GAMER_X:
-        fields[x][y].play_as_x();
-        on_move = GAMER_O;
-        break;
-      case GAMER_O:
-        fields[x][y].play_as_o();
-        on_move = GAMER_X;
-        break;
-    }
-    moves[moves_number] = std::make_pair(x, y);
+      throw error_already_filled();
+    fields[x][y].fill(player);
+    player.next();
+    moves[moves_number].set(x, y);
     moves_number++;
-    calculate_status();
+    recalculate_status();
     return status;
   }
 
-  std::ostream& operator<< (std::ostream& out, const table& self)
+  std::ostream& operator<< (std::ostream& out, const table_c& self)
   {
     out << self.status << " [ ";
     for(int i = 0; i < self.moves_number; i++)
     {
       if(i != 0)
         out << ", ";
-      out << "(" << self.moves[i].first << "," << self.moves[i].second << ")";
+      out << self.moves[i];
     }
     out << " ]" << std::endl;
-    for(int x = 0; x < self.size; x++)
+    for(coordinate_t y = 0; y < self.size; y++)
     {
-      for(int y = 0; y < self.size; y++)
-      {
-        out << " " << self.fields[x][y];
-        if(y != self.size-1)
-          out << " |";
-      }
-      if(x != self.size-1)
+      if(y != 0)
         out << std::endl << "---+---+---" << std::endl;
+      for(coordinate_t x = 0; x < self.size; x++)
+      {
+        if(x != 0)
+          out << " |";
+        out << " " << self.fields[x][y];
+      }
     }
     out << std::endl;
     return out;

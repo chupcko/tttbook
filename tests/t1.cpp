@@ -1,60 +1,72 @@
 #include <iostream>
 #include <vector>
-#include <array>
-#include <utility>
 
 #include "tttbook.hpp"
-#include "triple.hpp"
 
 using namespace std;
 using namespace tttbook;
-using namespace test_utility;
 
-typedef vector<pair<int, int>> moves_t;
-typedef array<bool, 3> except_t;
-typedef triplet<int, moves_t, except_t> test_t;
+typedef struct test_t
+{
+  int            number;
+  vector<move_c> moves;
+  struct
+  {
+    bool is_playable;
+    bool is_draw;
+    bool is_win_x;
+    bool is_win_o;
+  } except;
+} test_t;
 
 int main()
 {
   int test_number = 0;
   vector<test_t> tests =
   {
-    { test_number++, { {0, 0}, {0, 2}, {1, 0}, {1, 2}, {2, 0} }, { { false, true, false } } },
-    { test_number++, { {0, 0}, {0, 2}, {1, 0}, {1, 2}, {2, 0} }, { { false, true, true } } },
-    { test_number++, { {0, 0}, {0, 2}, {1, 0}, {1, 2}, {2, 0} }, { { false, true, true } } },
-    { test_number++, { {0, 0}, {0, 2}, {1, 0}, {1, 2}, {2, 0},  {2, 2} }, { { false, true, true } } },
+    { test_number++, {                                                                        }, { true,  false, false, false } },
+    { test_number++, { {0, 0}, {0, 2}                                                         }, { true,  false, false, false } },
+    { test_number++, { {0, 0}, {0, 2}, {1, 0}, {1, 2}                                         }, { true,  false, false, false } },
+    { test_number++, { {0, 0}, {0, 2}, {1, 0}, {1, 2}, {2, 0}                                 }, { false, false, true,  false } },
+    { test_number++, { {0, 0}, {0, 2}, {1, 0}, {1, 2}, {2, 1}, {2, 2}                         }, { false, false, false, true  } },
+    { test_number++, { {0, 0}, {1, 0}, {2, 0}, {0, 1}, {1, 1}, {2, 1}, {1, 2}, {0, 2}         }, { true,  false, false, false } },
+    { test_number++, { {0, 0}, {1, 0}, {2, 0}, {0, 1}, {1, 1}, {2, 1}, {1, 2}, {0, 2}, {2, 2} }, { false, true,  false, false } }
   };
-  table test_table;
+  table_c table;
 
   for(auto& test: tests)
   {
-    test_table.init();
-    auto& number = get<0>(test);
-    auto& moves = get<1>(test);
-    auto& except = get<2>(test);
-    for(auto& move: moves)
-      test_table.play(move.first, move.second);
-    if
-    (
-      test_table.is_draw() != except[0] ||
-      test_table.is_win_x() != except[1] ||
-      test_table.is_win_o() != except[2]
-    )
+    table.init();
+    try
+    {
+      for(auto& move: test.moves)
+        table.play(move.get_x(), move.get_y());
+      if
+      (
+        table.is_playable() != test.except.is_playable ||
+        table.is_draw() != test.except.is_draw ||
+        table.is_win_x() != test.except.is_win_x ||
+        table.is_win_o() != test.except.is_win_o
+      )
+        cout <<
+          boolalpha <<
+          "FAIL file=" << __FILE__ <<
+          " test=" << test.number <<
+          " except={ " <<
+          table.is_playable() << ", " <<
+          table.is_draw() << ", " <<
+          table.is_win_x() << ", " <<
+          table.is_win_o() <<
+          " }" << endl <<
+          table;
+    }
+    catch(const exception& e)
+    {
       cout <<
-        boolalpha <<
-        "FAIL file=" <<
-        __FILE__ <<
-        " test=" <<
-        number <<
-        " except={ " <<
-        test_table.is_draw() <<
-        ", " <<
-        test_table.is_win_x() <<
-        ", " <<
-        test_table.is_win_o() <<
-        " }" <<
-        endl <<
-        test_table;
+        "ERROR file=" << __FILE__ <<
+        " test=" << test.number << ' ' <<
+        e.what() << endl;
+    }
   }
 
   return 0;
