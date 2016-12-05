@@ -8,7 +8,7 @@ namespace tttbook
   {
   private:
 
-    table_c table;
+    board_c board;
 
   public:
 

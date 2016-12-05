@@ -3,7 +3,7 @@
 namespace tttbook
 {
 
-  bool table_c::recalculate_status_is_draw() const noexcept
+  bool board_c::recalculate_status_is_draw() const noexcept
   {
     for(coordinate_t x = 0; x < size; x++)
       for(coordinate_t y = 0; y < size; y++)
@@ -12,7 +12,7 @@ namespace tttbook
     return true;
   }
 
-  bool table_c::recalculate_status_is_win(field_c::field_t field_value) const noexcept
+  bool board_c::recalculate_status_is_win(field_c::field_t field_value) const noexcept
   {
     bool all;
 
@@ -57,7 +57,7 @@ namespace tttbook
     return false;
   }
 
-  void table_c::recalculate_status() noexcept
+  void board_c::recalculate_status() noexcept
   {
     if(recalculate_status_is_draw())
     {
@@ -76,7 +76,7 @@ namespace tttbook
     }
   }
 
-  void table_c::init() noexcept
+  void board_c::init() noexcept
   {
     status.set_playable();
     for(coordinate_t x = 0; x < size; x++)
@@ -86,7 +86,7 @@ namespace tttbook
     moves_number = 0;
   }
 
-  const status_c& table_c::play(coordinate_t x, coordinate_t y)
+  const status_c& board_c::play(coordinate_t x, coordinate_t y)
   {
     if
     (
@@ -108,7 +108,7 @@ namespace tttbook
     return status;
   }
 
-  std::ostream& operator<< (std::ostream& out, const table_c& self)
+  std::ostream& operator<< (std::ostream& out, const board_c& self)
   {
     out << self.status << " [ ";
     for(int i = 0; i < self.moves_number; i++)

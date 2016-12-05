@@ -32,33 +32,33 @@ int main()
     { test_number++, { {0, 0}, {1, 0}, {2, 0}, {0, 1}, {1, 1}, {2, 1}, {1, 2}, {0, 2}         }, { true,  false, false, false } },
     { test_number++, { {0, 0}, {1, 0}, {2, 0}, {0, 1}, {1, 1}, {2, 1}, {1, 2}, {0, 2}, {2, 2} }, { false, true,  false, false } }
   };
-  table_c table;
+  board_c board;
 
   for(auto& test: tests)
   {
-    table.init();
+    board.init();
     try
     {
       for(auto& move: test.moves)
-        table.play(move.get_x(), move.get_y());
+        board.play(move.get_x(), move.get_y());
       if
       (
-        table.is_playable() != test.except.is_playable ||
-        table.is_draw() != test.except.is_draw ||
-        table.is_win_x() != test.except.is_win_x ||
-        table.is_win_o() != test.except.is_win_o
+        board.is_playable() != test.except.is_playable ||
+        board.is_draw() != test.except.is_draw ||
+        board.is_win_x() != test.except.is_win_x ||
+        board.is_win_o() != test.except.is_win_o
       )
         cout <<
           boolalpha <<
           "FAIL file=" << __FILE__ <<
           " test=" << test.number <<
           " except={ " <<
-          table.is_playable() << ", " <<
-          table.is_draw() << ", " <<
-          table.is_win_x() << ", " <<
-          table.is_win_o() <<
+          board.is_playable() << ", " <<
+          board.is_draw() << ", " <<
+          board.is_win_x() << ", " <<
+          board.is_win_o() <<
           " }" << endl <<
-          table;
+          board;
     }
     catch(const exception& e)
     {

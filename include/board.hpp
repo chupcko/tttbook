@@ -1,10 +1,10 @@
-#ifndef __TABLE__HPP__
-#define __TABLE__HPP__
+#ifndef __BOARD__HPP__
+#define __BOARD__HPP__
 
 namespace tttbook
 {
 
-  class table_c
+  class board_c
   {
   public:
 
@@ -24,7 +24,7 @@ namespace tttbook
 
   public:
 
-    table_c() noexcept
+    board_c() noexcept
     {
       init();
     };
@@ -52,7 +52,7 @@ namespace tttbook
     };
 
     const status_c& play(coordinate_t x, coordinate_t y);
-    friend std::ostream& operator<< (std::ostream&, const table_c&);
+    friend std::ostream& operator<< (std::ostream&, const board_c&);
   };
 
 }
