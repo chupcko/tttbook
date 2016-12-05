@@ -13,6 +13,8 @@
 #include "field.hpp"
 #include "move.hpp"
 #include "status.hpp"
+#include "error.hpp"
 #include "table.hpp"
+#include "game.hpp"
 
 #endif
