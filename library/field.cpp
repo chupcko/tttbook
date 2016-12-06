@@ -5,7 +5,7 @@ namespace tttbook
 
   std::ostream& operator<< (std::ostream& out, const field_c& self)
   {
-    switch(self.value)
+    switch(self.field)
     {
       case field_c::FIELD_EMPTY:
         out << ' ';
@@ -18,6 +18,16 @@ namespace tttbook
         break;
     }
     return out;
+  }
+
+  bool operator== (const field_c& self, const field_c& other)
+  {
+    return self.field == other.field;
+  }
+
+  bool operator!= (const field_c& self, const field_c& other)
+  {
+    return !(self == other);
   }
 
 }

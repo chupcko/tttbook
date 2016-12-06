@@ -5,10 +5,13 @@ namespace tttbook
 
   std::ostream& operator<< (std::ostream& out, const status_c& self)
   {
-    switch(self.value)
+    switch(self.status)
     {
-      case status_c::STATUS_PLAYABLE:
-        out << "Playable";
+      case status_c::STATUS_NEW:
+        out << "New";
+        break;
+      case status_c::STATUS_PLAY:
+        out << "Play";
         break;
       case status_c::STATUS_DRAW:
         out << "Draw";

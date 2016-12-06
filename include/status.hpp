@@ -5,73 +5,80 @@ namespace tttbook
 {
   class status_c
   {
-  public:
+    public:
 
-    enum status_t
-    {
-      STATUS_PLAYABLE,
-      STATUS_DRAW,
-      STATUS_WIN_X,
-      STATUS_WIN_O
-    };
+      enum status_t
+      {
+        STATUS_NEW,
+        STATUS_PLAY,
+        STATUS_DRAW,
+        STATUS_WIN_X,
+        STATUS_WIN_O
+      };
 
-  private:
+      status_t status;
 
-    status_t value;
+      status_c(void) noexcept
+      {
+        set_new();
+      };
 
-  public:
+      void set_new(void) noexcept
+      {
+        status = STATUS_NEW;
+      };
 
-    status_c() noexcept
-    {
-      set_playable();
-    };
+      void set_play(void) noexcept
+      {
+        status = STATUS_PLAY;
+      };
 
-    void set_playable() noexcept
-    {
-      value = STATUS_PLAYABLE;
-    };
+      void set_draw(void) noexcept
+      {
+        status = STATUS_DRAW;
+      }
 
-    void set_draw() noexcept
-    {
-      value = STATUS_DRAW;
-    }
+      void set_win_x(void) noexcept
+      {
+        status = STATUS_WIN_X;
+      }
 
-    void set_win_x() noexcept
-    {
-      value = STATUS_WIN_X;
-    }
+      void set_win_o(void) noexcept
+      {
+        status = STATUS_WIN_O;
+      }
 
-    void set_win_o() noexcept
-    {
-      value = STATUS_WIN_O;
-    }
+      bool is_new(void) const noexcept
+      {
+        return status == STATUS_NEW;
+      };
 
-    status_t get_value() const noexcept
-    {
-      return value;
-    };
+      bool is_play(void) const noexcept
+      {
+        return status == STATUS_PLAY;
+      };
 
-    bool is_playable() const noexcept
-    {
-      return value == STATUS_PLAYABLE;
-    };
+      bool is_draw(void) const noexcept
+      {
+        return status == STATUS_DRAW;
+      };
 
-    bool is_draw() const noexcept
-    {
-      return value == STATUS_DRAW;
-    };
+      bool is_win_x(void) const noexcept
+      {
+        return status == STATUS_WIN_X;
+      };
 
-    bool is_win_x() const noexcept
-    {
-      return value == STATUS_WIN_X;
-    };
+      bool is_win_o(void) const noexcept
+      {
+        return status == STATUS_WIN_O;
+      };
 
-    bool is_win_o() const noexcept
-    {
-      return value == STATUS_WIN_O;
-    };
+      bool is_playable(void) const noexcept
+      {
+        return status == STATUS_NEW || status == STATUS_PLAY;
+      };
 
-    friend std::ostream& operator<< (std::ostream&, const status_c&);
+      friend std::ostream& operator<< (std::ostream&, const status_c&);
   };
 
 }

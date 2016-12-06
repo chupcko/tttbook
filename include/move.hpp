@@ -7,42 +7,30 @@ namespace tttbook
 
   class move_c
   {
-  private:
+    public:
 
-    coordinate_t x;
-    coordinate_t y;
+      coordinate_t x;
+      coordinate_t y;
 
-  public:
+      move_c(void) noexcept
+      {
+        x = 0;
+        y = 0;
+      };
 
-    move_c() noexcept
-    {
-      x = -1;
-      y = -1;
-    };
+      move_c(coordinate_t x_init, coordinate_t y_init) noexcept
+      {
+        x = x_init;
+        y = y_init;
+      };
 
-    move_c(coordinate_t x_init, coordinate_t y_init) noexcept
-    {
-      x = x_init;
-      y = y_init;
-    };
+      move_c(const move_c* move_init)
+      {
+        x = move_init->x;
+        y = move_init->y;
+      }
 
-    void set(coordinate_t x_init, coordinate_t y_init) noexcept
-    {
-      x = x_init;
-      y = y_init;
-    };
-
-    coordinate_t get_x() const noexcept
-    {
-      return x;
-    };
-
-    coordinate_t get_y() const noexcept
-    {
-      return y;
-    };
-
-    friend std::ostream& operator<< (std::ostream&, const move_c&);
+      friend std::ostream& operator<< (std::ostream&, const move_c&);
   };
 
 }

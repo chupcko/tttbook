@@ -6,54 +6,43 @@ namespace tttbook
 
   class board_c
   {
-  public:
+    public:
 
-    static const coordinate_t size = 3;
+      static const coordinate_t size = 3;
+      status_c status;
+      field_c fields[size][size];
+      player_c player;
 
-  private:
+    private:
 
-    status_c status;
-    field_c fields[size][size];
-    player_c player;
-    move_c moves[size*size];
-    int moves_number;
+      bool recalculate_status_is_draw(void) const noexcept;
+      bool recalculate_status_is_win(field_c::field_t) const noexcept;
+      void recalculate_status(void) noexcept;
 
-    bool recalculate_status_is_draw() const noexcept;
-    bool recalculate_status_is_win(field_c::field_t field_value) const noexcept;
-    void recalculate_status() noexcept;
+    public:
 
-  public:
+      board_c(void) noexcept
+      {
+        init();
+      };
 
-    board_c() noexcept
-    {
-      init();
-    };
+      board_c(const board_c* board_init) noexcept
+      {
+        status = board_init->status;
+        for(coordinate_t x = 0; x < size; x++)
+          for(coordinate_t y = 0; y < size; y++)
+            fields[x][y] = board_init->fields[x][y];
+        player = board_init->player;
+      }
 
-    void init() noexcept;
+      void init(void) noexcept;
+      const status_c& play(move_c move);
 
-    bool is_playable() const noexcept
-    {
-      return status.is_playable();
-    }
-
-    bool is_draw() const noexcept
-    {
-      return status.is_draw();
-    }
-
-    bool is_win_x() const noexcept
-    {
-      return status.is_win_x();
-    };
-
-    bool is_win_o() const noexcept
-    {
-      return status.is_win_o();
-    };
-
-    const status_c& play(coordinate_t x, coordinate_t y);
-    friend std::ostream& operator<< (std::ostream&, const board_c&);
+      friend std::ostream& operator<< (std::ostream&, const board_c&);
   };
+
+  bool operator== (const board_c&, const board_c&);
+  bool operator!= (const board_c&, const board_c&);
 
 }
 

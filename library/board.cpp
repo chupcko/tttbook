@@ -3,7 +3,7 @@
 namespace tttbook
 {
 
-  bool board_c::recalculate_status_is_draw() const noexcept
+  bool board_c::recalculate_status_is_draw(void) const noexcept
   {
     for(coordinate_t x = 0; x < size; x++)
       for(coordinate_t y = 0; y < size; y++)
@@ -20,7 +20,7 @@ namespace tttbook
     {
       all = true;
       for(coordinate_t y = 0; y < size; y++)
-        if(fields[x][y].get_value() != field_value)
+        if(!fields[x][y].is(field_value))
         {
           all = false;
           break;
@@ -29,7 +29,7 @@ namespace tttbook
         return true;
       all = true;
       for(coordinate_t y = 0; y < size; y++)
-        if(fields[y][x].get_value() != field_value)
+        if(!fields[y][x].is(field_value))
         {
           all = false;
           break;
@@ -39,15 +39,16 @@ namespace tttbook
     }
     all = true;
     for(coordinate_t x = 0; x < size; x++)
-      if(fields[x][x].get_value() != field_value)
+      if(!fields[x][x].is(field_value))
       {
         all = false;
         break;
       }
     if(all)
       return true;
+    all = true;
     for(coordinate_t x = 0; x < size; x++)
-      if(fields[x][size-1-x].get_value() != field_value)
+      if(!fields[x][size-1-x].is(field_value))
       {
         all = false;
         break;
@@ -57,13 +58,8 @@ namespace tttbook
     return false;
   }
 
-  void board_c::recalculate_status() noexcept
+  void board_c::recalculate_status(void) noexcept
   {
-    if(recalculate_status_is_draw())
-    {
-      status.set_draw();
-      return;
-    }
     if(recalculate_status_is_win(field_c::FIELD_X))
     {
       status.set_win_x();
@@ -74,50 +70,49 @@ namespace tttbook
       status.set_win_o();
       return;
     }
+    if(recalculate_status_is_draw())
+    {
+      status.set_draw();
+      return;
+    }
+    status.set_play();
   }
 
-  void board_c::init() noexcept
+  void board_c::init(void) noexcept
   {
-    status.set_playable();
+    status.set_new();
     for(coordinate_t x = 0; x < size; x++)
       for(coordinate_t y = 0; y < size; y++)
         fields[x][y].set_empty();
     player.set_x();
-    moves_number = 0;
   }
 
-  const status_c& board_c::play(coordinate_t x, coordinate_t y)
+  const status_c& board_c::play(move_c move)
   {
     if
     (
-      x < 0 ||
-      x >= size ||
-      y < 0 ||
-      y >= size
+      move.x < 0 ||
+      move.x >= size ||
+      move.y < 0 ||
+      move.y >= size
     )
       throw error_bad_index();
     if(!status.is_playable())
       throw error_not_playable();
-    if(!fields[x][y].is_empty())
+    if(!fields[move.x][move.y].is_empty())
       throw error_already_filled();
-    fields[x][y].fill(player);
+    fields[move.x][move.y].fill(player);
     player.next();
-    moves[moves_number].set(x, y);
-    moves_number++;
     recalculate_status();
     return status;
   }
 
   std::ostream& operator<< (std::ostream& out, const board_c& self)
   {
-    out << self.status << " [ ";
-    for(int i = 0; i < self.moves_number; i++)
-    {
-      if(i != 0)
-        out << ", ";
-      out << self.moves[i];
-    }
-    out << " ]" << std::endl;
+    out << self.status;
+    if(self.status.is_playable())
+      out << " next: " << self.player;
+    out << std::endl;
     for(coordinate_t y = 0; y < self.size; y++)
     {
       if(y != 0)
@@ -131,6 +126,20 @@ namespace tttbook
     }
     out << std::endl;
     return out;
+  }
+
+  bool operator== (const board_c& self, const board_c& other)
+  {
+    for(coordinate_t x = 0; x < board_c::size; x++)
+      for(coordinate_t y = 0; y < board_c::size; y++)
+        if(self.fields[x][y] != other.fields[x][y])
+          return false;
+    return self.player == other.player;
+  }
+
+  bool operator!= (const board_c& self, const board_c& other)
+  {
+    return !(self == other);
   }
 
 }
