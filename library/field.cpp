@@ -3,6 +3,14 @@
 namespace tttbook
 {
 
+  void field_c::fill(player_c player) noexcept
+  {
+    if(player.is_x())
+      set_x();
+    if(player.is_o())
+      set_o();
+  }
+
   std::ostream& operator<< (std::ostream& out, const field_c& self)
   {
     switch(self.field)

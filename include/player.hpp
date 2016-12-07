@@ -40,18 +40,7 @@ namespace tttbook
         return player == PLAYER_O;
       };
 
-      void next(void) noexcept
-      {
-        switch(player)
-        {
-          case PLAYER_X:
-            player = PLAYER_O;
-            break;
-          case PLAYER_O:
-            player = PLAYER_X;
-            break;
-        }
-      };
+      void next(void) noexcept;
 
       friend std::ostream& operator<< (std::ostream&, const player_c&);
   };

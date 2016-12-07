@@ -3,6 +3,7 @@
 
 namespace tttbook
 {
+  typedef long board_hash_t;
 
   class board_c
   {
@@ -26,17 +27,10 @@ namespace tttbook
         init();
       };
 
-      board_c(const board_c* board_init) noexcept
-      {
-        status = board_init->status;
-        for(coordinate_t x = 0; x < size; x++)
-          for(coordinate_t y = 0; y < size; y++)
-            fields[x][y] = board_init->fields[x][y];
-        player = board_init->player;
-      }
-
+      board_c(const board_c*) noexcept;
       void init(void) noexcept;
-      const status_c& play(move_c move);
+      const status_c& play(move_c);
+      board_hash_t hash() const noexcept;
 
       friend std::ostream& operator<< (std::ostream&, const board_c&);
   };

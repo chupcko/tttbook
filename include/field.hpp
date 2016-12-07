@@ -56,13 +56,7 @@ namespace tttbook
         return field == value;
       }
 
-      void fill(player_c player) noexcept
-      {
-        if(player.is_x())
-          set_x();
-        if(player.is_o())
-          set_o();
-      }
+      void fill(player_c) noexcept;
 
       friend std::ostream& operator<< (std::ostream&, const field_c&);
   };

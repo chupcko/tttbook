@@ -22,22 +22,23 @@ int main(void)
 /*    { test_number++, { {0, 0}, {1, 0}, {2, 0}, {0, 1}, {1, 1}, {2, 1}, {1, 2}, {0, 2} } }*/
 /*    { test_number++, { {0, 0}, {0, 1}, {1, 0}, {0, 2}, {2, 2}, {1, 2}, {2, 1} } }*/
   };
+  board_c board;
   solver_c solver;
+  solver.set_slow_speed();
+  solver.set_first_select();
 
   for(auto& test: tests)
   {
-    solver.init();
-    solver.set_slow_speed();
-    solver.set_first_select();
+    board.init();
     try
     {
       for(auto& move: test.moves)
-        solver.play(move);
-      cout << test.number << ' ' << solver << endl;
-      move_c* move = solver.best_move();
+        board.play(move);
+      cout << test.number << ' ' << board << endl;
+      move_c* move = solver.best_move(board);
       cout << *move << endl;
-      solver.play(*move);
-      cout << solver << endl;
+      board.play(*move);
+      cout << board << endl;
     }
     catch(const exception& e)
     {

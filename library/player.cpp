@@ -3,6 +3,19 @@
 namespace tttbook
 {
 
+  void player_c::next(void) noexcept
+  {
+    switch(player)
+    {
+      case PLAYER_X:
+        player = PLAYER_O;
+        break;
+      case PLAYER_O:
+        player = PLAYER_X;
+        break;
+    }
+  };
+
   std::ostream& operator<< (std::ostream& out, const player_c& self)
   {
     switch(self.player)

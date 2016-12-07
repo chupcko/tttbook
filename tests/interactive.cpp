@@ -9,6 +9,7 @@ using namespace tttbook;
 
 int main(void)
 {
+  board_c board;
   solver_c solver;
   int input;
 
@@ -16,21 +17,21 @@ int main(void)
   solver.set_random_select();
   for(;;)
   {
-    cout << solver << endl;
-    if(!solver.status.is_playable())
+    cout << board << endl;
+    if(!board.status.is_playable())
       break;
 
     cin >> input;
     if(input <= 0)
     {
-      move_c* move = solver.best_move();
-      solver.play(*move);
+      move_c* move = solver.best_move(board);
+      board.play(*move);
       delete move;
     }
     else if(input <= 9)
     {
       input--;
-      solver.play(new move_c(input%solver_c::size, input/solver_c::size));
+      board.play(new move_c(input%board_c::size, input/board_c::size));
     }
   }
   return 0;

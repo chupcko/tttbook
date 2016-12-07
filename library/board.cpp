@@ -78,6 +78,15 @@ namespace tttbook
     status.set_play();
   }
 
+  board_c::board_c(const board_c* board_init) noexcept
+  {
+    status = board_init->status;
+    for(coordinate_t x = 0; x < size; x++)
+      for(coordinate_t y = 0; y < size; y++)
+        fields[x][y] = board_init->fields[x][y];
+    player = board_init->player;
+  }
+
   void board_c::init(void) noexcept
   {
     status.set_new();
@@ -105,6 +114,18 @@ namespace tttbook
     player.next();
     recalculate_status();
     return status;
+  }
+
+  board_hash_t board_c::hash() const noexcept
+  {
+    board_hash_t result = 0;
+    for(coordinate_t x = 0; x < size; x++)
+      for(coordinate_t y = 0; y < size; y++)
+      {
+        result *= size;
+        result += fields[x][y].field;
+      }
+    return result;
   }
 
   std::ostream& operator<< (std::ostream& out, const board_c& self)

@@ -4,7 +4,7 @@
 namespace tttbook
 {
 
-  class solver_c : public board_c
+  class solver_c
   {
     public:
 
@@ -26,8 +26,8 @@ namespace tttbook
 
     private:
 
-      int rate(void) const noexcept;
-      int random(int, int) const noexcept;
+      int rate(const board_c&) const noexcept;
+      static int random(int, int) noexcept;
 
     public:
 
@@ -35,12 +35,6 @@ namespace tttbook
       {
         set_fast_speed();
         set_first_select();
-      }
-
-      solver_c(const solver_c* solver_init) : board_c(solver_init)
-      {
-        speed = solver_init->speed;
-        select = solver_init->select;
       }
 
       void set_fast_speed(void) noexcept
@@ -68,7 +62,7 @@ namespace tttbook
         select = LAST;
       }
 
-      move_c* best_move(void) const;
+      move_c* best_move(const board_c&) const;
   };
 
 }
