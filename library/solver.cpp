@@ -14,15 +14,15 @@ namespace tttbook
         {
           case player_c::PLAYER_X:
             if(board.status.is_win_x())
-              return -board_c::size*board_c::size;
+              return -board.size*board.size;
             else if(board.status.is_win_o())
-              return board_c::size*board_c::size;
+              return board.size*board.size;
             break;
           case player_c::PLAYER_O:
             if(board.status.is_win_x())
-              return board_c::size*board_c::size;
+              return board.size*board.size;
             else if(board.status.is_win_o())
-              return -board_c::size*board_c::size;
+              return -board.size*board.size;
             break;
         }
         break;
@@ -79,9 +79,9 @@ namespace tttbook
   {
     if(!board.status.is_playable())
       throw error_not_playable();
-    int scores[board_c::size][board_c::size];
-    for(move_coordinate_t x = 0; x < board_c::size; x++)
-      for(move_coordinate_t y = 0; y < board_c::size; y++)
+    int scores[board.size][board.size];
+    for(move_coordinate_t x = 0; x < board.size; x++)
+      for(move_coordinate_t y = 0; y < board.size; y++)
         if(board.fields[x][y].is_empty())
         {
           board_c board_copy(board);
@@ -89,10 +89,10 @@ namespace tttbook
           scores[x][y] = rate(board_copy);
         }
 
-    move_c moves[board_c::size*board_c::size];
+    move_c moves[board.size*board.size];
     int moves_number = 0;
-    for(move_coordinate_t x = 0; x < board_c::size; x++)
-      for(move_coordinate_t y = 0; y < board_c::size; y++)
+    for(move_coordinate_t x = 0; x < board.size; x++)
+      for(move_coordinate_t y = 0; y < board.size; y++)
         if(board.fields[x][y].is_empty())
           if(moves_number == 0)
           {

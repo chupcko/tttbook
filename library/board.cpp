@@ -130,10 +130,9 @@ namespace tttbook
 
   std::ostream& operator<< (std::ostream& out, const board_c& self)
   {
-    out << self.status;
+    out << self.status << std::endl;
     if(self.status.is_playable())
-      out << " next: " << self.player;
-    out << std::endl;
+      out << " next: " << self.player << std::endl;
     for(move_coordinate_t y = 0; y < self.size; y++)
     {
       if(y != 0)
@@ -142,7 +141,7 @@ namespace tttbook
       {
         if(x != 0)
           out << " |";
-        out << " " << self.fields[x][y];
+        out << ' ' << self.fields[x][y];
       }
     }
     out << std::endl;
