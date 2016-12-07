@@ -27,7 +27,7 @@ int main(void)
   for(auto& test: tests)
   {
     solver.init();
-    solver.set_fast_speed();
+    solver.set_slow_speed();
     solver.set_first_select();
     try
     {

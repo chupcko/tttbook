@@ -3,23 +3,45 @@
 namespace tttbook
 {
 
-  int solver_c::rate(void) const noexcept
+  int solver_c::rate() const noexcept
   {
     if(status.is_draw())
       return 0;
-    switch(player.player)
+    switch(speed)
     {
-      case player_c::PLAYER_X:
-        if(status.is_win_x())
-          return -1;
-        else if(status.is_win_o())
-          return 1;
+      case FAST:
+        switch(player.player)
+        {
+          case player_c::PLAYER_X:
+            if(status.is_win_x())
+              return -size*size;
+            else if(status.is_win_o())
+              return size*size;
+            break;
+          case player_c::PLAYER_O:
+            if(status.is_win_x())
+              return size*size;
+            else if(status.is_win_o())
+              return -size*size;
+            break;
+        }
         break;
-      case player_c::PLAYER_O:
-        if(status.is_win_x())
-          return 1;
-        else if(status.is_win_o())
-          return -1;
+      case SLOW:
+        switch(player.player)
+        {
+          case player_c::PLAYER_X:
+            if(status.is_win_x())
+              return -1;
+            else if(status.is_win_o())
+              return 1;
+            break;
+          case player_c::PLAYER_O:
+            if(status.is_win_x())
+              return 1;
+            else if(status.is_win_o())
+              return -1;
+            break;
+        }
         break;
     }
     solver_c solver_copy(this);
@@ -27,21 +49,33 @@ namespace tttbook
     solver_copy.play(*move);
     delete move;
     int new_rate = solver_copy.rate();
-    if(new_rate > 0)
-      new_rate++;
-    else if(new_rate < 0)
-      new_rate--;
+    switch(speed)
+    {
+      case FAST:
+        if(new_rate > 0)
+          new_rate--;
+        else if(new_rate < 0)
+          new_rate++;
+        break;
+      case SLOW:
+        if(new_rate > 0)
+          new_rate++;
+        else if(new_rate < 0)
+          new_rate--;
+        break;
+    }
     return -new_rate;
   }
 
   int solver_c::random(int low, int high) const noexcept
   {
-    std::default_random_engine generator;
+    std::random_device device;
+    std::default_random_engine generator(device());
     std::uniform_int_distribution<int> distribution(low, high);
     return distribution(generator);
   }
 
-  move_c* solver_c::best_move(void) const
+  move_c* solver_c::best_move() const
   {
     if(!status.is_playable())
       throw error_not_playable();
@@ -52,16 +86,7 @@ namespace tttbook
         {
           solver_c solver_copy(this);
           solver_copy.play(move_c(x, y));
-          switch(speed)
-          {
-            case FAST:
-              /*#*/
-              scores[x][y] = (size*size)+1-solver_copy.rate();
-              break;
-            case SLOW:
-              scores[x][y] = solver_copy.rate();
-              break;
-          }
+          scores[x][y] = solver_copy.rate();
         }
 
     move_c moves[size*size];
@@ -90,22 +115,6 @@ namespace tttbook
               moves_number++;
             }
           }
-
-/*#*/
-    std::cout << *this;
-    for(coordinate_t y = 0; y < size; y++)
-    {
-      for(coordinate_t x = 0; x < size; x++)
-        if(fields[x][y].is_empty())
-          std::cout << scores[x][y] << ' ';
-        else
-          std::cout << ". ";
-      std::cout << std::endl;
-    }
-    for(int i = 0; i < moves_number; i++)
-      std::cout << moves[i] << '(' << scores[moves[i].x][moves[i].y] << ") ";
-    std::cout << std::endl << std::endl;
-/*#*/
 
     move_c* move;
     switch(select)
