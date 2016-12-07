@@ -9,7 +9,7 @@ namespace tttbook
   {
     public:
 
-      static const coordinate_t size = 3;
+      static const move_coordinate_t size = 3;
       status_c status;
       field_c fields[size][size];
       player_c player;

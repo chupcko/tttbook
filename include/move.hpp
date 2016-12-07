@@ -3,14 +3,14 @@
 
 namespace tttbook
 {
-  typedef int coordinate_t;
+  typedef int move_coordinate_t;
 
   class move_c
   {
     public:
 
-      coordinate_t x;
-      coordinate_t y;
+      move_coordinate_t x;
+      move_coordinate_t y;
 
       move_c(void) noexcept
       {
@@ -18,7 +18,7 @@ namespace tttbook
         y = 0;
       };
 
-      move_c(coordinate_t x_init, coordinate_t y_init) noexcept
+      move_c(move_coordinate_t x_init, move_coordinate_t y_init) noexcept
       {
         x = x_init;
         y = y_init;

@@ -31,7 +31,7 @@ namespace tttbook
 
     public:
 
-      solver_c(void)
+      solver_c(void) noexcept
       {
         set_fast_speed();
         set_first_select();

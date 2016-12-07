@@ -80,8 +80,8 @@ namespace tttbook
     if(!board.status.is_playable())
       throw error_not_playable();
     int scores[board_c::size][board_c::size];
-    for(coordinate_t x = 0; x < board_c::size; x++)
-      for(coordinate_t y = 0; y < board_c::size; y++)
+    for(move_coordinate_t x = 0; x < board_c::size; x++)
+      for(move_coordinate_t y = 0; y < board_c::size; y++)
         if(board.fields[x][y].is_empty())
         {
           board_c board_copy(board);
@@ -91,8 +91,8 @@ namespace tttbook
 
     move_c moves[board_c::size*board_c::size];
     int moves_number = 0;
-    for(coordinate_t x = 0; x < board_c::size; x++)
-      for(coordinate_t y = 0; y < board_c::size; y++)
+    for(move_coordinate_t x = 0; x < board_c::size; x++)
+      for(move_coordinate_t y = 0; y < board_c::size; y++)
         if(board.fields[x][y].is_empty())
           if(moves_number == 0)
           {

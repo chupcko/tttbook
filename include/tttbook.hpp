@@ -12,5 +12,7 @@
 #include "error.hpp"
 #include "board.hpp"
 #include "solver.hpp"
+#include "page.hpp"
+#include "book.hpp"
 
 #endif
