@@ -7,7 +7,8 @@ namespace tttbook
   {
     for(move_coordinate_t x = 0; x < size; x++)
       for(move_coordinate_t y = 0; y < size; y++)
-        next_indexes[x][y] = null_page_index;
+        go_to_indexes[x][y] = null_page_index;
+    page_index = null_page_index;
   }
 
   std::ostream& operator<< (std::ostream& out, const page_c& self)
@@ -21,7 +22,7 @@ namespace tttbook
       {
         if(x != 0)
           out << " |";
-        out << ' ' << std::setw(5) << self.next_indexes[x][y];
+        out << ' ' << std::setw(5) << self.go_to_indexes[x][y];
       }
     }
     out << std::endl;

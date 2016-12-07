@@ -13,7 +13,8 @@ namespace tttbook
 
       const page_index_t null_page_index = -1;
 
-      page_index_t next_indexes[board_c::size][board_c::size];
+      page_index_t go_to_indexes[board_c::size][board_c::size];
+      page_index_t page_index;
 
     public:
 
@@ -22,7 +23,7 @@ namespace tttbook
         init_next_indexes();
       }
 
-      page_c(const board_c* board_init) noexcept
+      page_c(const board_c& board_init) noexcept
       : board_c(board_init)
       {
         init_next_indexes();

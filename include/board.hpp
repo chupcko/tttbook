@@ -27,7 +27,7 @@ namespace tttbook
         init();
       };
 
-      board_c(const board_c*) noexcept;
+      board_c(const board_c&) noexcept;
       void init(void) noexcept;
       const status_c& play(move_c);
       board_hash_t hash() const noexcept;

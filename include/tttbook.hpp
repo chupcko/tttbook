@@ -1,10 +1,13 @@
 #ifndef __TTTBOOK__HPP__
 #define __TTTBOOK__HPP__
 
+#include <deque>
 #include <exception>
-#include <iostream>
 #include <iomanip>
+#include <iostream>
+#include <map>
 #include <random>
+#include <vector>
 
 #include "player.hpp"
 #include "field.hpp"

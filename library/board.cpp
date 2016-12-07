@@ -78,13 +78,13 @@ namespace tttbook
     status.set_play();
   }
 
-  board_c::board_c(const board_c* board_init) noexcept
+  board_c::board_c(const board_c& board_init) noexcept
   {
-    status = board_init->status;
+    status = board_init.status;
     for(move_coordinate_t x = 0; x < size; x++)
       for(move_coordinate_t y = 0; y < size; y++)
-        fields[x][y] = board_init->fields[x][y];
-    player = board_init->player;
+        fields[x][y] = board_init.fields[x][y];
+    player = board_init.player;
   }
 
   void board_c::init(void) noexcept
