@@ -3,6 +3,7 @@
 
 namespace tttbook
 {
+
   typedef int move_coordinate_t;
 
   class move_c

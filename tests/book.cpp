@@ -15,7 +15,7 @@ int main(void)
   book.set_book_as_second();
 
   book.fill();
-  book.shuffle();
+  book.shuffle(3);
 
   cout << book;
   return 0;

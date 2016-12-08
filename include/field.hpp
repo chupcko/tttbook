@@ -3,6 +3,7 @@
 
 namespace tttbook
 {
+
   class field_c
   {
     public:

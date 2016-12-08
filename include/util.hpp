@@ -3,6 +3,20 @@
 
 namespace tttbook
 {
+
+  #define REPEAT_0(x)
+  #define REPEAT_1(x) REPEAT_0(x) x
+  #define REPEAT_2(x) REPEAT_1(x) x
+  #define REPEAT_3(x) REPEAT_2(x) x
+  #define REPEAT_4(x) REPEAT_3(x) x
+  #define REPEAT_5(x) REPEAT_4(x) x
+  #define REPEAT_6(x) REPEAT_5(x) x
+  #define REPEAT_7(x) REPEAT_6(x) x
+  #define REPEAT_8(x) REPEAT_7(x) x
+  #define REPEAT_9(x) REPEAT_8(x) x
+  #define REPEAT_(n, x) REPEAT_##n(x)
+  #define REPEAT(n, x) REPEAT_(n, x)
+
   class util_c
   {
     public:

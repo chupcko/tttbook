@@ -85,9 +85,9 @@ namespace tttbook
     }
   }
 
-  void book_c::shuffle(void) noexcept
+  void book_c::shuffle(int count) noexcept
   {
-    for(page_index_t i = 0; i < pages.size()*3; i++)
+    for(page_index_t i = 0; i < pages.size()*count; i++)
     {
       page_index_t a_index = util_c::random_int(shuffle_begin_index, pages.size()-1);
       page_index_t b_index = util_c::random_int(shuffle_begin_index, pages.size()-1);

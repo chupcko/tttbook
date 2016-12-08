@@ -3,6 +3,7 @@
 
 namespace tttbook
 {
+
   typedef long board_hash_t;
 
   class board_c

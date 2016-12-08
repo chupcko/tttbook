@@ -3,6 +3,7 @@
 
 namespace tttbook
 {
+
   class player_c
   {
     public:

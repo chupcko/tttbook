@@ -3,6 +3,7 @@
 
 namespace tttbook
 {
+
   class status_c
   {
     public:

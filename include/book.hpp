@@ -41,7 +41,7 @@ namespace tttbook
 
       void clear(void) noexcept;
       void fill(void) noexcept;
-      void shuffle(void) noexcept;
+      void shuffle(int) noexcept;
 
       friend std::ostream& operator<<(std::ostream&, const book_c&);
   };
