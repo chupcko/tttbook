@@ -20,16 +20,16 @@ namespace tttbook
 
       page_c(void) noexcept
       {
-        init_next_indexes();
+        init_go_to_indexes();
       }
 
       page_c(const board_c& board_init) noexcept
       : board_c(board_init)
       {
-        init_next_indexes();
+        init_go_to_indexes();
       }
 
-      void init_next_indexes(void) noexcept;
+      void init_go_to_indexes(void) noexcept;
 
       friend std::ostream& operator<< (std::ostream&, const page_c&);
   };

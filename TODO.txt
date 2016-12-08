@@ -1,0 +1,8 @@
+-zavrsi kada knjiga igra prva
+-dodaj pored best move jos nekoliko tipa random move
+-dodaj procenat greske, da kada pravi knjigu gresi
+-izvuci random u zasebnu klasu
+-odradi shuttle
+-napisi program sa switchevima
+-napravi postscript templejte
+-napravi make deo koji pravi pdf ili sve primere
