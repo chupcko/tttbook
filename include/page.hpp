@@ -11,7 +11,7 @@ namespace tttbook
   {
     public:
 
-      const page_index_t null_page_index = -1;
+      static const page_index_t null_page_index = -1;
 
       page_index_t go_to_indexes[board_c::size][board_c::size];
       page_index_t page_index;

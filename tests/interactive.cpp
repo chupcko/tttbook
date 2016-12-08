@@ -1,6 +1,5 @@
 #include <exception>
 #include <iostream>
-#include <vector>
 
 #include "tttbook.hpp"
 

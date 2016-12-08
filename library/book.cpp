@@ -55,6 +55,8 @@ namespace tttbook
       fill_init_book_as_first();
     else
       fill_init_book_as_second();
+    shuffle_begin_index = (page_index_t)pages.size();
+
     while(!unpublished_pages.empty())
     {
       page_index = unpublished_pages.front();
@@ -85,14 +87,33 @@ namespace tttbook
 
   void book_c::shuffle(void) noexcept
   {
-    /*#*/
+    for(page_index_t i = 0; i < pages.size()*3; i++)
+    {
+      page_index_t a_index = util_c::random_int(shuffle_begin_index, pages.size()-1);
+      page_index_t b_index = util_c::random_int(shuffle_begin_index, pages.size()-1);
+      while(a_index == b_index)
+         b_index = util_c::random_int(shuffle_begin_index, pages.size()-1);
+      page_index_t page_index = pages[pages[a_index]->page_index]->shuffle_index;
+      pages[pages[a_index]->page_index]->shuffle_index = pages[pages[b_index]->page_index]->shuffle_index;
+      pages[pages[b_index]->page_index]->shuffle_index = page_index;
+      page_index = pages[a_index]->page_index;
+      pages[a_index]->page_index = pages[b_index]->page_index;
+      pages[b_index]->page_index = page_index;
+    }
   }
 
   std::ostream& operator<<(std::ostream& out, const book_c& self)
   {
+    out <<
+      "Shuffle begin index: " << self.shuffle_begin_index << std::endl <<
+      std::endl;
     page_index_t page_index = 0;
     for(auto& page: self.pages)
-      out << "Page " << page_index++ << std::endl << *page << std::endl << std::endl << std::endl;
+      out <<
+        "Page " << page_index++ << std::endl <<
+        *page <<
+        std::endl <<
+        std::endl;
   }
 
 }

@@ -13,6 +13,7 @@ namespace tttbook
       std::map<board_hash_t, page_index_t> shortcuts;
       std::deque<page_index_t> unpublished_pages;
       bool book_is_first;
+      page_index_t shuffle_begin_index;
 
     private:
 
@@ -25,6 +26,7 @@ namespace tttbook
       book_c(void) noexcept
       {
         set_book_as_first();
+        shuffle_begin_index = page_c::null_page_index;
       };
 
       void set_book_as_first(void) noexcept
