@@ -3,7 +3,7 @@
 namespace tttbook
 {
 
-  void page_c::init_page(void) noexcept
+  void page_c::init(void) noexcept
   {
     for(move_coordinate_t x = 0; x < size; x++)
       for(move_coordinate_t y = 0; y < size; y++)

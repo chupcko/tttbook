@@ -30,7 +30,7 @@ int main(void)
 
   for(auto& test: tests)
   {
-    board.init_board();
+    board.init();
     try
     {
       for(auto& move: test.moves)

@@ -87,7 +87,7 @@ namespace tttbook
     player = board_init.player;
   }
 
-  void board_c::init_board(void) noexcept
+  void board_c::init(void) noexcept
   {
     status.set_new();
     for(move_coordinate_t x = 0; x < size; x++)

@@ -1,5 +1,5 @@
--vidi init_board i init_page
 -napravi postscript templejte
 -napisi program sa switchevima
 -napravi make deo koji pravi pdf ili sve primere
 -na kraju knjige ispisi statistiku
+-mozda one strane koje vode ka draw da odma prepoznas

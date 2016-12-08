@@ -26,11 +26,11 @@ namespace tttbook
 
       board_c(void) noexcept
       {
-        init_board();
+        init();
       };
 
       board_c(const board_c&) noexcept;
-      void init_board(void) noexcept;
+      void init(void) noexcept;
       const status_c& play(move_c);
       board_hash_t hash() const noexcept;
 

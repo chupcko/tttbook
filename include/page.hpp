@@ -23,16 +23,16 @@ namespace tttbook
 
       page_c(void) noexcept
       {
-        init_page();
+        init();
       }
 
       page_c(const board_c& board_init) noexcept
       : board_c(board_init)
       {
-        init_page();
+        init();
       }
 
-      void init_page(void) noexcept;
+      void init(void) noexcept;
 
       friend std::ostream& operator<<(std::ostream&, const page_c&);
   };
