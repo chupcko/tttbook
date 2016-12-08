@@ -158,7 +158,7 @@ namespace tttbook
 
   move_c* solver_c::calculate_move(const board_c& board) const
   {
-    if(util_c::random_double(0.0, 1.0) < worst_gate)
+    if(util_c::random_double(0.0, 1.0) < worst_best_gate)
       return worst_move(board);
     else
       return best_move(board);

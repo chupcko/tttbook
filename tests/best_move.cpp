@@ -26,7 +26,7 @@ int main(void)
   solver_c solver;
   solver.set_best_speed_slow();
   solver.set_select_first();
-  solver.set_worst_gate(0.0);
+  solver.set_worst_best_gate(0.0);
 
   for(auto& test: tests)
   {

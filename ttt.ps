@@ -1,0 +1,187 @@
+%!PS-Adobe-3.0
+%%EndComments
+
+%%BeginProlog
+%%BeginResource: init_page
+
+/TTT_init_page
+{
+  << /PageSize [120 72 mul 25.4 div dup] /MediaColor (white) >> setpagedevice
+  72 25.4 div dup scale
+} def
+
+%%EndResource
+%%BeginResource: print_page
+
+/TTT_helper
+{
+  0.01 setlinewidth
+  0 0 0.7 setrgbcolor
+  0 2.5 120
+  {
+    /i exch def
+    newpath i 0 moveto i 120 lineto stroke
+    newpath 0 i moveto 120 i lineto stroke
+  } for
+  0.05 setlinewidth
+  0 0.6 0 setrgbcolor
+  0 5 120
+  {
+    /i exch def
+    newpath i 0 moveto i 120 lineto stroke
+    newpath 0 i moveto 120 i lineto stroke
+  } for
+  0.1 setlinewidth
+  0.5 0 0 setrgbcolor
+  0 10 120
+  {
+    /i exch def
+    newpath i 0 moveto i 120 lineto stroke
+    newpath 0 i moveto 120 i lineto stroke
+  } for
+} def
+
+/TTT_status
+{
+  5 dict begin
+    /status exch def
+    newpath 0 0 moveto status true charpath pathbbox
+    /ury exch def
+    /urx exch def
+    /lly exch def
+    /llx exch def
+    newpath 7.5 llx sub 112.5 ury sub moveto status show
+  end
+} def
+
+/TTT_page_number
+{
+  5 dict begin
+    /page_number exch def
+    newpath 0 0 moveto page_number true charpath pathbbox
+    /ury exch def
+    /urx exch def
+    /lly exch def
+    /llx exch def
+    newpath 112.5 urx sub 7.5 lly sub moveto page_number show
+  end
+} def
+
+/TTT_hash
+{
+  2 setlinewidth
+  0 setgray
+  newpath 47.5 22.5 moveto 47.5 97.5 lineto stroke
+  newpath 72.5 22.5 moveto 72.5 97.5 lineto stroke
+  newpath 22.5 47.4 moveto 97.5 47.5 lineto stroke
+  newpath 22.5 72.5 moveto 97.5 72.5 lineto stroke
+} def
+
+/TTT_find
+{
+  2 dict begin
+    /y exch def
+    /x exch def
+    35 x 25 mul add
+    85 y 25 mul sub
+  end
+} def
+
+/TTT_x
+{
+  gsave
+    TTT_find translate
+    2 setlinewidth
+    0 setgray
+    newpath -7.5 -7.5 moveto 7.5 7.5 lineto stroke
+    newpath -7.5 7.5 moveto 7.5 -7.5 lineto stroke
+  grestore
+} def
+
+/TTT_x_gray
+{
+  gsave
+    TTT_find translate
+    2 setlinewidth
+    0.5 setgray
+    newpath -7.5 -7.5 moveto 7.5 7.5 lineto stroke
+    newpath -7.5 7.5 moveto 7.5 -7.5 lineto stroke
+  grestore
+} def
+
+
+/TTT_o
+{
+  gsave
+    TTT_find translate
+    2 setlinewidth
+    0 setgray
+    newpath 0 0 7.5 0 360 arc stroke
+  grestore
+} def
+
+/TTT_o_gray
+{
+  gsave
+    TTT_find translate
+    2 setlinewidth
+    0.5 setgray
+    newpath 0 0 7.5 0 360 arc stroke
+  grestore
+} def
+
+/TTT_empty
+{
+  pop
+  pop
+} def
+
+/TTT_go_to
+{
+  1 dict begin
+    /page exch def
+    gsave
+      TTT_find translate
+      newpath 0 0 moveto page true charpath pathbbox
+      /ury exch def
+      /urx exch def
+      /lly exch def
+      /llx exch def
+      newpath llx urx add 2 div neg lly ury add 2 div neg moveto page show
+    grestore
+  end
+} def
+
+%%EndResource
+%%EndProlog
+
+%%BeginSetup
+
+/HelveticaBold findfont 5 scalefont setfont
+
+%%EndSetup
+
+%%Page: 3 5
+TTT_init_page
+(Marina & Cane) TTT_status
+(1) TTT_page_number
+TTT_hash
+0 0 TTT_x
+1 2 TTT_x
+2 2 TTT_o_gray
+1 1 (23) TTT_go_to
+TTT_helper
+showpage
+
+%%Page: 2 7
+TTT_init_page
+(Book win!) TTT_status
+(343) TTT_page_number
+TTT_hash
+0 0 TTT_x_gray
+1 2 TTT_o
+1 1 (983) TTT_go_to
+1 1 (983) TTT_go_to
+showpage
+
+%%EOF

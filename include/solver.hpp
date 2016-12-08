@@ -23,7 +23,7 @@ namespace tttbook
 
       best_speed_t best_speed;
       select_t select;
-      double worst_gate;
+      double worst_best_gate;
 
     private:
 
@@ -37,7 +37,7 @@ namespace tttbook
       {
         set_best_speed_fast();
         set_select_random();
-        set_worst_gate(0.0);
+        set_worst_best_gate(0.0);
       }
 
       void set_best_speed_fast(void) noexcept
@@ -65,15 +65,15 @@ namespace tttbook
         select = LAST;
       }
 
-      void set_worst_gate(double worst_gate_init) noexcept
+      void set_worst_best_gate(double worst_best_gate_init) noexcept
       {
-        worst_gate = worst_gate_init;
-        if(std::isnan(worst_gate))
-          worst_gate = 0.0;
-        else if(worst_gate < 0.0)
-          worst_gate = 0.0;
-        else if(worst_gate > 1.0)
-          worst_gate = 1.0;
+        worst_best_gate = worst_best_gate_init;
+        if(std::isnan(worst_best_gate))
+          worst_best_gate = 0.0;
+        else if(worst_best_gate < 0.0)
+          worst_best_gate = 0.0;
+        else if(worst_best_gate > 1.0)
+          worst_best_gate = 1.0;
       }
 
       move_c* calculate_move(const board_c&) const;
