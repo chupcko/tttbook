@@ -78,7 +78,7 @@ namespace tttbook
         return status == STATUS_NEW || status == STATUS_PLAY;
       };
 
-      friend std::ostream& operator<< (std::ostream&, const status_c&);
+      friend std::ostream& operator<<(std::ostream&, const status_c&);
   };
 
 }

@@ -16,7 +16,7 @@ namespace tttbook
     }
   };
 
-  std::ostream& operator<< (std::ostream& out, const player_c& self)
+  std::ostream& operator<<(std::ostream& out, const player_c& self)
   {
     switch(self.player)
     {
@@ -28,16 +28,6 @@ namespace tttbook
         break;
     }
     return out;
-  }
-
-  bool operator== (const player_c& self, const player_c& other)
-  {
-    return self.player == other.player;
-  }
-
-  bool operator!= (const player_c& self, const player_c& other)
-  {
-    return !(self == other);
   }
 
 }

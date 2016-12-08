@@ -9,6 +9,7 @@
 #include <random>
 #include <vector>
 
+#include "util.hpp"
 #include "player.hpp"
 #include "field.hpp"
 #include "move.hpp"

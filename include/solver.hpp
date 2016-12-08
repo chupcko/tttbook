@@ -27,7 +27,6 @@ namespace tttbook
     private:
 
       int rate(const board_c&) const noexcept;
-      static int random(int, int) noexcept;
 
     public:
 

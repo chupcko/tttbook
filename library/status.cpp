@@ -3,7 +3,7 @@
 namespace tttbook
 {
 
-  std::ostream& operator<< (std::ostream& out, const status_c& self)
+  std::ostream& operator<<(std::ostream& out, const status_c& self)
   {
     switch(self.status)
     {

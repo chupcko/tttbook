@@ -87,7 +87,7 @@ namespace tttbook
     player = board_init.player;
   }
 
-  void board_c::init(void) noexcept
+  void board_c::init_board(void) noexcept
   {
     status.set_new();
     for(move_coordinate_t x = 0; x < size; x++)
@@ -128,7 +128,7 @@ namespace tttbook
     return result;
   }
 
-  std::ostream& operator<< (std::ostream& out, const board_c& self)
+  std::ostream& operator<<(std::ostream& out, const board_c& self)
   {
     out << "Status: " << self.status << std::endl;
     if(self.status.is_playable())
@@ -146,20 +146,6 @@ namespace tttbook
     }
     out << std::endl;
     return out;
-  }
-
-  bool operator== (const board_c& self, const board_c& other)
-  {
-    for(move_coordinate_t x = 0; x < board_c::size; x++)
-      for(move_coordinate_t y = 0; y < board_c::size; y++)
-        if(self.fields[x][y] != other.fields[x][y])
-          return false;
-    return self.player == other.player;
-  }
-
-  bool operator!= (const board_c& self, const board_c& other)
-  {
-    return !(self == other);
   }
 
 }

@@ -12,6 +12,7 @@ namespace tttbook
     pages.push_back(new page_c(board));
     page_index_t page_index = (page_index_t)(pages.size()-1);
     pages[page_index]->page_index = page_index;
+    pages[page_index]->shuffle_index = page_index;
     shortcuts[board_hash] = page_index;
     unpublished_pages.push_back(page_index);
     return page_index;
@@ -25,6 +26,7 @@ namespace tttbook
         board_c board;
         board.play(move_c(x, y));
         page_index_t page_index = find_page(board);
+        pages[page_index]->do_play = false;
       }
   }
 
@@ -32,6 +34,16 @@ namespace tttbook
   {
     board_c board;
     page_index_t page_index = find_page(board);
+    pages[page_index]->do_play = false;
+  }
+
+  void book_c::clear(void) noexcept
+  {
+    for(auto& page: pages)
+      delete page;
+    pages.clear();
+    shortcuts.clear();
+    unpublished_pages.clear();
   }
 
   void book_c::fill(void) noexcept
@@ -51,11 +63,12 @@ namespace tttbook
       if
       (
         pages[page_index]->status.is_playable() &&
-        !pages[page_index]->status.is_new()
+        pages[page_index]->do_play
       )
       {
         move_c* move = best_move((board_c)*pages[page_index]);
         pages[page_index]->play(*move);
+        pages[page_index]->last_move = *move;
         delete move;
       }
       if(pages[page_index]->status.is_playable())
@@ -70,7 +83,12 @@ namespace tttbook
     }
   }
 
-  std::ostream& operator<< (std::ostream& out, const book_c& self)
+  void book_c::shuffle(void) noexcept
+  {
+    /*#*/
+  }
+
+  std::ostream& operator<<(std::ostream& out, const book_c& self)
   {
     page_index_t page_index = 0;
     for(auto& page: self.pages)

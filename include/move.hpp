@@ -30,7 +30,7 @@ namespace tttbook
         y = move_init->y;
       }
 
-      friend std::ostream& operator<< (std::ostream&, const move_c&);
+      friend std::ostream& operator<<(std::ostream&, const move_c&);
   };
 
 }

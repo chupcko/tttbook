@@ -37,9 +37,11 @@ namespace tttbook
         book_is_first = false;
       };
 
+      void clear(void) noexcept;
       void fill(void) noexcept;
+      void shuffle(void) noexcept;
 
-      friend std::ostream& operator<< (std::ostream&, const book_c&);
+      friend std::ostream& operator<<(std::ostream&, const book_c&);
   };
 
 }

@@ -67,14 +67,6 @@ namespace tttbook
     return -new_rate;
   }
 
-  int solver_c::random(int low, int high) noexcept
-  {
-    std::random_device device;
-    std::default_random_engine generator(device());
-    std::uniform_int_distribution<int> distribution(low, high);
-    return distribution(generator);
-  }
-
   move_c* solver_c::best_move(const board_c& board) const
   {
     if(!board.status.is_playable())
@@ -123,7 +115,7 @@ namespace tttbook
         move = new move_c(&moves[0]);
         break;
       case RANDOM:
-        move = new move_c(&moves[random(0, moves_number-1)]);
+        move = new move_c(&moves[util_c::random_int(0, moves_number-1)]);
         break;
       case LAST:
         move = new move_c(&moves[moves_number-1]);

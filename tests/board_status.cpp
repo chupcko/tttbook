@@ -38,7 +38,7 @@ int main(void)
 
   for(auto& test: tests)
   {
-    board.init();
+    board.init_board();
     try
     {
       for(auto& move: test.moves)

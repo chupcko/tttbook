@@ -42,11 +42,8 @@ namespace tttbook
 
       void next(void) noexcept;
 
-      friend std::ostream& operator<< (std::ostream&, const player_c&);
+      friend std::ostream& operator<<(std::ostream&, const player_c&);
   };
-
-  bool operator== (const player_c&, const player_c&);
-  bool operator!= (const player_c&, const player_c&);
 
 }
 

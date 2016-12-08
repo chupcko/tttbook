@@ -15,23 +15,26 @@ namespace tttbook
 
       page_index_t go_to_indexes[board_c::size][board_c::size];
       page_index_t page_index;
+      page_index_t shuffle_index;
+      bool do_play;
+      move_c last_move;
 
     public:
 
       page_c(void) noexcept
       {
-        init_go_to_indexes();
+        init_page();
       }
 
       page_c(const board_c& board_init) noexcept
       : board_c(board_init)
       {
-        init_go_to_indexes();
+        init_page();
       }
 
-      void init_go_to_indexes(void) noexcept;
+      void init_page(void) noexcept;
 
-      friend std::ostream& operator<< (std::ostream&, const page_c&);
+      friend std::ostream& operator<<(std::ostream&, const page_c&);
   };
 
 }

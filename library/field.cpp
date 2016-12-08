@@ -11,7 +11,7 @@ namespace tttbook
       set_o();
   }
 
-  std::ostream& operator<< (std::ostream& out, const field_c& self)
+  std::ostream& operator<<(std::ostream& out, const field_c& self)
   {
     switch(self.field)
     {
@@ -26,16 +26,6 @@ namespace tttbook
         break;
     }
     return out;
-  }
-
-  bool operator== (const field_c& self, const field_c& other)
-  {
-    return self.field == other.field;
-  }
-
-  bool operator!= (const field_c& self, const field_c& other)
-  {
-    return !(self == other);
   }
 
 }

@@ -58,11 +58,8 @@ namespace tttbook
 
       void fill(player_c) noexcept;
 
-      friend std::ostream& operator<< (std::ostream&, const field_c&);
+      friend std::ostream& operator<<(std::ostream&, const field_c&);
   };
-
-  bool operator== (const field_c&, const field_c&);
-  bool operator!= (const field_c&, const field_c&);
 
 }
 
