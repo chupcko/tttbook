@@ -14,6 +14,14 @@ namespace tttbook
         std::uniform_int_distribution<int> distribution(low, high);
         return distribution(generator);
       };
+
+      static double random_double(int low, int high)
+      {
+        static std::random_device device;
+        static std::default_random_engine generator(device());
+        std::uniform_real_distribution<double> distribution(low, high);
+        return distribution(generator);
+      };
   };
 
 }

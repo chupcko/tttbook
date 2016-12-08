@@ -1,6 +1,7 @@
 #ifndef __TTTBOOK__HPP__
 #define __TTTBOOK__HPP__
 
+#include <cmath>
 #include <deque>
 #include <exception>
 #include <iomanip>

@@ -12,8 +12,9 @@ int main(void)
   solver_c solver;
   int input;
 
-  solver.set_fast_speed();
-  solver.set_random_select();
+  solver.set_best_speed_fast();
+  solver.set_select_random();
+  solver.set_worst_gate(0.5);
   for(;;)
   {
     cout << board << endl;
@@ -23,7 +24,7 @@ int main(void)
     cin >> input;
     if(input <= 0)
     {
-      move_c* move = solver.best_move(board);
+      move_c* move = solver.calculate_move(board);
       board.play(*move);
       delete move;
     }

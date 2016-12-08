@@ -24,8 +24,9 @@ int main(void)
   };
   board_c board;
   solver_c solver;
-  solver.set_slow_speed();
-  solver.set_first_select();
+  solver.set_best_speed_slow();
+  solver.set_select_first();
+  solver.set_worst_gate(0.0);
 
   for(auto& test: tests)
   {
@@ -35,7 +36,7 @@ int main(void)
       for(auto& move: test.moves)
         board.play(move);
       cout << test.number << ' ' << board << endl;
-      move_c* move = solver.best_move(board);
+      move_c* move = solver.calculate_move(board);
       cout << *move << endl;
       board.play(*move);
       cout << board << endl;

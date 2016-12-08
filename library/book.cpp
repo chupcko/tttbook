@@ -68,7 +68,7 @@ namespace tttbook
         pages[page_index]->do_play
       )
       {
-        move_c* move = best_move((board_c)*pages[page_index]);
+        move_c* move = calculate_move((board_c)*pages[page_index]);
         pages[page_index]->play(*move);
         pages[page_index]->last_move = *move;
         delete move;

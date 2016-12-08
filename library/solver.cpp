@@ -7,9 +7,9 @@ namespace tttbook
   {
     if(board.status.is_draw())
       return 0;
-    switch(speed)
+    switch(best_speed)
     {
-      case FAST:
+      case BEST_FAST:
         switch(board.player.player)
         {
           case player_c::PLAYER_X:
@@ -26,7 +26,7 @@ namespace tttbook
             break;
         }
         break;
-      case SLOW:
+      case BEST_SLOW:
         switch(board.player.player)
         {
           case player_c::PLAYER_X:
@@ -49,15 +49,15 @@ namespace tttbook
     board_copy.play(*move);
     delete move;
     int new_rate = rate(board_copy);
-    switch(speed)
+    switch(best_speed)
     {
-      case FAST:
+      case BEST_FAST:
         if(new_rate > 0)
           new_rate--;
         else if(new_rate < 0)
           new_rate++;
         break;
-      case SLOW:
+      case BEST_SLOW:
         if(new_rate > 0)
           new_rate++;
         else if(new_rate < 0)
@@ -111,17 +111,57 @@ namespace tttbook
     move_c* move;
     switch(select)
     {
-      case FIRST:
-        move = new move_c(&moves[0]);
-        break;
       case RANDOM:
         move = new move_c(&moves[util_c::random_int(0, moves_number-1)]);
+        break;
+      case FIRST:
+        move = new move_c(&moves[0]);
         break;
       case LAST:
         move = new move_c(&moves[moves_number-1]);
         break;
     }
     return move;
+  }
+
+  move_c* solver_c::worst_move(const board_c& board) const
+  {
+    if(!board.status.is_playable())
+      throw error_not_playable();
+
+    move_c moves[board.size*board.size];
+    int moves_number = 0;
+    for(move_coordinate_t x = 0; x < board.size; x++)
+      for(move_coordinate_t y = 0; y < board.size; y++)
+        if(board.fields[x][y].is_empty())
+        {
+          moves[moves_number].x = x;
+          moves[moves_number].y = y;
+          moves_number++;
+        }
+
+    move_c* move;
+    switch(select)
+    {
+      case RANDOM:
+        move = new move_c(&moves[util_c::random_int(0, moves_number-1)]);
+        break;
+      case FIRST:
+        move = new move_c(&moves[0]);
+        break;
+      case LAST:
+        move = new move_c(&moves[moves_number-1]);
+        break;
+    }
+    return move;
+  }
+
+  move_c* solver_c::calculate_move(const board_c& board) const
+  {
+    if(util_c::random_double(0.0, 1.0) < worst_gate)
+      return worst_move(board);
+    else
+      return best_move(board);
   }
 
 }

@@ -1,6 +1,5 @@
--dodaj pored best move jos nekoliko tipa random move
--dodaj procenat greske, da kada pravi knjigu gresi
 -vidi init_board i init_page
--napisi program sa switchevima
 -napravi postscript templejte
+-napisi program sa switchevima
 -napravi make deo koji pravi pdf ili sve primere
+-na kraju knjige ispisi statistiku
