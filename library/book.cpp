@@ -282,9 +282,9 @@ namespace tttbook
         "TTT_init_page (" << pages[page_index]->page_index+page_offset << ") TTT_page_number (";
       if(pages[page_index]->status.is_playable())
         if(book_is_first)
-          out << "Play as O:";
+          out << "Play as O, go to page:";
         else
-          out << "Play as X:";
+          out << "Play as X, go to page:";
       else if(pages[page_index]->status.is_draw())
         out << "Draw!";
       else if(pages[page_index]->status.is_win_x())

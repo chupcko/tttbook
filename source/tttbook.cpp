@@ -10,12 +10,12 @@ int main(void)
 {
   book_c book;
   book.set_best_speed_fast();
-  book.set_select_random();
-  book.set_worst_best_gate(0.3);
-  book.set_book_as_first();
+  book.set_select_first();
+  book.set_worst_best_gate(0.0);
+  book.set_book_as_second();
 
   book.fill();
-  book.shuffle(5);
+//  book.shuffle(5);
 
   book.write_ps(cout);
   return 0;
