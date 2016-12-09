@@ -7,7 +7,7 @@ namespace tttbook
   #define MAKE_ERROR(name, text)                 \
   class name : public std::exception             \
   {                                              \
-    virtual const char* what(void) const throw() \
+    virtual const char* what() const throw() \
     {                                            \
       return text;                               \
     }                                            \

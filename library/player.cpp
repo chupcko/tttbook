@@ -3,7 +3,7 @@
 namespace tttbook
 {
 
-  void player_c::next(void) noexcept
+  void player_c::next() noexcept
   {
     switch(player)
     {

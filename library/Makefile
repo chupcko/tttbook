@@ -24,5 +24,6 @@ clean:
 $(TARGET): $(OBJECTS)
 	$(ARCHIVER) $(ARCHIVER_FLAGS) $@ $^
 
+.SUFFIXES:
 %.o: %.cpp $(INCLUDES)
 	$(COMPILER) $(COMPILER_FLAGS) -c -o $@ $<

@@ -16,32 +16,32 @@ namespace tttbook
 
       player_t player;
 
-      player_c(void) noexcept
+      player_c() noexcept
       {
         set_x();
-      };
+      }
 
-      void set_x(void) noexcept
+      void set_x() noexcept
       {
         player = PLAYER_X;
-      };
+      }
 
-      void set_o(void) noexcept
+      void set_o() noexcept
       {
         player = PLAYER_O;
-      };
+      }
 
-      bool is_x(void) const noexcept
+      bool is_x() const noexcept
       {
         return player == PLAYER_X;
-      };
+      }
 
-      bool is_o(void) const noexcept
+      bool is_o() const noexcept
       {
         return player == PLAYER_O;
-      };
+      }
 
-      void next(void) noexcept;
+      void next() noexcept;
 
       friend std::ostream& operator<<(std::ostream&, const player_c&);
   };

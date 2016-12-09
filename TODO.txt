@@ -1,6 +1,7 @@
--last move nema smisla, moze se doci na vise nacina u istu poziciju
--kada ubaci page, treba odma da izracuna potez i tako sacuva za hash
+-last move switch
 -sredi ps, optimizuj
+
+-napravi iterator za fields
 
 -napisi program sa switchevima
 -napravi make deo koji pravi pdf ili sve primere

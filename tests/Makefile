@@ -21,5 +21,6 @@ debug: $(TARGETS)
 clean:
 	rm -rf $(TARGETS)
 
+.SUFFIXES:
 %.t: %.cpp $(INCLUDES) $(LIBRARY)
 	$(COMPILER) $(COMPILER_FLAGS) -o $@ $< $(LIBRARY)

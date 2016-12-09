@@ -33,34 +33,34 @@ namespace tttbook
 
     public:
 
-      solver_c(void) noexcept
+      solver_c() noexcept
       {
         set_best_speed_fast();
         set_select_random();
         set_worst_best_gate(0.0);
       }
 
-      void set_best_speed_fast(void) noexcept
+      void set_best_speed_fast() noexcept
       {
         best_speed = BEST_FAST;
       }
 
-      void set_best_speed_slow(void) noexcept
+      void set_best_speed_slow() noexcept
       {
         best_speed = BEST_SLOW;
       }
 
-      void set_select_random(void) noexcept
+      void set_select_random() noexcept
       {
         select = RANDOM;
       }
 
-      void set_select_first(void) noexcept
+      void set_select_first() noexcept
       {
         select = FIRST;
       }
 
-      void set_select_last(void) noexcept
+      void set_select_last() noexcept
       {
         select = LAST;
       }

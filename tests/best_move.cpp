@@ -13,7 +13,7 @@ typedef struct test_t
   vector<move_c> moves;
 } test_t;
 
-int main(void)
+int main()
 {
   int test_number = 0;
   vector<test_t> tests =

@@ -22,7 +22,5 @@ clean:
 	rm -rf $(TARGET)
 
 .SUFFIXES:
-SUFFIXES :=
-
 %: %.cpp $(INCLUDES) $(LIBRARY)
 	$(COMPILER) $(COMPILER_FLAGS) -o $@ $< $(LIBRARY)

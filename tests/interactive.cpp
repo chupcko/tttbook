@@ -6,15 +6,15 @@
 using namespace std;
 using namespace tttbook;
 
-int main(void)
+int main()
 {
   board_c board;
   solver_c solver;
   int input;
 
-  solver.set_best_speed_fast();
-  solver.set_select_random();
-  solver.set_worst_best_gate(0.5);
+  solver.set_best_speed_slow();
+  solver.set_select_first();
+  solver.set_worst_best_gate(1.0);
   for(;;)
   {
     cout << board << endl;

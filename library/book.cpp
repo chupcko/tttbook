@@ -3,7 +3,7 @@
 namespace tttbook
 {
 
-  page_index_t book_c::find_page(board_c& board) noexcept
+  page_index_t book_c::find_page(board_c& board, bool do_play) noexcept
   {
     board_hash_t board_hash = board.hash();
     if(shortcuts.count(board_hash) > 0)
@@ -11,6 +11,20 @@ namespace tttbook
 
     pages.push_back(new page_c(board));
     page_index_t page_index = (page_index_t)(pages.size()-1);
+
+    if
+    (
+      do_play &&
+      pages[page_index]->status.is_playable()
+    )
+    {
+      move_c* move = calculate_move((board_c)*pages[page_index]);
+      pages[page_index]->play(*move);
+      pages[page_index]->last_move_is_set = true;
+      pages[page_index]->last_move = *move;
+      delete move;
+    }
+
     pages[page_index]->page_index = page_index;
     pages[page_index]->shuffle_index = page_index;
     shortcuts[board_hash] = page_index;
@@ -18,28 +32,25 @@ namespace tttbook
     return page_index;
   }
 
-  void book_c::fill_init_book_as_first(void) noexcept
+  void book_c::fill_init_book_as_first() noexcept
   {
     for(move_coordinate_t y = 0; y < board_c::size; y++)
       for(move_coordinate_t x = 0; x < board_c::size; x++)
       {
         board_c board;
         board.play(move_c(x, y));
-        page_index_t page_index = find_page(board);
-        pages[page_index]->do_play = false;
+        page_index_t page_index = find_page(board, false);
         pages[page_index]->last_move_is_set = true;
         pages[page_index]->last_move.set(x, y);
       }
   }
 
-  void book_c::fill_init_book_as_second(void) noexcept
+  void book_c::fill_init_book_as_second() noexcept
   {
-    board_c board;
-    page_index_t page_index = find_page(board);
-    pages[page_index]->do_play = false;
+    page_index_t page_index = find_page(*new board_c, false);
   }
 
-  void book_c::clear(void) noexcept
+  void book_c::clear() noexcept
   {
     for(auto& page: pages)
       delete page;
@@ -48,7 +59,7 @@ namespace tttbook
     unpublished_pages.clear();
   }
 
-  void book_c::fill(void) noexcept
+  void book_c::fill() noexcept
   {
     page_index_t page_index;
     page_index_t go_to_page_index;
@@ -63,19 +74,6 @@ namespace tttbook
     {
       page_index = unpublished_pages.front();
       unpublished_pages.pop_front();
-
-      if
-      (
-        pages[page_index]->status.is_playable() &&
-        pages[page_index]->do_play
-      )
-      {
-        move_c* move = calculate_move((board_c)*pages[page_index]);
-        pages[page_index]->play(*move);
-        pages[page_index]->last_move_is_set = true;
-        pages[page_index]->last_move = *move;
-        delete move;
-      }
       if(pages[page_index]->status.is_playable())
         for(move_coordinate_t y = 0; y < pages[page_index]->size; y++)
           for(move_coordinate_t x = 0; x < pages[page_index]->size; x++)
@@ -83,7 +81,7 @@ namespace tttbook
             {
               board_c board_copy = board_c((board_c)*pages[page_index]);
               board_copy.play(move_c(x, y));
-              pages[page_index]->go_to_indexes[x][y] = find_page(board_copy);
+              pages[page_index]->go_to_indexes[x][y] = find_page(board_copy, true);
             }
     }
   }
@@ -313,6 +311,7 @@ namespace tttbook
           else if(pages[page_index]->fields[x][y].is_x())
             if
             (
+              showing_last_move &&
               pages[page_index]->last_move_is_set &&
               pages[page_index]->last_move.is(x, y)
             )
@@ -322,6 +321,7 @@ namespace tttbook
           else if(pages[page_index]->fields[x][y].is_o())
             if
             (
+              showing_last_move &&
               pages[page_index]->last_move_is_set &&
               pages[page_index]->last_move.is(x, y)
             )
@@ -340,7 +340,9 @@ namespace tttbook
 
   std::ostream& operator<<(std::ostream& out, const book_c& self)
   {
-    out <<
+    out << std::boolalpha <<
+      "Book is first: " << self.book_is_first << std::endl <<
+      "Showing last move: " << self.showing_last_move << std::endl <<
       "Shuffle begin index: " << self.shuffle_begin_index << std::endl <<
       std::endl;
     page_index_t page_index = 0;

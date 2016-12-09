@@ -17,40 +17,40 @@ namespace tttbook
 
       field_t field;
 
-      field_c(void) noexcept
+      field_c() noexcept
       {
         set_empty();
-      };
+      }
 
-      void set_empty(void) noexcept
+      void set_empty() noexcept
       {
         field = FIELD_EMPTY;
-      };
+      }
 
-      void set_x(void) noexcept
+      void set_x() noexcept
       {
         field = FIELD_X;
-      };
+      }
 
-      void set_o(void) noexcept
+      void set_o() noexcept
       {
         field = FIELD_O;
-      };
+      }
 
-      bool is_empty(void) const noexcept
+      bool is_empty() const noexcept
       {
         return field == FIELD_EMPTY;
-      };
+      }
 
-      bool is_x(void) const noexcept
+      bool is_x() const noexcept
       {
         return field == FIELD_X;
-      };
+      }
 
-      bool is_o(void) const noexcept
+      bool is_o() const noexcept
       {
         return field == FIELD_O;
-      };
+      }
 
       bool is(field_t value) const noexcept
       {

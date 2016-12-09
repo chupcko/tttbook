@@ -16,13 +16,12 @@ namespace tttbook
       page_index_t go_to_indexes[board_c::size][board_c::size];
       page_index_t page_index;
       page_index_t shuffle_index;
-      bool do_play;
       bool last_move_is_set;
       move_c last_move;
 
     public:
 
-      page_c(void) noexcept
+      page_c() noexcept
       {
         init();
       }
@@ -33,7 +32,7 @@ namespace tttbook
         init();
       }
 
-      void init(void) noexcept;
+      void init() noexcept;
 
       friend std::ostream& operator<<(std::ostream&, const page_c&);
   };

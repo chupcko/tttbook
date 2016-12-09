@@ -14,23 +14,23 @@ namespace tttbook
 
       status_c status;
       field_c fields[size][size];
-      player_c player;
+      player_c next_player;
 
     private:
 
-      bool recalculate_status_is_draw(void) const noexcept;
+      bool recalculate_status_is_draw() const noexcept;
       bool recalculate_status_is_win(field_c::field_t) const noexcept;
-      void recalculate_status(void) noexcept;
+      void recalculate_status() noexcept;
 
     public:
 
-      board_c(void) noexcept
+      board_c() noexcept
       {
         init();
-      };
+      }
 
       board_c(const board_c&) noexcept;
-      void init(void) noexcept;
+      void init() noexcept;
       const status_c& play(move_c);
       board_hash_t hash() const noexcept;
 

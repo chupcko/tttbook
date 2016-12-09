@@ -10,7 +10,7 @@ namespace tttbook
     switch(best_speed)
     {
       case BEST_FAST:
-        switch(board.player.player)
+        switch(board.next_player.player)
         {
           case player_c::PLAYER_X:
             if(board.status.is_win_x())
@@ -27,7 +27,7 @@ namespace tttbook
         }
         break;
       case BEST_SLOW:
-        switch(board.player.player)
+        switch(board.next_player.player)
         {
           case player_c::PLAYER_X:
             if(board.status.is_win_x())
@@ -72,8 +72,8 @@ namespace tttbook
     if(!board.status.is_playable())
       throw error_not_playable();
     int scores[board.size][board.size];
-    for(move_coordinate_t x = 0; x < board.size; x++)
-      for(move_coordinate_t y = 0; y < board.size; y++)
+    for(move_coordinate_t y = 0; y < board.size; y++)
+      for(move_coordinate_t x = 0; x < board.size; x++)
         if(board.fields[x][y].is_empty())
         {
           board_c board_copy(board);
@@ -83,8 +83,8 @@ namespace tttbook
 
     move_c moves[board.size*board.size];
     int moves_number = 0;
-    for(move_coordinate_t x = 0; x < board.size; x++)
-      for(move_coordinate_t y = 0; y < board.size; y++)
+    for(move_coordinate_t y = 0; y < board.size; y++)
+      for(move_coordinate_t x = 0; x < board.size; x++)
         if(board.fields[x][y].is_empty())
           if(moves_number == 0)
           {
@@ -128,8 +128,8 @@ namespace tttbook
 
     move_c moves[board.size*board.size];
     int moves_number = 0;
-    for(move_coordinate_t x = 0; x < board.size; x++)
-      for(move_coordinate_t y = 0; y < board.size; y++)
+    for(move_coordinate_t y = 0; y < board.size; y++)
+      for(move_coordinate_t x = 0; x < board.size; x++)
         if(board.fields[x][y].is_empty())
         {
           moves[moves_number].set(x, y);
