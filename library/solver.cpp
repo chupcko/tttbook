@@ -88,22 +88,19 @@ namespace tttbook
         if(board.fields[x][y].is_empty())
           if(moves_number == 0)
           {
-            moves[0].x = x;
-            moves[0].y = y;
+            moves[0].set(x, y);
             moves_number = 1;
           }
           else
           {
             if(scores[x][y] > scores[moves[0].x][moves[0].y])
             {
-              moves[0].x = x;
-              moves[0].y = y;
+              moves[0].set(x, y);
               moves_number = 1;
             }
             else if(scores[x][y] == scores[moves[0].x][moves[0].y])
             {
-              moves[moves_number].x = x;
-              moves[moves_number].y = y;
+              moves[moves_number].set(x, y);
               moves_number++;
             }
           }
@@ -112,13 +109,13 @@ namespace tttbook
     switch(select)
     {
       case RANDOM:
-        move = new move_c(&moves[util_c::random_int(0, moves_number-1)]);
+        move = new move_c(moves[util_c::random_int(0, moves_number-1)]);
         break;
       case FIRST:
-        move = new move_c(&moves[0]);
+        move = new move_c(moves[0]);
         break;
       case LAST:
-        move = new move_c(&moves[moves_number-1]);
+        move = new move_c(moves[moves_number-1]);
         break;
     }
     return move;
@@ -135,8 +132,7 @@ namespace tttbook
       for(move_coordinate_t y = 0; y < board.size; y++)
         if(board.fields[x][y].is_empty())
         {
-          moves[moves_number].x = x;
-          moves[moves_number].y = y;
+          moves[moves_number].set(x, y);
           moves_number++;
         }
 
@@ -144,13 +140,13 @@ namespace tttbook
     switch(select)
     {
       case RANDOM:
-        move = new move_c(&moves[util_c::random_int(0, moves_number-1)]);
+        move = new move_c(moves[util_c::random_int(0, moves_number-1)]);
         break;
       case FIRST:
-        move = new move_c(&moves[0]);
+        move = new move_c(moves[0]);
         break;
       case LAST:
-        move = new move_c(&moves[moves_number-1]);
+        move = new move_c(moves[moves_number-1]);
         break;
     }
     return move;

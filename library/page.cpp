@@ -11,6 +11,7 @@ namespace tttbook
     page_index = null_page_index;
     shuffle_index = null_page_index;
     do_play = true;
+    last_move_is_set = false;
   }
 
   std::ostream& operator<<(std::ostream& out, const page_c& self)
@@ -29,11 +30,12 @@ namespace tttbook
         out << ' ' << std::setw(LENGTH) << self.go_to_indexes[x][y];
       }
     }
-    out <<
+    out << std::boolalpha <<
       std::endl <<
       "Page index: " << self.page_index << std::endl <<
       "Shuffle index: " << self.shuffle_index << std::endl <<
-      "Do play: " << std::boolalpha << self.do_play << std::endl <<
+      "Do play: " << self.do_play << std::endl <<
+      "Last move is set: " << self.last_move_is_set << std::endl <<
       "Last move: " << self.last_move << std::endl;
 
     return out;

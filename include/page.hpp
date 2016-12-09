@@ -17,6 +17,7 @@ namespace tttbook
       page_index_t page_index;
       page_index_t shuffle_index;
       bool do_play;
+      bool last_move_is_set;
       move_c last_move;
 
     public:

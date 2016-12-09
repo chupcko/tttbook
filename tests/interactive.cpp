@@ -31,7 +31,7 @@ int main(void)
     else if(input <= 9)
     {
       input--;
-      board.play(new move_c(input%board_c::size, input/board_c::size));
+      board.play(move_c(input%board_c::size, input/board_c::size));
     }
   }
   return 0;
