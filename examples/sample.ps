@@ -6,8 +6,50 @@
 
 /TTT_init_page
 {
-  << /PageSize [120 72 mul 25.4 div dup] /MediaColor (white) >> setpagedevice
+  << /PageSize [TTT_page_in_mm 72 mul 25.4 div dup] /MediaColor (white) >> setpagedevice
   72 25.4 div dup scale
+  TTT_watermark
+  gsave
+    TTT_footer_font_name findfont TTT_footer_font_size scalefont setfont
+    TTT_footer_gray setgray
+    newpath 7.5 7.5 moveto TTT_footer_text show
+  grestore
+} def
+
+%%EndResource
+%%BeginResource: TTT_watermark
+
+/TTT_watermark
+{
+  4 dict begin
+    gsave
+      TTT_page_in_mm 2 div TTT_page_in_mm 2 div translate
+      45 rotate
+      /HelveticaBold findfont 25 scalefont setfont
+      0.95 setgray
+      newpath 0 0 moveto (CHUPCKO) true charpath pathbbox
+      /ury exch def
+      /urx exch def
+      /lly exch def
+      /llx exch def
+      newpath llx urx add 2 div neg lly ury add 2 div neg moveto (CHUPCKO) show
+    grestore
+  end
+} def
+
+%%EndResource
+%%BeginResource: TTT_helper
+
+/TTT_helper
+{
+  0.01 setlinewidth
+  0 0 0.75 setrgbcolor
+  0 2.5 TTT_page_in_mm
+  {
+    /i exch def
+    newpath i 0 moveto i TTT_page_in_mm lineto stroke
+    newpath 0 i moveto TTT_page_in_mm i lineto stroke
+  } for
 } def
 
 %%EndResource
@@ -25,7 +67,7 @@
       /urx exch def
       /lly exch def
       /llx exch def
-      newpath 112.5 urx sub 7.5 lly sub moveto page_number show
+      newpath 112.5 urx sub 7.5 moveto page_number show
     grestore
   end
 } def
@@ -167,6 +209,12 @@
 
 %%BeginSetup
 
+/TTT_page_in_mm 120 def
+
+/TTT_footer_text (TTTbook 1.3 by CHUPCKO) def
+/TTT_footer_font_name /Helvetica def
+/TTT_footer_font_size 2 def
+/TTT_footer_gray 0.5 def
 /TTT_page_number_font_name /HelveticaBold def
 /TTT_page_number_font_size 5 def
 /TTT_page_number_gray 0 def
@@ -196,6 +244,7 @@ TTT_hash
 1 2 TTT_x
 2 2 TTT_o_last
 1 1 (23) TTT_go_to
+TTT_helper
 showpage
 
 %%Page: 2 7

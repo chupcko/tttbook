@@ -1,5 +1,6 @@
 -last move switch realizuj
 -dodaj potpis u ps, waterprint
+-vidi sta je dict u ps
 
 -napisi program sa switchevima
 -napravi make deo koji pravi pdf ili sve primere
