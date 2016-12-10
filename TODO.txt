@@ -1,9 +1,7 @@
--last move switch
--sredi ps, optimizuj
-
--napravi iterator za fields
+-last move switch realizuj
+-dodaj potpis u ps, waterprint
 
 -napisi program sa switchevima
 -napravi make deo koji pravi pdf ili sve primere
 -na kraju knjige ispisi statistiku
--mozda one strane koje vode ka draw da odma prepoznas
+-dodaj naslovnu stranu

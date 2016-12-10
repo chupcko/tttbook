@@ -3,6 +3,17 @@
 namespace tttbook
 {
 
+  field_c& board_fields_iterator_c::operator*() const noexcept
+  {
+    return board->fields[position%board_c::size][position/board_c::size];
+  }
+
+  const board_fields_iterator_c& board_fields_iterator_c::operator++() noexcept
+  {
+    position++;
+    return *this;
+  }
+
   bool board_c::recalculate_status_is_draw() const noexcept
   {
     for(move_coordinate_t y = 0; y < size; y++)
@@ -98,13 +109,7 @@ namespace tttbook
 
   const status_c& board_c::play(move_c move)
   {
-    if
-    (
-      move.x < 0 ||
-      move.x >= size ||
-      move.y < 0 ||
-      move.y >= size
-    )
+    if(!move.is_valid(size))
       throw error_bad_index();
     if(!status.is_playable())
       throw error_not_playable();
