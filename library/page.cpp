@@ -1,6 +1,6 @@
 #include "tttbook.hpp"
 
-namespace tttbook
+namespace TTTbook
 {
 
   void page_c::init() noexcept

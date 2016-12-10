@@ -1,6 +1,6 @@
 #include "tttbook.hpp"
 
-namespace tttbook
+namespace TTTbook
 {
 
   std::ostream& operator<<(std::ostream& out, const move_c& self)

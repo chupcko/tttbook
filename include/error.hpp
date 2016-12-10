@@ -1,7 +1,7 @@
 #ifndef __ERROR__HPP__
 #define __ERROR__HPP__
 
-namespace tttbook
+namespace TTTbook
 {
 
   #define MAKE_ERROR(name, text)                 \

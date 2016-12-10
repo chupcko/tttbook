@@ -1,7 +1,7 @@
 #ifndef __STATUS__HPP__
 #define __STATUS__HPP__
 
-namespace tttbook
+namespace TTTbook
 {
 
   class status_c

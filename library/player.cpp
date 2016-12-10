@@ -1,6 +1,6 @@
 #include "tttbook.hpp"
 
-namespace tttbook
+namespace TTTbook
 {
 
   void player_c::next() noexcept

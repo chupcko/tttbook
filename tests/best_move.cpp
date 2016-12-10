@@ -5,7 +5,7 @@
 #include "tttbook.hpp"
 
 using namespace std;
-using namespace tttbook;
+using namespace TTTbook;
 
 typedef struct test_t
 {
@@ -28,12 +28,12 @@ int main()
   solver.set_select_first();
   solver.set_worst_best_gate(0.0);
 
-  for(auto& test: tests)
+  for(test_t& test: tests)
   {
     board.init();
     try
     {
-      for(auto& move: test.moves)
+      for(move_c& move: test.moves)
         board.play(move);
       cout << test.number << ' ' << board << endl;
       move_c* move = solver.calculate_move(board);

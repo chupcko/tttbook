@@ -1,7 +1,7 @@
 #ifndef __PAGE__HPP__
 #define __PAGE__HPP__
 
-namespace tttbook
+namespace TTTbook
 {
 
   typedef int page_index_t;

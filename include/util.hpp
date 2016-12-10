@@ -1,7 +1,7 @@
 #ifndef __UTIL__HPP__
 #define __UTIL__HPP__
 
-namespace tttbook
+namespace TTTbook
 {
 
   #define REPEAT_0(x)
@@ -36,6 +36,17 @@ namespace tttbook
         std::uniform_real_distribution<double> distribution(low, high);
         return distribution(generator);
       }
+
+      static void string_replace(std::string& subject, const std::string& search, const std::string& replace)
+      {
+        size_t position = subject.find(search, 0);
+        while(position != std::string::npos)
+        {
+          subject.replace(position, search.length(), replace);
+          position = subject.find(search, position+replace.length());
+        }
+      }
+
   };
 
 }

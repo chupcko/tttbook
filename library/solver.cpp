@@ -1,6 +1,6 @@
 #include "tttbook.hpp"
 
-namespace tttbook
+namespace TTTbook
 {
 
   int solver_c::rate(const board_c& board) const noexcept

@@ -1,7 +1,7 @@
 #ifndef __MOVE__HPP__
 #define __MOVE__HPP__
 
-namespace tttbook
+namespace TTTbook
 {
 
   typedef int move_coordinate_t;

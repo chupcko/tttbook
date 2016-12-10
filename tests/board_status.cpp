@@ -5,7 +5,7 @@
 #include "tttbook.hpp"
 
 using namespace std;
-using namespace tttbook;
+using namespace TTTbook;
 
 typedef struct test_t
 {
@@ -36,12 +36,12 @@ int main()
   };
   board_c board;
 
-  for(auto& test: tests)
+  for(test_t& test: tests)
   {
     board.init();
     try
     {
-      for(auto& move: test.moves)
+      for(move_c& move: test.moves)
         board.play(move);
       if
       (

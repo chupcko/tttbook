@@ -2,28 +2,15 @@
 %%EndComments
 
 %%BeginProlog
-%%BeginResource: TTT_init_page
+%%BeginResource: TTTbook_init_page
 
-/TTT_init_page
+/TTTbook_init_page
 {
-  << /PageSize [TTT_page_in_mm 72 mul 25.4 div dup] /MediaColor (white) >> setpagedevice
+  << /PageSize [TTTbook_page_in_mm 72 mul 25.4 div dup] /MediaColor (white) >> setpagedevice
   72 25.4 div dup scale
-  TTT_watermark
-  gsave
-    TTT_footer_font_name findfont TTT_footer_font_size scalefont setfont
-    TTT_footer_gray setgray
-    newpath 7.5 7.5 moveto TTT_footer_text show
-  grestore
-} def
-
-%%EndResource
-%%BeginResource: TTT_watermark
-
-/TTT_watermark
-{
   4 dict begin
     gsave
-      TTT_page_in_mm 2 div TTT_page_in_mm 2 div translate
+      TTTbook_page_in_mm 2 div TTTbook_page_in_mm 2 div translate
       45 rotate
       /HelveticaBold findfont 25 scalefont setfont
       0.95 setgray
@@ -35,33 +22,38 @@
       newpath llx urx add 2 div neg lly ury add 2 div neg moveto (CHUPCKO) show
     grestore
   end
+  gsave
+    TTTbook_footer_font_name findfont TTTbook_footer_font_size scalefont setfont
+    TTTbook_footer_gray setgray
+    newpath 7.5 7.5 moveto TTTbook_footer_text show
+  grestore
 } def
 
 %%EndResource
-%%BeginResource: TTT_helper
+%%BeginResource: TTTbook_helper
 
-/TTT_helper
+/TTTbook_helper
 {
   0.01 setlinewidth
   0 0 0.75 setrgbcolor
-  0 2.5 TTT_page_in_mm
+  0 2.5 TTTbook_page_in_mm
   {
     /i exch def
-    newpath i 0 moveto i TTT_page_in_mm lineto stroke
-    newpath 0 i moveto TTT_page_in_mm i lineto stroke
+    newpath i 0 moveto i TTTbook_page_in_mm lineto stroke
+    newpath 0 i moveto TTTbook_page_in_mm i lineto stroke
   } for
 } def
 
 %%EndResource
-%%BeginResource: TTT_page_number
+%%BeginResource: TTTbook_page_number
 
-/TTT_page_number
+/TTTbook_page_number
 {
   5 dict begin
     /page_number exch def
     gsave
-      TTT_page_number_font_name findfont TTT_page_number_font_size scalefont setfont
-      TTT_page_number_gray setgray
+      TTTbook_page_number_font_name findfont TTTbook_page_number_font_size scalefont setfont
+      TTTbook_page_number_gray setgray
       newpath 0 0 moveto page_number true charpath pathbbox
       /ury exch def
       /urx exch def
@@ -73,15 +65,15 @@
 } def
 
 %%EndResource
-%%BeginResource: TTT_status
+%%BeginResource: TTTbook_status
 
-/TTT_status
+/TTTbook_status
 {
   5 dict begin
     /status exch def
     gsave
-      TTT_status_font_name findfont TTT_status_font_size scalefont setfont
-      TTT_status_gray setgray
+      TTTbook_status_font_name findfont TTTbook_status_font_size scalefont setfont
+      TTTbook_status_gray setgray
       newpath 0 0 moveto status true charpath pathbbox
       /ury exch def
       /urx exch def
@@ -93,13 +85,13 @@
 } def
 
 %%EndResource
-%%BeginResource: TTT_hash
+%%BeginResource: TTTbook_hash
 
-/TTT_hash
+/TTTbook_hash
 {
   gsave
-    TTT_hash_line_width setlinewidth
-    TTT_hash_gray setgray
+    TTTbook_hash_line_width setlinewidth
+    TTTbook_hash_gray setgray
     newpath 47.5 22.5 moveto 47.5 97.5 lineto stroke
     newpath 72.5 22.5 moveto 72.5 97.5 lineto stroke
     newpath 22.5 47.4 moveto 97.5 47.5 lineto stroke
@@ -108,9 +100,9 @@
 } def
 
 %%EndResource
-%%BeginResource: TTT_find
+%%BeginResource: TTTbook_find
 
-/TTT_find
+/TTTbook_find
 {
   2 dict begin
     /y exch def
@@ -121,79 +113,79 @@
 } def
 
 %%EndResource
-%%BeginResource: TTT_empty
+%%BeginResource: TTTbook_empty
 
-/TTT_empty
+/TTTbook_empty
 {
   pop
   pop
 } def
 
 %%EndResource
-%%BeginResource: TTT_x
+%%BeginResource: TTTbook_x
 
-/TTT_x
+/TTTbook_x
 {
   gsave
-    TTT_find translate
-    TTT_x_line_width setlinewidth
-    TTT_x_gray setgray
+    TTTbook_find translate
+    TTTbook_x_line_width setlinewidth
+    TTTbook_x_gray setgray
     newpath -7.5 -7.5 moveto 7.5 7.5 lineto stroke
     newpath -7.5 7.5 moveto 7.5 -7.5 lineto stroke
   grestore
 } def
 
 %%EndResource
-%%BeginResource: TTT_x_gray
+%%BeginResource: TTTbook_x_gray
 
-/TTT_x_last
+/TTTbook_x_last
 {
   gsave
-    TTT_find translate
-    TTT_x_line_width setlinewidth
-    TTT_x_last_gray setgray
+    TTTbook_find translate
+    TTTbook_x_line_width setlinewidth
+    TTTbook_x_last_gray setgray
     newpath -7.5 -7.5 moveto 7.5 7.5 lineto stroke
     newpath -7.5 7.5 moveto 7.5 -7.5 lineto stroke
   grestore
 } def
 
 %%EndResource
-%%BeginResource: TTT_o
+%%BeginResource: TTTbook_o
 
-/TTT_o
+/TTTbook_o
 {
   gsave
-    TTT_find translate
-    TTT_o_line_width setlinewidth
-    TTT_o_gray setgray
+    TTTbook_find translate
+    TTTbook_o_line_width setlinewidth
+    TTTbook_o_gray setgray
     newpath 0 0 7.5 0 360 arc stroke
   grestore
 } def
 
 %%EndResource
-%%BeginResource: TTT_o_gray
+%%BeginResource: TTTbook_o_gray
 
-/TTT_o_last
+/TTTbook_o_last
 {
   gsave
-    TTT_find translate
-    TTT_o_line_width setlinewidth
-    TTT_o_last_gray setgray
+    TTTbook_find translate
+    TTTbook_o_line_width setlinewidth
+    TTTbook_o_last_gray setgray
     newpath 0 0 7.5 0 360 arc stroke
   grestore
 } def
 
 %%EndResource
-%%BeginResource: TTT_go_to
+%%BeginResource: TTTbook_go_to
 
-/TTT_go_to
+/TTTbook_go_to
 {
   1 dict begin
     /go_to exch def
     gsave
-      TTT_find translate
-      TTT_go_to_font_name findfont TTT_go_to_font_size scalefont setfont
-      TTT_go_to_gray setgray
+      TTTbook_find translate
+      TTTbook_go_to_font_name findfont TTTbook_go_to_font_size scalefont setfont
+      TTTbook_go_to_gray setgray
       newpath 0 0 moveto go_to true charpath pathbbox
       /ury exch def
       /urx exch def
@@ -209,53 +201,53 @@
 
 %%BeginSetup
 
-/TTT_page_in_mm 120 def
+/TTTbook_page_in_mm 120 def
 
-/TTT_footer_text (TTTbook 1.3 by CHUPCKO) def
-/TTT_footer_font_name /Helvetica def
-/TTT_footer_font_size 2 def
-/TTT_footer_gray 0.5 def
-/TTT_page_number_font_name /HelveticaBold def
-/TTT_page_number_font_size 5 def
-/TTT_page_number_gray 0 def
-/TTT_status_font_name /HelveticaBold def
-/TTT_status_font_size 5 def
-/TTT_status_gray 0 def
-/TTT_hash_line_width 2 def
-/TTT_hash_gray 0 def
-/TTT_x_line_width 2 def
-/TTT_x_gray 0 def
-/TTT_x_last_gray 0.5 def
-/TTT_o_line_width 2 def
-/TTT_o_gray 0 def
-/TTT_o_last_gray 0.5 def
-/TTT_go_to_font_name /HelveticaBold def
-/TTT_go_to_font_size 5 def
-/TTT_go_to_gray 0 def
+/TTTbook_footer_text (TTTbook $$VERSION $$DATE by CHUPCKO) def
+/TTTbook_footer_font_name /Helvetica def
+/TTTbook_footer_font_size 2 def
+/TTTbook_footer_gray 0.5 def
+/TTTbook_page_number_font_name /HelveticaBold def
+/TTTbook_page_number_font_size 5 def
+/TTTbook_page_number_gray 0 def
+/TTTbook_status_font_name /HelveticaBold def
+/TTTbook_status_font_size 5 def
+/TTTbook_status_gray 0 def
+/TTTbook_hash_line_width 2 def
+/TTTbook_hash_gray 0 def
+/TTTbook_x_line_width 2 def
+/TTTbook_x_gray 0 def
+/TTTbook_x_last_gray 0.5 def
+/TTTbook_o_line_width 2 def
+/TTTbook_o_gray 0 def
+/TTTbook_o_last_gray 0.5 def
+/TTTbook_go_to_font_name /HelveticaBold def
+/TTTbook_go_to_font_size 5 def
+/TTTbook_go_to_gray 0 def
 
 %%EndSetup
 
 %%Page: 3 5
-TTT_init_page
-(PPP) TTT_status
-(1) TTT_page_number
-TTT_hash
-0 0 TTT_x
-1 2 TTT_x
-2 2 TTT_o_last
-1 1 (23) TTT_go_to
-TTT_helper
+TTTbook_init_page
+(PPP) TTTbook_status
+(1) TTTbook_page_number
+TTTbook_hash
+0 0 TTTbook_x
+1 2 TTTbook_x
+2 2 TTTbook_o_last
+1 1 (23) TTTbook_go_to
+TTTbook_helper
 showpage
 
 %%Page: 2 7
-TTT_init_page
-(Book win!) TTT_status
-(343) TTT_page_number
-TTT_hash
-0 0 TTT_x_last
-1 2 TTT_o
-1 1 (983) TTT_go_to
-1 1 (983) TTT_go_to
+TTTbook_init_page
+(Book win!) TTTbook_status
+(343) TTTbook_page_number
+TTTbook_hash
+0 0 TTTbook_x_last
+1 2 TTTbook_o
+1 1 (983) TTTbook_go_to
+1 1 (983) TTTbook_go_to
 showpage
 
 %%EOF

@@ -1,7 +1,7 @@
 #ifndef __PLAYER__HPP__
 #define __PLAYER__HPP__
 
-namespace tttbook
+namespace TTTbook
 {
 
   class player_c

@@ -4,7 +4,7 @@
 #include "tttbook.hpp"
 
 using namespace std;
-using namespace tttbook;
+using namespace TTTbook;
 
 int main()
 {

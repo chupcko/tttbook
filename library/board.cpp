@@ -1,6 +1,6 @@
 #include "tttbook.hpp"
 
-namespace tttbook
+namespace TTTbook
 {
 
   field_c& board_fields_iterator_c::operator*() const noexcept
@@ -16,10 +16,9 @@ namespace tttbook
 
   bool board_c::recalculate_status_is_draw() const noexcept
   {
-    for(move_coordinate_t y = 0; y < size; y++)
-      for(move_coordinate_t x = 0; x < size; x++)
-        if(fields[x][y].is_empty())
-          return false;
+    for(field_c& field : *this)
+      if(field.is_empty())
+        return false;
     return true;
   }
 
@@ -101,9 +100,8 @@ namespace tttbook
   void board_c::init() noexcept
   {
     status.set_new();
-    for(move_coordinate_t y = 0; y < size; y++)
-      for(move_coordinate_t x = 0; x < size; x++)
-        fields[x][y].set_empty();
+    for(field_c& field : *this)
+      field.set_empty();
     next_player.set_x();
   }
 
@@ -124,12 +122,11 @@ namespace tttbook
   board_hash_t board_c::hash() const noexcept
   {
     board_hash_t result = 0;
-    for(move_coordinate_t y = 0; y < size; y++)
-      for(move_coordinate_t x = 0; x < size; x++)
-      {
-        result *= size;
-        result += fields[x][y].field;
-      }
+    for(field_c& field : *this)
+    {
+      result *= size;
+      result += field.field;
+    }
     return result;
   }
 

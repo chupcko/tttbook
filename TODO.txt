@@ -1,8 +1,10 @@
 -last move switch realizuj
--dodaj potpis u ps, waterprint
--vidi sta je dict u ps
+-kada knjiga igra prva da igra uvek iz jednog poteza
+-iterator da vraca move
 
 -napisi program sa switchevima
 -napravi make deo koji pravi pdf ili sve primere
 -na kraju knjige ispisi statistiku
 -dodaj naslovnu stranu
+-dodaj liniju kod pobednickih strana
+-sredi ps, paramtreizuj sta sve moze

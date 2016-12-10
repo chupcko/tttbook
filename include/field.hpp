@@ -1,7 +1,7 @@
 #ifndef __FIELD__HPP__
 #define __FIELD__HPP__
 
-namespace tttbook
+namespace TTTbook
 {
 
   class field_c

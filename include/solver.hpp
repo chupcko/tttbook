@@ -1,7 +1,7 @@
 #ifndef __SOLVER__HPP__
 #define __SOLVER__HPP__
 
-namespace tttbook
+namespace TTTbook
 {
 
   class solver_c

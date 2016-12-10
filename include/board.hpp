@@ -1,7 +1,7 @@
 #ifndef __BOARD__HPP__
 #define __BOARD__HPP__
 
-namespace tttbook
+namespace TTTbook
 {
 
   typedef long board_hash_t;
