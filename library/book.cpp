@@ -5,29 +5,43 @@ namespace TTTbook
 
   page_index_t book_c::find_page(board_c& board, bool do_play) noexcept
   {
-    board_hash_t board_hash = board.hash();
-    if(shortcuts.count(board_hash) > 0)
-      return shortcuts[board_hash];
+    board_c board_copy(board);
 
-    pages.push_back(new page_c(board));
-    page_index_t page_index = (page_index_t)(pages.size()-1);
+    board_hash_t board_hash_before_play = board_copy.hash();
+    if(shortcuts_before_play.count(board_hash_before_play) > 0)
+      return shortcuts_before_play[board_hash_before_play];
 
+    move_c* move = nullptr;
     if
     (
       do_play &&
-      pages[page_index]->status.is_playable()
+      board_copy.status.is_playable()
     )
     {
-      move_c* move = calculate_move((board_c)*pages[page_index]);
-      pages[page_index]->play(*move);
+      move = calculate_move(board_copy);
+      board_copy.play(*move);
+    }
+
+    board_hash_t board_hash_after_play = board_copy.hash();
+    if
+    (
+      !showing_last_move &&
+      shortcuts_after_play.count(board_hash_after_play) > 0
+    )
+      return shortcuts_after_play[board_hash_after_play];
+
+    pages.push_back(new page_c(board_copy));
+    page_index_t page_index = (page_index_t)(pages.size()-1);
+    pages[page_index]->page_index = page_index;
+    pages[page_index]->shuffle_index = page_index;
+    if(move != nullptr)
+    {
       pages[page_index]->last_move_is_set = true;
       pages[page_index]->last_move = *move;
       delete move;
     }
-
-    pages[page_index]->page_index = page_index;
-    pages[page_index]->shuffle_index = page_index;
-    shortcuts[board_hash] = page_index;
+    shortcuts_before_play[board_hash_before_play] = page_index;
+    shortcuts_after_play[board_hash_after_play] = page_index;
     unpublished_pages.push_back(page_index);
     return page_index;
   }
@@ -55,7 +69,8 @@ namespace TTTbook
     for(page_c* page: pages)
       delete page;
     pages.clear();
-    shortcuts.clear();
+    shortcuts_before_play.clear();
+    shortcuts_after_play.clear();
     unpublished_pages.clear();
     shuffle_begin_index = page_c::null_page_index;
   }

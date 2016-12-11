@@ -1,6 +1,7 @@
--last move switch realizuj
 -kada knjiga igra prva da igra uvek iz jednog poteza
--iterator da vraca move
+-iterator da vraca move (kroz klasu board_all_moves, board_empty_moves)
+-defense move
+-tezinski faktori za izbor poteza
 
 -napisi program sa switchevima
 -napravi make deo koji pravi pdf ili sve primere

@@ -11,7 +11,7 @@ int main()
   book_c book;
   book.set_best_speed_fast();
   book.set_select_first();
-  book.set_worst_best_gate(1.0);
+  book.set_worst_best_gate(0.0);
   book.book_play_second();
   book.do_not_show_last_move();
 

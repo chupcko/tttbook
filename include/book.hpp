@@ -10,7 +10,8 @@ namespace TTTbook
     public:
 
       std::vector<page_c*> pages;
-      std::map<board_hash_t, page_index_t> shortcuts;
+      std::map<board_hash_t, page_index_t> shortcuts_before_play;
+      std::map<board_hash_t, page_index_t> shortcuts_after_play;
       std::deque<page_index_t> unpublished_pages;
       bool book_is_first;
       bool showing_last_move;
