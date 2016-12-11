@@ -21,7 +21,7 @@ namespace TTTbook
     for(move_coordinate_t y = 0; y < self.size; y++)
     {
       if(y != 0)
-        out << std::endl << "-" REPEAT(LENGTH, "-") "-+-" REPEAT(LENGTH, "-") "-+-" REPEAT(LENGTH, "-") "-" << std::endl;
+        out << "\n-" REPEAT(LENGTH, "-") "-+-" REPEAT(LENGTH, "-") "-+-" REPEAT(LENGTH, "-") "-\n";
       for(move_coordinate_t x = 0; x < self.size; x++)
       {
         if(x != 0)
@@ -30,12 +30,10 @@ namespace TTTbook
       }
     }
     out << std::boolalpha <<
-      std::endl <<
-      "Page index: " << self.page_index << std::endl <<
-      "Shuffle index: " << self.shuffle_index << std::endl <<
-      "Last move is set: " << self.last_move_is_set << std::endl <<
-      "Last move: " << self.last_move << std::endl;
-
+      "\nPage index: " << self.page_index <<
+      "\nShuffle index: " << self.shuffle_index <<
+      "\nLast move is set: " << self.last_move_is_set <<
+      "\nLast move: " << self.last_move << '\n';
     return out;
   }
 

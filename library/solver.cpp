@@ -9,7 +9,7 @@ namespace TTTbook
       return 0;
     switch(best_speed)
     {
-      case BEST_FAST:
+      case BEST_SPEED_FAST:
         switch(board.next_player.player)
         {
           case player_c::PLAYER_X:
@@ -26,7 +26,7 @@ namespace TTTbook
             break;
         }
         break;
-      case BEST_SLOW:
+      case BEST_SPEED_SLOW:
         switch(board.next_player.player)
         {
           case player_c::PLAYER_X:
@@ -51,13 +51,13 @@ namespace TTTbook
     int new_rate = rate(board_copy);
     switch(best_speed)
     {
-      case BEST_FAST:
+      case BEST_SPEED_FAST:
         if(new_rate > 0)
           new_rate--;
         else if(new_rate < 0)
           new_rate++;
         break;
-      case BEST_SLOW:
+      case BEST_SPEED_SLOW:
         if(new_rate > 0)
           new_rate++;
         else if(new_rate < 0)
@@ -108,13 +108,13 @@ namespace TTTbook
     move_c* move;
     switch(select)
     {
-      case RANDOM:
+      case SELECT_RANDOM:
         move = new move_c(moves[util_c::random_int(0, moves_number-1)]);
         break;
-      case FIRST:
+      case SELECT_FIRST:
         move = new move_c(moves[0]);
         break;
-      case LAST:
+      case SELECT_LAST:
         move = new move_c(moves[moves_number-1]);
         break;
     }
@@ -139,13 +139,13 @@ namespace TTTbook
     move_c* move;
     switch(select)
     {
-      case RANDOM:
+      case SELECT_RANDOM:
         move = new move_c(moves[util_c::random_int(0, moves_number-1)]);
         break;
-      case FIRST:
+      case SELECT_FIRST:
         move = new move_c(moves[0]);
         break;
-      case LAST:
+      case SELECT_LAST:
         move = new move_c(moves[moves_number-1]);
         break;
     }

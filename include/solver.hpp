@@ -10,15 +10,15 @@ namespace TTTbook
 
       enum best_speed_t
       {
-        BEST_FAST = 0,
-        BEST_SLOW = 1
+        BEST_SPEED_FAST = 0,
+        BEST_SPEED_SLOW = 1
       };
 
       enum select_t
       {
-        RANDOM = 0,
-        FIRST = 1,
-        LAST = 2
+        SELECT_RANDOM = 0,
+        SELECT_FIRST = 1,
+        SELECT_LAST = 2
       };
 
       best_speed_t best_speed;
@@ -42,27 +42,27 @@ namespace TTTbook
 
       void set_best_speed_fast() noexcept
       {
-        best_speed = BEST_FAST;
+        best_speed = BEST_SPEED_FAST;
       }
 
       void set_best_speed_slow() noexcept
       {
-        best_speed = BEST_SLOW;
+        best_speed = BEST_SPEED_SLOW;
       }
 
       void set_select_random() noexcept
       {
-        select = RANDOM;
+        select = SELECT_RANDOM;
       }
 
       void set_select_first() noexcept
       {
-        select = FIRST;
+        select = SELECT_FIRST;
       }
 
       void set_select_last() noexcept
       {
-        select = LAST;
+        select = SELECT_LAST;
       }
 
       void set_worst_best_gate(double worst_best_gate_init) noexcept

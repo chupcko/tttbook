@@ -1,3 +1,4 @@
+#include <cstdlib>
 #include <exception>
 #include <iostream>
 
@@ -14,10 +15,10 @@ int main()
 
   solver.set_best_speed_slow();
   solver.set_select_first();
-  solver.set_worst_best_gate(1.0);
+  solver.set_worst_best_gate(0.0);
   for(;;)
   {
-    cout << board << endl;
+    cout << board << '\n';
     if(!board.status.is_playable())
       break;
 
@@ -34,5 +35,5 @@ int main()
       board.play(move_c(input%board_c::size, input/board_c::size));
     }
   }
-  return 0;
+  return EXIT_SUCCESS;
 }

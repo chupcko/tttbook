@@ -1,3 +1,4 @@
+#include <cstdlib>
 #include <exception>
 #include <iostream>
 #include <vector>
@@ -35,20 +36,20 @@ int main()
     {
       for(move_c& move: test.moves)
         board.play(move);
-      cout << test.number << ' ' << board << endl;
+      cout << test.number << ' ' << board << '\n';
       move_c* move = solver.calculate_move(board);
-      cout << *move << endl;
+      cout << *move << '\n';
       board.play(*move);
-      cout << board << endl;
+      cout << board << '\n';
     }
     catch(const exception& e)
     {
       cout <<
         "ERROR file=" << __FILE__ <<
         " test=" << test.number << ' ' <<
-        e.what() << endl;
+        e.what() << '\n';
     }
   }
 
-  return 0;
+  return EXIT_SUCCESS;
 }

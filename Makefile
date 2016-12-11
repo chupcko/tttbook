@@ -1,6 +1,6 @@
 .DEFAULT_GOAL := all
 .PHONY: all
-all: source- tests-
+all: source- tests- examples-
 
 .PHONY: debug
 debug: source-debug tests-debug
@@ -18,7 +18,7 @@ endef
 define GENERATE_GOALS =
   $(foreach goal,all debug clean,$(eval $(call GENERATE_GOALS_CORE,$(1),$(goal))))
 endef
-$(foreach dir,library source tests,$(call GENERATE_GOALS,$(dir)))
+$(foreach dir,library source tests examples,$(call GENERATE_GOALS,$(dir)))
 
 .PHONY: $(GOALS)
 
@@ -28,7 +28,7 @@ endef
 define GENERATE_RULES =
   $(foreach goal,all debug clean,$(eval $(call GENERATE_RULES_CORE,$(1),$(goal))))
 endef
-$(foreach dir,source tests,$(call GENERATE_RULES,$(dir)))
+$(foreach dir,source tests examples,$(call GENERATE_RULES,$(dir)))
 
 GET_DIR = $(word 1,$(subst -, ,$(1)))
 GET_GOAL = $(word 2,$(subst -, ,$(1)))

@@ -1,3 +1,4 @@
+#include <cstdlib>
 #include <exception>
 #include <iostream>
 #include <vector>
@@ -61,7 +62,7 @@ int main()
           board.status.is_draw() << ", " <<
           board.status.is_win_x() << ", " <<
           board.status.is_win_o() <<
-          " }" << endl <<
+          " }\n" <<
           board;
     }
     catch(const exception& e)
@@ -69,9 +70,9 @@ int main()
       cout <<
         "ERROR file=" << __FILE__ <<
         " test=" << test.number << ' ' <<
-        e.what() << endl;
+        e.what() << '\n';
     }
   }
 
-  return 0;
+  return EXIT_SUCCESS;
 }
