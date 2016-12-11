@@ -14,6 +14,7 @@ namespace TTTbook
       std::map<board_hash_t, page_index_t> shortcuts_after_play;
       std::deque<page_index_t> unpublished_pages;
       bool book_is_first;
+      move_c first_move;
       bool showing_last_move;
       bool showing_marks;
       page_index_t shuffle_begin_index;
@@ -34,9 +35,18 @@ namespace TTTbook
         shuffle_begin_index = page_c::null_page_index;
       }
 
-      void book_play_first() noexcept
+      void book_play_first(move_c first_move_init) noexcept
       {
         book_is_first = true;
+        first_move = first_move_init;
+        first_move.normalize(board_c::size);
+      }
+
+      void book_play_first(move_coordinate_t x, move_coordinate_t y) noexcept
+      {
+        book_is_first = true;
+        first_move = move_c(x, y);
+        first_move.normalize(board_c::size);
       }
 
       void book_play_second() noexcept
@@ -67,7 +77,8 @@ namespace TTTbook
       void clear() noexcept;
       void fill() noexcept;
       void shuffle(int) noexcept;
-      void write_ps(std::ostream&) const noexcept;
+      void write_ps(std::ostream&, page_index_t) const noexcept;
+      void info(std::ostream&) const noexcept;
 
       friend std::ostream& operator<<(std::ostream&, const book_c&);
   };

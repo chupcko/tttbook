@@ -13,7 +13,6 @@ namespace TTTbook
     }                                            \
   }                                              \
 
-  MAKE_ERROR(error_bad_index,      "Bad index");
   MAKE_ERROR(error_not_playable,   "Not playable");
   MAKE_ERROR(error_already_filled, "Already filled");
 

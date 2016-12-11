@@ -48,15 +48,11 @@ namespace TTTbook
 
   void book_c::fill_init_book_as_first() noexcept
   {
-    for(move_coordinate_t y = 0; y < board_c::size; y++)
-      for(move_coordinate_t x = 0; x < board_c::size; x++)
-      {
-        board_c board;
-        board.play(move_c(x, y));
-        page_index_t page_index = find_page(board, false);
-        pages[page_index]->last_move_is_set = true;
-        pages[page_index]->last_move.set(x, y);
-      }
+    board_c board;
+    board.play(first_move);
+    page_index_t page_index = find_page(board, false);
+    pages[page_index]->last_move_is_set = true;
+    pages[page_index]->last_move = first_move;
   }
 
   void book_c::fill_init_book_as_second() noexcept
@@ -416,15 +412,14 @@ namespace TTTbook
     "/TTTbook_mark_gray 0.5 def\n"
     "\n"
     "%%EndSetup\n"
-"\n";
+    "\n";
 
-  void book_c::write_ps(std::ostream& out) const noexcept
+  void book_c::write_ps(std::ostream& out, page_index_t page_offset) const noexcept
   {
     std::string header = ps_header;
     util_c::string_replace(header, "$$VERSION", TTTBOOK_VERSION);
     util_c::string_replace(header, "$$DATE", TTTBOOK_DATE);
     out << header;
-    page_index_t page_offset = 1;
     for(page_c* page: pages)
     {
       page_index_t page_index = page->shuffle_index;
@@ -501,6 +496,23 @@ namespace TTTbook
       out << "showpage\n\n";
     }
     out << "%%EOF\n";
+  }
+
+  void book_c::info(std::ostream& out) const noexcept
+  {
+    if(book_is_first)
+      out << "Book is first with move " << first_move << '\n';
+    else
+      out << "Book is second\n";
+    if(showing_last_move)
+      out << "Show last move\n";
+    else
+      out << "Do not show last move\n";
+    if(showing_marks)
+      out << "Show marks\n";
+    else
+      out << "Do not show marks\n";
+    solver_c::info(out);
   }
 
   std::ostream& operator<<(std::ostream& out, const book_c& self)

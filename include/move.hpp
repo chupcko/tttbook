@@ -44,13 +44,19 @@ namespace TTTbook
           y == y_init;
       }
 
-      bool is_valid(move_coordinate_t size) const noexcept
+      static move_coordinate_t normalize(move_coordinate_t size, move_coordinate_t xy) noexcept
       {
-        return
-          x >= 0 &&
-          x < size &&
-          y >= 0 &&
-          y < size;
+        if(xy < 0)
+          return 0;
+        if(xy >= size)
+          return size-1;
+        return xy;
+      }
+
+      void normalize(move_coordinate_t size) noexcept
+      {
+        x = normalize(size, x);
+        y = normalize(size, y);
       }
 
       friend std::ostream& operator<<(std::ostream&, const move_c&);

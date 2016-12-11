@@ -12,16 +12,45 @@
 using namespace std;
 using namespace TTTbook;
 
-void version(const char* name)
-{
-  cerr << name << ' ' << TTTBOOK_VERSION << ' ' << TTTBOOK_DATE << '\n';
-  exit(EXIT_FAILURE);
-}
 
 void help(const char* name)
 {
-  cerr << name << " help ...\n";
-  /*#*/
+  cerr <<
+    name << " [options] (file_name)?\n"
+    "\t-h\n"
+    "\t--help\n"
+    "\t\tShow help\n"
+    "\t-v\n"
+    "\t--version\n"
+    "\t\tShow version\n"
+    "\t-1 [x,y]\n"
+    "\t--first [x,y]\n"
+    "\t\tBook play first at x,y; x,y from (0 .. 2, 0 .. 2)\n"
+    "\t-2\n"
+    "\t--second\n"
+    "\t\tBook play second; default\n"
+    "\t-l\n"
+    "\t--last_move\n"
+    "\t\tShow last move; default: do not show\n"
+    "\t-m\n"
+    "\t--marks\n"
+    "\t\tShow marks; default: do not show\n"
+    "\t-r [number]\n"
+    "\t--rate [number]\n"
+    "\t\tRate of worst vs. best solver; default: 0.0, number from (0.0 .. 1.0)\n"
+    "\t--select [random, first, last]\n"
+    "\t\tStrategy of selecting moves; default: random\n"
+    "\t--best_speed [fast, slow]\n"
+    "\t\tSpeed for best solver; default: fast\n"
+     "\t-s [number]\n"
+    "\t--shuffle [number]\n"
+    "\t\tShuffle pages number times; default: 0; number from (0 .. 9)\n";
+ exit(EXIT_FAILURE);
+}
+
+void version(const char* name)
+{
+  cerr << name << ' ' << TTTBOOK_VERSION << ' ' << TTTBOOK_DATE << '\n';
   exit(EXIT_FAILURE);
 }
 
@@ -34,7 +63,7 @@ enum long_options_target_t
   LAST_MOVE,
   MARKS,
   SHUFFLE,
-  GATE,
+  RATE,
   SELECT,
   BEST_SPEED
 };
@@ -47,10 +76,10 @@ struct option long_options[] =
   {"second",     no_argument,       NULL, SECOND    },
   {"last_move",  no_argument,       NULL, LAST_MOVE },
   {"marks",      no_argument,       NULL, MARKS     },
-  {"shuffle",    required_argument, NULL, SHUFFLE   },
-  {"gate",       required_argument, NULL, GATE      },
+  {"rate",       required_argument, NULL, RATE      },
   {"select",     required_argument, NULL, SELECT    },
   {"best_speed", required_argument, NULL, BEST_SPEED},
+  {"shuffle",    required_argument, NULL, SHUFFLE   },
   {0,            0,                 NULL, -2        }
 };
 
@@ -58,8 +87,11 @@ int main(int arguments_number, char* arguments_values[])
 {
   int option;
   int shuffle = -1;
-  int first = false;
-  double gate = 0;
+  bool first = false;
+  move_coordinate_t first_move_x;
+  move_coordinate_t first_move_y;
+  char* comma;
+  double rate = 0.0;
   bool show_last_move = false;
   bool show_marks = false;
   solver_c::best_speed_t best_speed = solver_c::BEST_SPEED_FAST;
@@ -71,7 +103,7 @@ int main(int arguments_number, char* arguments_values[])
   while(true)
   {
     int option_index = 0;
-    option = getopt_long(arguments_number, arguments_values, "hv1:2lms:", long_options, &option_index);
+    option = getopt_long(arguments_number, arguments_values, "hv1:2lmg:s:", long_options, &option_index);
     if(option == -1)
       break;
     switch(option)
@@ -87,7 +119,15 @@ int main(int arguments_number, char* arguments_values[])
       case '1':
       case FIRST:
         first = true;
-        /*#*/
+        first_move_x = atoi(optarg);
+        comma = strchr(optarg, ',');
+        if(comma == NULL)
+        {
+          cerr << "Bad first move coordinate\n";
+          return EXIT_FAILURE;
+        }
+        comma++;
+        first_move_y = atoi(comma);
         break;
       case '2':
       case SECOND:
@@ -101,17 +141,9 @@ int main(int arguments_number, char* arguments_values[])
       case MARKS:
         show_marks = true;
         break;
-      case 's':
-      case SHUFFLE:
-        shuffle = atoi(optarg);
-        if(shuffle < 1)
-          shuffle = 1;
-        if(shuffle > 10)
-          shuffle = 10;
-        break;
-      case 'g':
-      case GATE:
-        gate = atof(optarg);
+      case 'r':
+      case RATE:
+        rate = atof(optarg);
         break;
       case SELECT:
         switch(*optarg)
@@ -138,6 +170,14 @@ int main(int arguments_number, char* arguments_values[])
             break;
         }
         break;
+      case 's':
+      case SHUFFLE:
+        shuffle = atoi(optarg);
+        if(shuffle < 1)
+          shuffle = 1;
+        if(shuffle > 10)
+          shuffle = 10;
+        break;
       default:
         help(arguments_values[0]);
     }
@@ -145,7 +185,11 @@ int main(int arguments_number, char* arguments_values[])
   if(arguments_number-optind > 1)
     help(arguments_values[0]);
 
-  if(arguments_number-optind == 1)
+  if
+  (
+    arguments_number-optind == 1 &&
+    strcmp(arguments_values[optind], "-") != 0
+  )
   {
     new_file.open(arguments_values[optind]);
     if(!new_file.is_open())
@@ -178,9 +222,9 @@ int main(int arguments_number, char* arguments_values[])
       book.set_select_last();
       break;
   }
-  book.set_worst_best_gate(gate);
+  book.set_worst_best_rate(rate);
   if(first)
-    book.book_play_first();
+    book.book_play_first(first_move_x, first_move_y);
   else
     book.book_play_second();
   if(show_last_move)
@@ -191,10 +235,17 @@ int main(int arguments_number, char* arguments_values[])
     book.show_marks();
   else
     book.do_not_show_marks();
+
+  book.info(cerr);
+  if(shuffle > 0)
+    cerr << "Shuffle " << shuffle << " times\n";
+  else
+    cerr << "Do not shuffle\n";
+
   book.fill();
   if(shuffle > 0)
     book.shuffle(shuffle);
 
-  book.write_ps(*file);
+  book.write_ps(*file, 1);
   return EXIT_SUCCESS;
 }

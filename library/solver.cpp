@@ -154,10 +154,40 @@ namespace TTTbook
 
   move_c* solver_c::calculate_move(const board_c& board) const
   {
-    if(util_c::random_double(0.0, 1.0) < worst_best_gate)
+    if(util_c::random_double(0.0, 1.0) < worst_best_rate)
       return worst_move(board);
     else
       return best_move(board);
+  }
+
+  void solver_c::info(std::ostream& out) const noexcept
+  {
+    out
+      << "Worst vs. best rate: " << std::fixed << std::setprecision(5) << worst_best_rate <<
+      "\nSelect: ";
+    switch(select)
+    {
+      case SELECT_RANDOM:
+        out << "random";
+        break;
+      case SELECT_FIRST:
+        out << "first";
+        break;
+      case SELECT_LAST:
+        out << "last";
+        break;
+    }
+    out << "\nBest speed: ";
+    switch(best_speed)
+    {
+      case BEST_SPEED_FAST:
+        out << "fast";
+        break;
+      case BEST_SPEED_SLOW:
+        out << "slow";
+        break;
+    }
+    out << '\n';
   }
 
 }

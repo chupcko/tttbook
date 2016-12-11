@@ -15,7 +15,7 @@ int main()
 
   solver.set_best_speed_slow();
   solver.set_select_first();
-  solver.set_worst_best_gate(0.0);
+  solver.set_worst_best_rate(0.0);
   for(;;)
   {
     cout << board << '\n';

@@ -16,6 +16,7 @@ namespace TTTbook
 
   bool board_c::is_win_in_row(move_coordinate_t y, field_c::field_t field_value) const noexcept
   {
+    y = move_c::normalize(size, y);
     for(move_coordinate_t x = 0; x < size; x++)
       if(!fields[x][y].is(field_value))
         return false;
@@ -24,6 +25,7 @@ namespace TTTbook
 
   bool board_c::is_win_in_column(move_coordinate_t x, field_c::field_t field_value) const noexcept
   {
+    x = move_c::normalize(size, x);
     for(move_coordinate_t y = 0; y < size; y++)
       if(!fields[x][y].is(field_value))
         return false;
@@ -131,8 +133,7 @@ namespace TTTbook
 
   const status_c& board_c::play(move_c move)
   {
-    if(!move.is_valid(size))
-      throw error_bad_index();
+    move.normalize(size);
     if(!status.is_playable())
       throw error_not_playable();
     if(!fields[move.x][move.y].is_empty())

@@ -1,9 +1,3 @@
--da normalizuje kordinate mozda ?
-
--ispisi kako je generisao knjigu
--help
-
--kada knjiga igra prva da igra uvek iz jednog poteza
 -iterator da vraca move (kroz klasu board_all_moves, board_empty_moves)
 
 -defense move
