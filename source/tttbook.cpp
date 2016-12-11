@@ -29,11 +29,12 @@ enum long_options_target_t
 {
   HELP,
   VERSION,
-  SHUFFLE,
   FIRST,
   SECOND,
-  GATE,
   LAST_MOVE,
+  MARKS,
+  SHUFFLE,
+  GATE,
   SELECT,
   BEST_SPEED
 };
@@ -42,11 +43,12 @@ struct option long_options[] =
 {
   {"help",       no_argument,       NULL, HELP      },
   {"version",    no_argument,       NULL, VERSION   },
-  {"shuffle",    required_argument, NULL, SHUFFLE   },
   {"first",      required_argument, NULL, FIRST     },
   {"second",     no_argument,       NULL, SECOND    },
-  {"gate",       required_argument, NULL, GATE      },
   {"last_move",  no_argument,       NULL, LAST_MOVE },
+  {"marks",      no_argument,       NULL, MARKS     },
+  {"shuffle",    required_argument, NULL, SHUFFLE   },
+  {"gate",       required_argument, NULL, GATE      },
   {"select",     required_argument, NULL, SELECT    },
   {"best_speed", required_argument, NULL, BEST_SPEED},
   {0,            0,                 NULL, -2        }
@@ -59,6 +61,7 @@ int main(int arguments_number, char* arguments_values[])
   int first = false;
   double gate = 0;
   bool show_last_move = false;
+  bool show_marks = false;
   solver_c::best_speed_t best_speed = solver_c::BEST_SPEED_FAST;
   solver_c::select_t select = solver_c::SELECT_RANDOM;
   ostream* file = &cout;
@@ -68,7 +71,7 @@ int main(int arguments_number, char* arguments_values[])
   while(true)
   {
     int option_index = 0;
-    option = getopt_long(arguments_number, arguments_values, "hvs:1:2g:l", long_options, &option_index);
+    option = getopt_long(arguments_number, arguments_values, "hv1:2lms:", long_options, &option_index);
     if(option == -1)
       break;
     switch(option)
@@ -81,14 +84,6 @@ int main(int arguments_number, char* arguments_values[])
       case VERSION:
         version(arguments_values[0]);
         break;
-      case 's':
-      case SHUFFLE:
-        shuffle = atoi(optarg);
-        if(shuffle < 1)
-          shuffle = 1;
-        if(shuffle > 10)
-          shuffle = 10;
-        break;
       case '1':
       case FIRST:
         first = true;
@@ -98,24 +93,25 @@ int main(int arguments_number, char* arguments_values[])
       case SECOND:
         first = false;
         break;
-      case 'g':
-      case GATE:
-        gate = atof(optarg);
-        break;
       case 'l':
       case LAST_MOVE:
         show_last_move = true;
         break;
-      case BEST_SPEED:
-        switch(*optarg)
-        {
-          case 'f':
-            best_speed = solver_c::BEST_SPEED_FAST;
-            break;
-          case 's':
-            best_speed = solver_c::BEST_SPEED_SLOW;
-            break;
-        }
+      case 'm':
+      case MARKS:
+        show_marks = true;
+        break;
+      case 's':
+      case SHUFFLE:
+        shuffle = atoi(optarg);
+        if(shuffle < 1)
+          shuffle = 1;
+        if(shuffle > 10)
+          shuffle = 10;
+        break;
+      case 'g':
+      case GATE:
+        gate = atof(optarg);
         break;
       case SELECT:
         switch(*optarg)
@@ -128,6 +124,17 @@ int main(int arguments_number, char* arguments_values[])
             break;
           case 'l':
             select = solver_c::SELECT_LAST;
+            break;
+        }
+        break;
+      case BEST_SPEED:
+        switch(*optarg)
+        {
+          case 'f':
+            best_speed = solver_c::BEST_SPEED_FAST;
+            break;
+          case 's':
+            best_speed = solver_c::BEST_SPEED_SLOW;
             break;
         }
         break;
@@ -180,6 +187,10 @@ int main(int arguments_number, char* arguments_values[])
     book.show_last_move();
   else
     book.do_not_show_last_move();
+  if(show_marks)
+    book.show_marks();
+  else
+    book.do_not_show_marks();
   book.fill();
   if(shuffle > 0)
     book.shuffle(shuffle);

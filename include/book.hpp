@@ -15,6 +15,7 @@ namespace TTTbook
       std::deque<page_index_t> unpublished_pages;
       bool book_is_first;
       bool showing_last_move;
+      bool showing_marks;
       page_index_t shuffle_begin_index;
 
     private:
@@ -29,6 +30,7 @@ namespace TTTbook
       {
         book_play_second();
         do_not_show_last_move();
+        do_not_show_marks();
         shuffle_begin_index = page_c::null_page_index;
       }
 
@@ -50,6 +52,16 @@ namespace TTTbook
       void do_not_show_last_move() noexcept
       {
         showing_last_move = false;
+      }
+
+      void show_marks() noexcept
+      {
+        showing_marks = true;
+      }
+
+      void do_not_show_marks() noexcept
+      {
+        showing_marks = false;
       }
 
       void clear() noexcept;

@@ -27,13 +27,16 @@ int main()
   int test_number = 0;
   vector<test_t> tests =
   {
+/*
     { test_number++, {                                                                        }, { true,  false, false, false, false } },
-    { test_number++, { {0, 0}, {0, 2}                                                         }, { false, true,  false, false, false } },
-    { test_number++, { {0, 0}, {0, 2}, {1, 0}, {1, 2}                                         }, { false, true,  false, false, false } },
+*/
+    { test_number++, { {0, 0}, {0, 2}                                                         }, { false, true,  false, false, false } }
+/*    { test_number++, { {0, 0}, {0, 2}, {1, 0}, {1, 2}                                         }, { false, true,  false, false, false } },
     { test_number++, { {0, 0}, {0, 2}, {1, 0}, {1, 2}, {2, 0}                                 }, { false, false, false, true,  false } },
     { test_number++, { {0, 0}, {0, 2}, {1, 0}, {1, 2}, {2, 1}, {2, 2}                         }, { false, false, false, false, true  } },
     { test_number++, { {0, 0}, {1, 0}, {2, 0}, {0, 1}, {1, 1}, {2, 1}, {1, 2}, {0, 2}         }, { false, true,  false, false, false } },
     { test_number++, { {0, 0}, {1, 0}, {2, 0}, {0, 1}, {1, 1}, {2, 1}, {1, 2}, {0, 2}, {2, 2} }, { false, false, false, true,  false } }
+*/
   };
   board_c board;
 

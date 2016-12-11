@@ -22,7 +22,7 @@
 #include "page.hpp"
 #include "book.hpp"
 
-#define TTTBOOK_VERSION "0.1.5b"
+#define TTTBOOK_VERSION "0.1.5"
 #define TTTBOOK_DATE    "2016-12-11"
 
 #endif

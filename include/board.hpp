@@ -44,6 +44,9 @@ namespace TTTbook
 
     private:
 
+      bool is_win_in_row(move_coordinate_t, field_c::field_t) const noexcept;
+      bool is_win_in_column(move_coordinate_t, field_c::field_t) const noexcept;
+      bool is_win_in_diagonal(move_coordinate_t, field_c::field_t) const noexcept;
       bool recalculate_status_is_draw() const noexcept;
       bool recalculate_status_is_win(field_c::field_t) const noexcept;
       void recalculate_status() noexcept;
@@ -67,6 +70,9 @@ namespace TTTbook
 
       board_c(const board_c&) noexcept;
       void init() noexcept;
+      bool is_win_in_row(move_coordinate_t) const noexcept;
+      bool is_win_in_column(move_coordinate_t) const noexcept;
+      bool is_win_in_diagonal(move_coordinate_t) const noexcept;
       const status_c& play(move_c);
       board_hash_t hash() const noexcept;
 

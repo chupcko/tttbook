@@ -484,6 +484,20 @@ namespace TTTbook
         }
         out << '\n';
       }
+      if(showing_marks)
+      {
+        for(move_coordinate_t xy = 0; xy < pages[page_index]->size; xy++)
+        {
+          if(pages[page_index]->is_win_in_row(xy))
+            out << xy << " TTTbook_mark_row\n";
+          if(pages[page_index]->is_win_in_column(xy))
+            out << xy << " TTTbook_mark_column\n";
+        }
+        if(pages[page_index]->is_win_in_diagonal(0))
+          out << "0 TTTbook_mark_diagonal\n";
+        if(pages[page_index]->is_win_in_diagonal(1))
+          out << "1 TTTbook_mark_diagonal\n";
+      }
       out << "showpage\n\n";
     }
     out << "%%EOF\n";
