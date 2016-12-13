@@ -237,10 +237,6 @@ int main(int arguments_number, char* arguments_values[])
     book.do_not_show_marks();
 
   book.info(cerr);
-  if(shuffle > 0)
-    cerr << "Shuffle " << shuffle << " times\n";
-  else
-    cerr << "Do not shuffle\n";
 
   book.fill();
   if(shuffle > 0)

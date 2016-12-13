@@ -17,6 +17,7 @@ namespace TTTbook
       move_c first_move;
       bool showing_last_move;
       bool showing_marks;
+      int shuffle_count;
       page_index_t shuffle_begin_index;
 
     private:
@@ -32,6 +33,7 @@ namespace TTTbook
         book_play_second();
         do_not_show_last_move();
         do_not_show_marks();
+        shuffle_count = -1;
         shuffle_begin_index = page_c::null_page_index;
       }
 

@@ -1,5 +1,4 @@
--mark uradi kao outline
--naslovna strana
+-doteraj naslovnu stranu
 
 -iterator da vraca move (kroz klasu board_all_moves, board_empty_moves)
 
