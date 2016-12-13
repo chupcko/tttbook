@@ -1,3 +1,4 @@
+-sredi DSC
 -iterator da vraca move (kroz klasu board_all_moves, board_empty_moves)
 
 -defense move

@@ -77,7 +77,7 @@ namespace TTTbook
       void clear() noexcept;
       void fill() noexcept;
       void shuffle(int) noexcept;
-      void write_ps(std::ostream&, page_index_t) const noexcept;
+      void write_ps(std::ostream&) const noexcept;
       void info(std::ostream&) const noexcept;
 
       friend std::ostream& operator<<(std::ostream&, const book_c&);

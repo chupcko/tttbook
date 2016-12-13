@@ -103,7 +103,7 @@ int main(int arguments_number, char* arguments_values[])
   while(true)
   {
     int option_index = 0;
-    option = getopt_long(arguments_number, arguments_values, "hv1:2lmg:s:", long_options, &option_index);
+    option = getopt_long(arguments_number, arguments_values, "hv1:2lmr:s:", long_options, &option_index);
     if(option == -1)
       break;
     switch(option)
@@ -246,6 +246,6 @@ int main(int arguments_number, char* arguments_values[])
   if(shuffle > 0)
     book.shuffle(shuffle);
 
-  book.write_ps(*file, 1);
+  book.write_ps(*file);
   return EXIT_SUCCESS;
 }
