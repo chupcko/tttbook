@@ -464,6 +464,7 @@ namespace TTTbook
     "/Helvetica-Bold findfont 7 scalefont setfont\n"
     "0 setgray\n"
     "newpath TTTbook_page_half 60 moveto (by CHUPCKO) TTTbook_center_show\n"
+    "[ /Rect [ 0 0 TTTbook_page_size TTTbook_page_size ] /Border [ 0 0 0 ] /Page TTTbook_page_number_offset /View [ /XYZ null null null ] /LNK pdfmark\n"
     "showpage\n"
     "\n";
 
