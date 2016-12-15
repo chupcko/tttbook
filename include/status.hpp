@@ -76,7 +76,9 @@ namespace TTTbook
 
       bool is_playable() const noexcept
       {
-        return status == STATUS_NEW || status == STATUS_PLAY;
+        return
+          status == STATUS_NEW ||
+          status == STATUS_PLAY;
       }
 
       friend std::ostream& operator<<(std::ostream&, const status_c&);

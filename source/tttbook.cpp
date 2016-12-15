@@ -12,7 +12,6 @@
 using namespace std;
 using namespace TTTbook;
 
-
 void help(const char* name)
 {
   cerr <<
@@ -35,9 +34,12 @@ void help(const char* name)
     "\t-m\n"
     "\t--marks\n"
     "\t\tShow marks; default: do not show\n"
-    "\t-r [number]\n"
-    "\t--rate [number]\n"
-    "\t\tRate of worst vs. best solver; default: 0.0, number from (0.0 .. 1.0)\n"
+    "\t--best_weight [number]\n"
+    "\t\tBest solver weight; default: 1.0, positive number\n"
+    "\t--modest_weight [number]\n"
+    "\t\tModest solver weight; default: 0.0, positive number\n"
+    "\t--worst_weight [number]\n"
+    "\t\tWorst solver weight; default: 0.0, positive number\n"
     "\t--select [random, first, last]\n"
     "\t\tStrategy of selecting moves; default: random\n"
     "\t--best_speed [fast, slow]\n"
@@ -63,24 +65,28 @@ enum long_options_target_t
   LAST_MOVE,
   MARKS,
   SHUFFLE,
-  RATE,
+  BEST_WEIGHT,
+  MODEST_WEIGHT,
+  WORST_WEIGHT,
   SELECT,
   BEST_SPEED
 };
 
 struct option long_options[] =
 {
-  {"help",       no_argument,       NULL, HELP      },
-  {"version",    no_argument,       NULL, VERSION   },
-  {"first",      required_argument, NULL, FIRST     },
-  {"second",     no_argument,       NULL, SECOND    },
-  {"last_move",  no_argument,       NULL, LAST_MOVE },
-  {"marks",      no_argument,       NULL, MARKS     },
-  {"rate",       required_argument, NULL, RATE      },
-  {"select",     required_argument, NULL, SELECT    },
-  {"best_speed", required_argument, NULL, BEST_SPEED},
-  {"shuffle",    required_argument, NULL, SHUFFLE   },
-  {0,            0,                 NULL, -2        }
+  {"help",          no_argument,       NULL, HELP         },
+  {"version",       no_argument,       NULL, VERSION      },
+  {"first",         required_argument, NULL, FIRST        },
+  {"second",        no_argument,       NULL, SECOND       },
+  {"last_move",     no_argument,       NULL, LAST_MOVE    },
+  {"marks",         no_argument,       NULL, MARKS        },
+  {"best_weight",   required_argument, NULL, BEST_WEIGHT  },
+  {"modest_weight", required_argument, NULL, MODEST_WEIGHT},
+  {"worst_weight",  required_argument, NULL, WORST_WEIGHT },
+  {"select",        required_argument, NULL, SELECT       },
+  {"best_speed",    required_argument, NULL, BEST_SPEED   },
+  {"shuffle",       required_argument, NULL, SHUFFLE      },
+  {0,               0,                 NULL, -2           }
 };
 
 int main(int arguments_number, char* arguments_values[])
@@ -91,7 +97,9 @@ int main(int arguments_number, char* arguments_values[])
   move_coordinate_t first_move_x;
   move_coordinate_t first_move_y;
   char* comma;
-  double rate = 0.0;
+  double best_weight = 1.0;
+  double modest_weight = 0.0;
+  double worst_weight = 0.0;
   bool show_last_move = false;
   bool show_marks = false;
   solver_c::best_speed_t best_speed = solver_c::BEST_SPEED_FAST;
@@ -103,7 +111,7 @@ int main(int arguments_number, char* arguments_values[])
   while(true)
   {
     int option_index = 0;
-    option = getopt_long(arguments_number, arguments_values, "hv1:2lmr:s:", long_options, &option_index);
+    option = getopt_long(arguments_number, arguments_values, "hv1:2lms:", long_options, &option_index);
     if(option == -1)
       break;
     switch(option)
@@ -141,9 +149,12 @@ int main(int arguments_number, char* arguments_values[])
       case MARKS:
         show_marks = true;
         break;
-      case 'r':
-      case RATE:
-        rate = atof(optarg);
+      case BEST_WEIGHT:
+        best_weight = atof(optarg);
+      case MODEST_WEIGHT:
+        modest_weight = atof(optarg);
+      case WORST_WEIGHT:
+        worst_weight = atof(optarg);
         break;
       case SELECT:
         switch(*optarg)
@@ -201,6 +212,9 @@ int main(int arguments_number, char* arguments_values[])
   }
 
   book_c book;
+  book.set_best_weight(best_weight);
+  book.set_modest_weight(modest_weight);
+  book.set_worst_weight(worst_weight);
   switch(best_speed)
   {
     case solver_c::BEST_SPEED_FAST:
@@ -222,7 +236,6 @@ int main(int arguments_number, char* arguments_values[])
       book.set_select_last();
       break;
   }
-  book.set_worst_best_rate(rate);
   if(first)
     book.book_play_first(first_move_x, first_move_y);
   else

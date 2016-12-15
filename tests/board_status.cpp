@@ -76,6 +76,5 @@ int main()
         e.what() << '\n';
     }
   }
-
   return EXIT_SUCCESS;
 }

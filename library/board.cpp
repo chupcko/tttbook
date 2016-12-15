@@ -131,6 +131,11 @@ namespace TTTbook
       is_win_in_diagonal(t, field_c::FIELD_O);
   }
 
+  void board_c::next() noexcept
+  {
+    next_player.next();
+  }
+
   const status_c& board_c::play(move_c move)
   {
     move.normalize(size);

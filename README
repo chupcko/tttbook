@@ -1,3 +1,5 @@
-make examples
-cd examples
+TTTbook is Tic tac toe book generator, where the book plays against you.
 
+To test:
+  make examples
+  cd examples

@@ -73,8 +73,6 @@ namespace TTTbook
 
   void book_c::fill() noexcept
   {
-    page_index_t page_index;
-
     if(book_is_first)
       fill_init_book_as_first();
     else
@@ -83,7 +81,7 @@ namespace TTTbook
 
     while(!unpublished_pages.empty())
     {
-      page_index = unpublished_pages.front();
+      page_index_t page_index = unpublished_pages.front();
       unpublished_pages.pop_front();
       if(pages[page_index]->status.is_playable())
         for(move_coordinate_t y = 0; y < pages[page_index]->size; y++)

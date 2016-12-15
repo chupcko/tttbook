@@ -27,7 +27,9 @@ int main()
   solver_c solver;
   solver.set_best_speed_slow();
   solver.set_select_first();
-  solver.set_worst_best_rate(0.0);
+  solver.set_best_weight(1.0);
+  solver.set_modest_weight(1.0);
+  solver.set_worst_weight(1.0);
 
   for(test_t& test: tests)
   {
@@ -50,6 +52,5 @@ int main()
         e.what() << '\n';
     }
   }
-
   return EXIT_SUCCESS;
 }

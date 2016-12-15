@@ -73,6 +73,7 @@ namespace TTTbook
       bool is_win_in_row(move_coordinate_t) const noexcept;
       bool is_win_in_column(move_coordinate_t) const noexcept;
       bool is_win_in_diagonal(move_coordinate_t) const noexcept;
+      void next() noexcept;
       const status_c& play(move_c);
       board_hash_t hash() const noexcept;
 

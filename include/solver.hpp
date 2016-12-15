@@ -21,34 +21,61 @@ namespace TTTbook
         BEST_SPEED_SLOW = 1
       };
 
-      double worst_best_rate;
+      double best_weight;
+      double modest_weight;
+      double worst_weight;
       select_t select;
       best_speed_t best_speed;
 
     private:
 
-      int rate(const board_c&) const noexcept;
+      int best_rate(const board_c&) const noexcept;
       move_c* best_move(const board_c&) const;
+      move_c* modest_move(const board_c&) const;
       move_c* worst_move(const board_c&) const;
 
     public:
 
       solver_c() noexcept
       {
-        set_worst_best_rate(0.0);
+        set_best_weight(1.0);
+        set_modest_weight(0.0);
+        set_worst_weight(0.0);
         set_select_random();
         set_best_speed_fast();
       }
 
-      void set_worst_best_rate(double worst_best_rate_init) noexcept
+      void set_best_weight(double weight) noexcept
       {
-        worst_best_rate = worst_best_rate_init;
-        if(std::isnan(worst_best_rate))
-          worst_best_rate = 0.0;
-        else if(worst_best_rate < 0.0)
-          worst_best_rate = 0.0;
-        else if(worst_best_rate > 1.0)
-          worst_best_rate = 1.0;
+        best_weight = weight;
+        if
+        (
+          std::isnan(best_weight) ||
+          best_weight < 0.0
+        )
+          best_weight = 0.0;
+      }
+
+      void set_modest_weight(double weight) noexcept
+      {
+        modest_weight = weight;
+        if
+        (
+          std::isnan(modest_weight) ||
+          modest_weight < 0.0
+        )
+          modest_weight = 0.0;
+      }
+
+      void set_worst_weight(double weight) noexcept
+      {
+        worst_weight = weight;
+        if
+        (
+          std::isnan(worst_weight) ||
+          worst_weight < 0.0
+        )
+          worst_weight = 0.0;
       }
 
       void set_select_random() noexcept
