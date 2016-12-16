@@ -4,14 +4,15 @@
 namespace TTTbook
 {
 
-  #define MAKE_ERROR(name, text)                 \
-  class name : public std::exception             \
-  {                                              \
+  #define MAKE_ERROR(name, text)             \
+  class name :                               \
+    public std::exception                    \
+  {                                          \
     virtual const char* what() const throw() \
-    {                                            \
-      return text;                               \
-    }                                            \
-  }                                              \
+    {                                        \
+      return text;                           \
+    }                                        \
+  }                                          \
 
   MAKE_ERROR(error_not_playable,   "Not playable");
   MAKE_ERROR(error_already_filled, "Already filled");

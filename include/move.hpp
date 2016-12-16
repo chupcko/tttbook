@@ -4,14 +4,14 @@
 namespace TTTbook
 {
 
-  typedef int move_coordinate_t;
-
   class move_c
   {
     public:
 
-      move_coordinate_t x;
-      move_coordinate_t y;
+      typedef int coordinate_t;
+
+      coordinate_t x;
+      coordinate_t y;
 
       move_c() noexcept
       {
@@ -19,7 +19,7 @@ namespace TTTbook
         y = -1;
       }
 
-      move_c(move_coordinate_t x_init, move_coordinate_t y_init) noexcept
+      move_c(coordinate_t x_init, coordinate_t y_init) noexcept
       {
         x = x_init;
         y = y_init;
@@ -31,20 +31,20 @@ namespace TTTbook
         y = move_init.y;
       }
 
-      void set(move_coordinate_t x_init, move_coordinate_t y_init) noexcept
+      void set(coordinate_t x_init, coordinate_t y_init) noexcept
       {
         x = x_init;
         y = y_init;
       }
 
-      bool is(move_coordinate_t x_init, move_coordinate_t y_init) const noexcept
+      bool is(coordinate_t x_init, coordinate_t y_init) const noexcept
       {
         return
           x == x_init &&
           y == y_init;
       }
 
-      static move_coordinate_t normalize(move_coordinate_t size, move_coordinate_t xy) noexcept
+      static coordinate_t normalize(coordinate_t size, coordinate_t xy) noexcept
       {
         if(xy < 0)
           return 0;
@@ -53,7 +53,7 @@ namespace TTTbook
         return xy;
       }
 
-      void normalize(move_coordinate_t size) noexcept
+      void normalize(coordinate_t size) noexcept
       {
         x = normalize(size, x);
         y = normalize(size, y);

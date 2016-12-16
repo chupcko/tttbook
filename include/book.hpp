@@ -4,25 +4,25 @@
 namespace TTTbook
 {
 
-  class book_c
-  : public solver_c
+  class book_c :
+    public solver_c
   {
     public:
 
       std::vector<page_c*> pages;
-      std::map<board_hash_t, page_index_t> shortcuts_before_play;
-      std::map<board_hash_t, page_index_t> shortcuts_after_play;
-      std::deque<page_index_t> unpublished_pages;
+      std::map<board_c::hash_t, page_c::index_t> shortcuts_before_play;
+      std::map<board_c::hash_t, page_c::index_t> shortcuts_after_play;
+      std::deque<page_c::index_t> unpublished_pages;
       bool book_is_first;
       move_c first_move;
       bool showing_last_move;
       bool showing_marks;
       int shuffle_count;
-      page_index_t shuffle_begin_index;
+      page_c::index_t shuffle_begin_index;
 
     private:
 
-      page_index_t find_page(board_c&, bool) noexcept;
+      page_c::index_t find_page(board_c&, bool) noexcept;
       void fill_init_book_as_first() noexcept;
       void fill_init_book_as_second() noexcept;
 
@@ -34,7 +34,7 @@ namespace TTTbook
         do_not_show_last_move();
         do_not_show_marks();
         shuffle_count = -1;
-        shuffle_begin_index = page_c::null_page_index;
+        shuffle_begin_index = page_c::null_index;
       }
 
       void book_play_first(move_c first_move_init) noexcept
@@ -44,7 +44,7 @@ namespace TTTbook
         first_move.normalize(board_c::size);
       }
 
-      void book_play_first(move_coordinate_t x, move_coordinate_t y) noexcept
+      void book_play_first(move_c::coordinate_t x, move_c::coordinate_t y) noexcept
       {
         book_is_first = true;
         first_move = move_c(x, y);

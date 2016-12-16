@@ -94,8 +94,8 @@ int main(int arguments_number, char* arguments_values[])
   int option;
   int shuffle = -1;
   bool first = false;
-  move_coordinate_t first_move_x;
-  move_coordinate_t first_move_y;
+  move_c::coordinate_t first_move_x;
+  move_c::coordinate_t first_move_y;
   char* comma;
   double best_weight = 1.0;
   double modest_weight = 0.0;

@@ -3,11 +3,11 @@
 namespace TTTbook
 {
 
-  page_index_t book_c::find_page(board_c& board, bool do_play) noexcept
+  page_c::index_t book_c::find_page(board_c& board, bool do_play) noexcept
   {
     board_c board_copy(board);
 
-    board_hash_t board_hash_before_play = board_copy.hash();
+    board_c::hash_t board_hash_before_play = board_copy.hash();
     if(shortcuts_before_play.count(board_hash_before_play) > 0)
       return shortcuts_before_play[board_hash_before_play];
 
@@ -22,7 +22,7 @@ namespace TTTbook
       board_copy.play(*move);
     }
 
-    board_hash_t board_hash_after_play = board_copy.hash();
+    board_c::hash_t board_hash_after_play = board_copy.hash();
     if
     (
       !showing_last_move &&
@@ -31,7 +31,7 @@ namespace TTTbook
       return shortcuts_after_play[board_hash_after_play];
 
     pages.push_back(new page_c(board_copy));
-    page_index_t page_index = (page_index_t)(pages.size()-1);
+    page_c::index_t page_index = (page_c::index_t)(pages.size()-1);
     pages[page_index]->page_index = page_index;
     pages[page_index]->shuffle_index = page_index;
     if(move != nullptr)
@@ -50,7 +50,7 @@ namespace TTTbook
   {
     board_c board;
     board.play(first_move);
-    page_index_t page_index = find_page(board, false);
+    page_c::index_t page_index = find_page(board, false);
     pages[page_index]->last_move_is_set = true;
     pages[page_index]->last_move = first_move;
   }
@@ -68,7 +68,7 @@ namespace TTTbook
     shortcuts_before_play.clear();
     shortcuts_after_play.clear();
     unpublished_pages.clear();
-    shuffle_begin_index = page_c::null_page_index;
+    shuffle_begin_index = page_c::null_index;
   }
 
   void book_c::fill() noexcept
@@ -77,15 +77,15 @@ namespace TTTbook
       fill_init_book_as_first();
     else
       fill_init_book_as_second();
-    shuffle_begin_index = (page_index_t)pages.size();
+    shuffle_begin_index = (page_c::index_t)pages.size();
 
     while(!unpublished_pages.empty())
     {
-      page_index_t page_index = unpublished_pages.front();
+      page_c::index_t page_index = unpublished_pages.front();
       unpublished_pages.pop_front();
       if(pages[page_index]->status.is_playable())
-        for(move_coordinate_t y = 0; y < pages[page_index]->size; y++)
-          for(move_coordinate_t x = 0; x < pages[page_index]->size; x++)
+        for(move_c::coordinate_t y = 0; y < pages[page_index]->size; y++)
+          for(move_c::coordinate_t x = 0; x < pages[page_index]->size; x++)
             if(pages[page_index]->fields[x][y].is_empty())
             {
               board_c board_copy = board_c((board_c)*pages[page_index]);
@@ -98,13 +98,13 @@ namespace TTTbook
   void book_c::shuffle(int count) noexcept
   {
     shuffle_count = count;
-    for(page_index_t i = 0; i < (page_index_t)(shuffle_count*pages.size()); i++)
+    for(page_c::index_t i = 0; i < (page_c::index_t)(shuffle_count*pages.size()); i++)
     {
-      page_index_t a_index = util_c::random_int(shuffle_begin_index, pages.size()-1);
-      page_index_t b_index = util_c::random_int(shuffle_begin_index, pages.size()-1);
+      page_c::index_t a_index = util_c::random_int(shuffle_begin_index, pages.size()-1);
+      page_c::index_t b_index = util_c::random_int(shuffle_begin_index, pages.size()-1);
       while(a_index == b_index)
-         b_index = util_c::random_int(shuffle_begin_index, pages.size()-1);
-      page_index_t page_index = pages[pages[a_index]->page_index]->shuffle_index;
+        b_index = util_c::random_int(shuffle_begin_index, pages.size()-1);
+      page_c::index_t page_index = pages[pages[a_index]->page_index]->shuffle_index;
       pages[pages[a_index]->page_index]->shuffle_index = pages[pages[b_index]->page_index]->shuffle_index;
       pages[pages[b_index]->page_index]->shuffle_index = page_index;
       page_index = pages[a_index]->page_index;
@@ -470,7 +470,7 @@ namespace TTTbook
 
   void book_c::write_ps(std::ostream& out) const noexcept
   {
-    const page_index_t page_offset = 2;
+    const page_c::index_t page_offset = 2;
     std::string header = ps_header;
     util_c::string_replace(header, "$$PAGES", std::to_string(pages.size()+page_offset-1));
     util_c::string_replace(header, "$$OFFSET", std::to_string(page_offset));
@@ -479,7 +479,7 @@ namespace TTTbook
     out << header;
     for(page_c* page: pages)
     {
-      page_index_t page_index = page->shuffle_index;
+      page_c::index_t page_index = page->shuffle_index;
       out <<
         "%%Page: " << pages[page_index]->page_index+page_offset << ' ' << pages[page_index]->page_index+page_offset <<
         "\nTTTbook_page (" << pages[page_index]->page_index << ") TTTbook_page_number (";
@@ -501,9 +501,9 @@ namespace TTTbook
         else
           out << "Book (O) win!";
       out << ") TTTbook_status TTTbook_hash\n";
-      for(move_coordinate_t y = 0; y < pages[page_index]->size; y++)
+      for(move_c::coordinate_t y = 0; y < pages[page_index]->size; y++)
       {
-        for(move_coordinate_t x = 0; x < pages[page_index]->size; x++)
+        for(move_c::coordinate_t x = 0; x < pages[page_index]->size; x++)
         {
           if(x != 0)
             out << ' ';
@@ -538,7 +538,7 @@ namespace TTTbook
       }
       if(showing_marks)
       {
-        for(move_coordinate_t xy = 0; xy < pages[page_index]->size; xy++)
+        for(move_c::coordinate_t xy = 0; xy < pages[page_index]->size; xy++)
         {
           if(pages[page_index]->is_win_in_row(xy))
             out << xy << " TTTbook_mark_row\n";
@@ -582,7 +582,7 @@ namespace TTTbook
       "Book is first: " << self.book_is_first <<
       "\nShowing last move: " << self.showing_last_move <<
       "\nShuffle begin index: " << self.shuffle_begin_index << "\n\n";
-    page_index_t page_index = 0;
+    page_c::index_t page_index = 0;
     for(page_c* page: self.pages)
       out << "Page " << page_index++ << '\n' << *page << "\n\n";
     return out;

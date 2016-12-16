@@ -66,8 +66,8 @@ namespace TTTbook
       throw error_not_playable();
 
     int scores[board.size][board.size];
-    for(move_coordinate_t y = 0; y < board.size; y++)
-      for(move_coordinate_t x = 0; x < board.size; x++)
+    for(move_c::coordinate_t y = 0; y < board.size; y++)
+      for(move_c::coordinate_t x = 0; x < board.size; x++)
         if(board.fields[x][y].is_empty())
         {
           board_c board_copy(board);
@@ -77,8 +77,8 @@ namespace TTTbook
 
     move_c moves[board.size*board.size];
     int moves_number = 0;
-    for(move_coordinate_t y = 0; y < board.size; y++)
-      for(move_coordinate_t x = 0; x < board.size; x++)
+    for(move_c::coordinate_t y = 0; y < board.size; y++)
+      for(move_c::coordinate_t x = 0; x < board.size; x++)
         if(board.fields[x][y].is_empty())
           if(moves_number == 0)
           {
@@ -122,8 +122,8 @@ namespace TTTbook
 
     move_c moves[board.size*board.size];
     int moves_number = 0;
-    for(move_coordinate_t y = 0; y < board.size; y++)
-      for(move_coordinate_t x = 0; x < board.size; x++)
+    for(move_c::coordinate_t y = 0; y < board.size; y++)
+      for(move_c::coordinate_t x = 0; x < board.size; x++)
         if(board.fields[x][y].is_empty())
         {
           board_c board_copy(board);
@@ -166,8 +166,8 @@ namespace TTTbook
     }
 
     moves_number = 0;
-    for(move_coordinate_t y = 0; y < board.size; y++)
-      for(move_coordinate_t x = 0; x < board.size; x++)
+    for(move_c::coordinate_t y = 0; y < board.size; y++)
+      for(move_c::coordinate_t x = 0; x < board.size; x++)
         if(board.fields[x][y].is_empty())
         {
           board_c board_copy(board);
@@ -220,8 +220,8 @@ namespace TTTbook
 
     move_c moves[board.size*board.size];
     int moves_number = 0;
-    for(move_coordinate_t y = 0; y < board.size; y++)
-      for(move_coordinate_t x = 0; x < board.size; x++)
+    for(move_c::coordinate_t y = 0; y < board.size; y++)
+      for(move_c::coordinate_t x = 0; x < board.size; x++)
         if(board.fields[x][y].is_empty())
         {
           moves[moves_number].set(x, y);

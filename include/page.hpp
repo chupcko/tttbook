@@ -4,18 +4,18 @@
 namespace TTTbook
 {
 
-  typedef int page_index_t;
-
-  class page_c
-  : public board_c
+  class page_c :
+    public board_c
   {
     public:
 
-      static const page_index_t null_page_index = -1;
+      typedef int index_t;
 
-      page_index_t go_to_indexes[board_c::size][board_c::size];
-      page_index_t page_index;
-      page_index_t shuffle_index;
+      static const index_t null_index = -1;
+
+      index_t go_to_indexes[board_c::size][board_c::size];
+      index_t page_index;
+      index_t shuffle_index;
       bool last_move_is_set;
       move_c last_move;
 
@@ -26,8 +26,8 @@ namespace TTTbook
         init();
       }
 
-      page_c(const board_c& board_init) noexcept
-      : board_c(board_init)
+      page_c(const board_c& board_init) noexcept :
+        board_c(board_init)
       {
         init();
       }

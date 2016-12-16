@@ -5,11 +5,11 @@ namespace TTTbook
 
   void page_c::init() noexcept
   {
-    for(move_coordinate_t y = 0; y < size; y++)
-      for(move_coordinate_t x = 0; x < size; x++)
-        go_to_indexes[x][y] = null_page_index;
-    page_index = null_page_index;
-    shuffle_index = null_page_index;
+    for(move_c::coordinate_t y = 0; y < size; y++)
+      for(move_c::coordinate_t x = 0; x < size; x++)
+        go_to_indexes[x][y] = null_index;
+    page_index = null_index;
+    shuffle_index = null_index;
     last_move_is_set = false;
   }
 
@@ -18,11 +18,11 @@ namespace TTTbook
     #define LENGTH 5
 
     out << (board_c)self;
-    for(move_coordinate_t y = 0; y < self.size; y++)
+    for(move_c::coordinate_t y = 0; y < self.size; y++)
     {
       if(y != 0)
         out << "\n-" REPEAT(LENGTH, "-") "-+-" REPEAT(LENGTH, "-") "-+-" REPEAT(LENGTH, "-") "-\n";
-      for(move_coordinate_t x = 0; x < self.size; x++)
+      for(move_c::coordinate_t x = 0; x < self.size; x++)
       {
         if(x != 0)
           out << " |";
