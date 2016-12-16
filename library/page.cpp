@@ -17,11 +17,11 @@ namespace TTTbook
     #define LENGTH 5
 
     out << (board_c)self;
-    for(move_c::coordinate_t y = 0; y < self.size; y++)
+    for(move_c::coordinate_t y : move_c::all_coordinates_c(self.size))
     {
       if(y != 0)
         out << "\n-" REPEAT(LENGTH, "-") "-+-" REPEAT(LENGTH, "-") "-+-" REPEAT(LENGTH, "-") "-\n";
-      for(move_c::coordinate_t x = 0; x < self.size; x++)
+      for(move_c::coordinate_t x : move_c::all_coordinates_c(self.size))
       {
         if(x != 0)
           out << " |";

@@ -163,6 +163,7 @@ namespace TTTbook
       static const move_c::coordinate_t size = 3;
 
       status_c status;
+      int moves_number;
       field_c fields[size][size];
       player_c next_player;
       all_fields_c all_fields;

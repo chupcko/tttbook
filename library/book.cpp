@@ -499,9 +499,9 @@ namespace TTTbook
         else
           out << "Book (O) win!";
       out << ") TTTbook_status TTTbook_hash\n";
-      for(move_c::coordinate_t y = 0; y < pages[page_index]->size; y++)
+      for(move_c::coordinate_t y : move_c::all_coordinates_c(pages[page_index]->size))
       {
-        for(move_c::coordinate_t x = 0; x < pages[page_index]->size; x++)
+        for(move_c::coordinate_t x : move_c::all_coordinates_c(pages[page_index]->size))
         {
           if(x != 0)
             out << ' ';
@@ -536,7 +536,7 @@ namespace TTTbook
       }
       if(showing_marks)
       {
-        for(move_c::coordinate_t xy = 0; xy < pages[page_index]->size; xy++)
+        for(move_c::coordinate_t xy : move_c::all_coordinates_c(pages[page_index]->size))
         {
           if(pages[page_index]->is_win_in_row(xy))
             out << xy << " TTTbook_mark_row\n";

@@ -57,7 +57,7 @@ namespace TTTbook
   bool board_c::is_win_in_row(move_c::coordinate_t y, field_c::field_t field_value) const noexcept
   {
     y = move_c::normalize(size, y);
-    for(move_c::coordinate_t x = 0; x < size; x++)
+    for(move_c::coordinate_t x : move_c::all_coordinates_c(size))
       if(!fields[x][y].is(field_value))
         return false;
     return true;
@@ -66,7 +66,7 @@ namespace TTTbook
   bool board_c::is_win_in_column(move_c::coordinate_t x, field_c::field_t field_value) const noexcept
   {
     x = move_c::normalize(size, x);
-    for(move_c::coordinate_t y = 0; y < size; y++)
+    for(move_c::coordinate_t y : move_c::all_coordinates_c(size))
       if(!fields[x][y].is(field_value))
         return false;
     return true;
@@ -76,13 +76,13 @@ namespace TTTbook
   {
     if(t == 0)
     {
-      for(move_c::coordinate_t xy = 0; xy < size; xy++)
+      for(move_c::coordinate_t xy : move_c::all_coordinates_c(size))
         if(!fields[xy][xy].is(field_value))
           return false;
     }
     else
     {
-      for(move_c::coordinate_t xy = 0; xy < size; xy++)
+      for(move_c::coordinate_t xy : move_c::all_coordinates_c(size))
         if(!fields[xy][size-1-xy].is(field_value))
           return false;
     }
@@ -99,7 +99,7 @@ namespace TTTbook
 
   bool board_c::recalculate_status_is_win(field_c::field_t field_value) const noexcept
   {
-    for(move_c::coordinate_t xy = 0; xy < size; xy++)
+    for(move_c::coordinate_t xy : move_c::all_coordinates_c(size))
     {
       if(is_win_in_row(xy, field_value))
         return true;
@@ -139,6 +139,7 @@ namespace TTTbook
     all_moves_on_empty(this)
   {
     status = board_init.status;
+    moves_number = board_init.moves_number;
     for(move_c& move : all_moves)
       fields[move.x][move.y] = board_init.fields[move.x][move.y];
     next_player = board_init.next_player;
@@ -147,6 +148,7 @@ namespace TTTbook
   void board_c::init() noexcept
   {
     status.set_new();
+    moves_number = 0;
     for(field_c& field : all_fields)
       field.set_empty();
     next_player.set_x();
@@ -188,6 +190,7 @@ namespace TTTbook
     fields[move.x][move.y].fill(next_player);
     next_player.next();
     recalculate_status();
+    moves_number++;
     return status;
   }
 
@@ -204,14 +207,16 @@ namespace TTTbook
 
   std::ostream& operator<<(std::ostream& out, const board_c& self)
   {
-    out << "Status: " << self.status << '\n';
+    out <<
+      "Status: " << self.status <<
+      "\nMoves number: " << self.moves_number;
     if(self.status.is_playable())
       out << "Next player: " << self.next_player << '\n';
-    for(move_c::coordinate_t y = 0; y < self.size; y++)
+    for(move_c::coordinate_t y : move_c::all_coordinates_c(self.size))
     {
       if(y != 0)
         out << "\n---+---+---\n";
-      for(move_c::coordinate_t x = 0; x < self.size; x++)
+      for(move_c::coordinate_t x : move_c::all_coordinates_c(self.size))
       {
         if(x != 0)
           out << " |";

@@ -236,6 +236,8 @@ namespace TTTbook
 
   move_c* solver_c::calculate_move(const board_c& board) const
   {
+    if(board.moves_number < guaranteed_best*2)
+      return best_move(board);
     double bid = util_c::random_double(0.0, best_weight+modest_weight+worst_weight);
     if(bid < best_weight)
       return best_move(board);
@@ -246,8 +248,10 @@ namespace TTTbook
 
   void solver_c::info(std::ostream& out) const noexcept
   {
-    out << std::fixed << std::setprecision(5) <<
-      "Best weitgh: " << best_weight <<
+    out <<
+      "Guaranteed best: " << guaranteed_best <<
+      std::fixed << std::setprecision(5) <<
+      "\nBest weitgh: " << best_weight <<
       "\nModest weitgh: " << modest_weight <<
       "\nWorst weitgh: " << worst_weight <<
       "\nSelect: ";

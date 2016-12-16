@@ -34,6 +34,9 @@ void help(const char* name)
     "\t-m\n"
     "\t--marks\n"
     "\t\tShow marks; default: do not show\n"
+    "\t-g [number]\n"
+    "\t--guaranteed_best [number]\n"
+    "\t\tGuaranteed first best moves; default: 0, from (0 .. 5)\n"
     "\t--best_weight [number]\n"
     "\t\tBest solver weight; default: 1.0, positive number\n"
     "\t--modest_weight [number]\n"
@@ -64,29 +67,31 @@ enum long_options_target_t
   SECOND,
   LAST_MOVE,
   MARKS,
-  SHUFFLE,
+  GUARANTEED_BEST,
   BEST_WEIGHT,
   MODEST_WEIGHT,
   WORST_WEIGHT,
   SELECT,
-  BEST_SPEED
+  BEST_SPEED,
+  SHUFFLE
 };
 
 struct option long_options[] =
 {
-  {"help",          no_argument,       NULL, HELP         },
-  {"version",       no_argument,       NULL, VERSION      },
-  {"first",         required_argument, NULL, FIRST        },
-  {"second",        no_argument,       NULL, SECOND       },
-  {"last_move",     no_argument,       NULL, LAST_MOVE    },
-  {"marks",         no_argument,       NULL, MARKS        },
-  {"best_weight",   required_argument, NULL, BEST_WEIGHT  },
-  {"modest_weight", required_argument, NULL, MODEST_WEIGHT},
-  {"worst_weight",  required_argument, NULL, WORST_WEIGHT },
-  {"select",        required_argument, NULL, SELECT       },
-  {"best_speed",    required_argument, NULL, BEST_SPEED   },
-  {"shuffle",       required_argument, NULL, SHUFFLE      },
-  {0,               0,                 NULL, -2           }
+  {"help",            no_argument,       NULL, HELP           },
+  {"version",         no_argument,       NULL, VERSION        },
+  {"first",           required_argument, NULL, FIRST          },
+  {"second",          no_argument,       NULL, SECOND         },
+  {"last_move",       no_argument,       NULL, LAST_MOVE      },
+  {"marks",           no_argument,       NULL, MARKS          },
+  {"guaranteed_best", required_argument, NULL, GUARANTEED_BEST},
+  {"best_weight",     required_argument, NULL, BEST_WEIGHT    },
+  {"modest_weight",   required_argument, NULL, MODEST_WEIGHT  },
+  {"worst_weight",    required_argument, NULL, WORST_WEIGHT   },
+  {"select",          required_argument, NULL, SELECT         },
+  {"best_speed",      required_argument, NULL, BEST_SPEED     },
+  {"shuffle",         required_argument, NULL, SHUFFLE        },
+  {0,                 0,                 NULL, -2             }
 };
 
 int main(int arguments_number, char* arguments_values[])
@@ -97,6 +102,7 @@ int main(int arguments_number, char* arguments_values[])
   move_c::coordinate_t first_move_x;
   move_c::coordinate_t first_move_y;
   char* comma;
+  int guaranteed_best = 0;
   double best_weight = 1.0;
   double modest_weight = 0.0;
   double worst_weight = 0.0;
@@ -111,7 +117,7 @@ int main(int arguments_number, char* arguments_values[])
   while(true)
   {
     int option_index = 0;
-    option = getopt_long(arguments_number, arguments_values, "hv1:2lms:", long_options, &option_index);
+    option = getopt_long(arguments_number, arguments_values, "hv1:2lmg:s:", long_options, &option_index);
     if(option == -1)
       break;
     switch(option)
@@ -151,8 +157,14 @@ int main(int arguments_number, char* arguments_values[])
         break;
       case BEST_WEIGHT:
         best_weight = atof(optarg);
+        break;
+      case 'g':
+      case GUARANTEED_BEST:
+        guaranteed_best = atoi(optarg);
+        break;
       case MODEST_WEIGHT:
         modest_weight = atof(optarg);
+        break;
       case WORST_WEIGHT:
         worst_weight = atof(optarg);
         break;
@@ -212,6 +224,7 @@ int main(int arguments_number, char* arguments_values[])
   }
 
   book_c book;
+  book.set_guaranteed_best(guaranteed_best);
   book.set_best_weight(best_weight);
   book.set_modest_weight(modest_weight);
   book.set_worst_weight(worst_weight);

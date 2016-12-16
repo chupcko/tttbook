@@ -21,6 +21,7 @@ namespace TTTbook
         BEST_SPEED_SLOW = 1
       };
 
+      int guaranteed_best;
       double best_weight;
       double modest_weight;
       double worst_weight;
@@ -38,11 +39,17 @@ namespace TTTbook
 
       solver_c() noexcept
       {
+        guaranteed_best = 0;
         set_best_weight(1.0);
         set_modest_weight(0.0);
         set_worst_weight(0.0);
         set_select_random();
         set_best_speed_fast();
+      }
+
+      void set_guaranteed_best(int guaranteed_best_init) noexcept
+      {
+        guaranteed_best = guaranteed_best_init;
       }
 
       void set_best_weight(double weight) noexcept

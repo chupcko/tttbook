@@ -10,6 +10,56 @@ namespace TTTbook
 
       typedef int coordinate_t;
 
+      class all_coordinates_c
+      {
+        public:
+
+          class iterator_c
+          {
+            public:
+
+              coordinate_t position;
+
+              iterator_c(coordinate_t position_init)
+              {
+                position = position_init;
+              }
+
+              bool operator!=(const iterator_c& other) const
+              {
+                return position != other.position;
+              }
+
+              const coordinate_t& operator*() const
+              {
+                return position;
+              }
+
+              iterator_c& operator++()
+              {
+                position++;
+                return *this;
+              }
+          };
+
+          coordinate_t size;
+
+          all_coordinates_c(coordinate_t size_init)
+          {
+            size = size_init;
+          }
+
+          iterator_c begin() const
+          {
+            return iterator_c(0);
+          }
+
+          iterator_c end() const
+          {
+            return iterator_c(size);
+          }
+      };
+
       coordinate_t x;
       coordinate_t y;
 
