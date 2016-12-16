@@ -139,9 +139,8 @@ namespace TTTbook
     all_moves_on_empty(this)
   {
     status = board_init.status;
-    for(move_c::coordinate_t y = 0; y < size; y++)
-      for(move_c::coordinate_t x = 0; x < size; x++)
-        fields[x][y] = board_init.fields[x][y];
+    for(move_c& move : all_moves)
+      fields[move.x][move.y] = board_init.fields[move.x][move.y];
     next_player = board_init.next_player;
   }
 

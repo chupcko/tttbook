@@ -45,12 +45,12 @@ namespace TTTbook
             board = board_init;
           }
 
-          iterator_c begin() const
+          iterator_c begin() const noexcept
           {
             return iterator_c(board, 0);
           }
 
-          iterator_c end() const
+          iterator_c end() const noexcept
           {
             return iterator_c(board, size*size);
           }
@@ -94,12 +94,12 @@ namespace TTTbook
             board = board_init;
           }
 
-          iterator_c begin() const
+          iterator_c begin() const noexcept
           {
             return iterator_c(board, 0);
           }
 
-          iterator_c end() const
+          iterator_c end() const noexcept
           {
             return iterator_c(board, size*size);
           }
@@ -149,12 +149,12 @@ namespace TTTbook
             board = board_init;
           }
 
-          iterator_c begin() const
+          iterator_c begin() const noexcept
           {
             return iterator_c(board, 0);
           }
 
-          iterator_c end() const
+          iterator_c end() const noexcept
           {
             return iterator_c(board, size*size);
           }

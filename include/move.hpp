@@ -37,6 +37,12 @@ namespace TTTbook
         y = y_init;
       }
 
+      void set(const move_c& move_init) noexcept
+      {
+        x = move_init.x;
+        y = move_init.y;
+      }
+
       bool is(coordinate_t x_init, coordinate_t y_init) const noexcept
       {
         return

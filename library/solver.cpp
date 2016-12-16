@@ -66,38 +66,34 @@ namespace TTTbook
       throw error_not_playable();
 
     int scores[board.size][board.size];
-    for(move_c::coordinate_t y = 0; y < board.size; y++)
-      for(move_c::coordinate_t x = 0; x < board.size; x++)
-        if(board.fields[x][y].is_empty())
-        {
-          board_c board_copy(board);
-          board_copy.play(move_c(x, y));
-          scores[x][y] = best_rate(board_copy);
-        }
+    for(move_c& move : board.all_moves_on_empty)
+    {
+      board_c board_copy(board);
+      board_copy.play(move);
+      scores[move.x][move.y] = best_rate(board_copy);
+    }
 
     move_c moves[board.size*board.size];
     int moves_number = 0;
-    for(move_c::coordinate_t y = 0; y < board.size; y++)
-      for(move_c::coordinate_t x = 0; x < board.size; x++)
-        if(board.fields[x][y].is_empty())
-          if(moves_number == 0)
-          {
-            moves[0].set(x, y);
-            moves_number = 1;
-          }
-          else
-          {
-            if(scores[x][y] > scores[moves[0].x][moves[0].y])
-            {
-              moves[0].set(x, y);
-              moves_number = 1;
-            }
-            else if(scores[x][y] == scores[moves[0].x][moves[0].y])
-            {
-              moves[moves_number].set(x, y);
-              moves_number++;
-            }
-          }
+    for(move_c& move : board.all_moves_on_empty)
+      if(moves_number == 0)
+      {
+        moves[0].set(move);
+        moves_number = 1;
+      }
+      else
+      {
+        if(scores[move.x][move.y] > scores[moves[0].x][moves[0].y])
+        {
+          moves[0].set(move);
+          moves_number = 1;
+        }
+        else if(scores[move.x][move.y] == scores[moves[0].x][moves[0].y])
+        {
+          moves[moves_number].set(move);
+          moves_number++;
+        }
+      }
 
     move_c* move;
     switch(select)
@@ -122,30 +118,28 @@ namespace TTTbook
 
     move_c moves[board.size*board.size];
     int moves_number = 0;
-    for(move_c::coordinate_t y = 0; y < board.size; y++)
-      for(move_c::coordinate_t x = 0; x < board.size; x++)
-        if(board.fields[x][y].is_empty())
-        {
-          board_c board_copy(board);
-          board_copy.play(move_c(x, y));
-          switch(board.next_player.player)
+    for(move_c& move : board.all_moves_on_empty)
+    {
+      board_c board_copy(board);
+      board_copy.play(move);
+      switch(board.next_player.player)
+      {
+        case player_c::PLAYER_X:
+          if(board_copy.status.is_win_x())
           {
-            case player_c::PLAYER_X:
-              if(board_copy.status.is_win_x())
-              {
-                moves[moves_number].set(x, y);
-                moves_number++;
-              }
-              break;
-            case player_c::PLAYER_O:
-              if(board_copy.status.is_win_o())
-              {
-                moves[moves_number].set(x, y);
-                moves_number++;
-              }
-              break;
+            moves[moves_number].set(move);
+            moves_number++;
           }
-        }
+          break;
+        case player_c::PLAYER_O:
+          if(board_copy.status.is_win_o())
+          {
+            moves[moves_number].set(move);
+            moves_number++;
+          }
+          break;
+      }
+    }
 
     if(moves_number > 0)
     {
@@ -166,31 +160,29 @@ namespace TTTbook
     }
 
     moves_number = 0;
-    for(move_c::coordinate_t y = 0; y < board.size; y++)
-      for(move_c::coordinate_t x = 0; x < board.size; x++)
-        if(board.fields[x][y].is_empty())
-        {
-          board_c board_copy(board);
-          board_copy.next();
-          board_copy.play(move_c(x, y));
-          switch(board.next_player.player)
+    for(move_c& move : board.all_moves_on_empty)
+    {
+      board_c board_copy(board);
+      board_copy.next();
+      board_copy.play(move);
+      switch(board.next_player.player)
+      {
+        case player_c::PLAYER_X:
+          if(board_copy.status.is_win_o())
           {
-            case player_c::PLAYER_X:
-              if(board_copy.status.is_win_o())
-              {
-                moves[moves_number].set(x, y);
-                moves_number++;
-              }
-              break;
-            case player_c::PLAYER_O:
-              if(board_copy.status.is_win_x())
-              {
-                moves[moves_number].set(x, y);
-                moves_number++;
-              }
-              break;
+            moves[moves_number].set(move);
+            moves_number++;
           }
-        }
+          break;
+        case player_c::PLAYER_O:
+          if(board_copy.status.is_win_x())
+          {
+            moves[moves_number].set(move);
+            moves_number++;
+          }
+          break;
+      }
+    }
 
     if(moves_number > 0)
     {
@@ -220,13 +212,11 @@ namespace TTTbook
 
     move_c moves[board.size*board.size];
     int moves_number = 0;
-    for(move_c::coordinate_t y = 0; y < board.size; y++)
-      for(move_c::coordinate_t x = 0; x < board.size; x++)
-        if(board.fields[x][y].is_empty())
-        {
-          moves[moves_number].set(x, y);
-          moves_number++;
-        }
+    for(move_c& move : board.all_moves_on_empty)
+    {
+      moves[moves_number].set(move);
+      moves_number++;
+    }
 
     move_c* move;
     switch(select)

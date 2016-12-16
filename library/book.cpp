@@ -84,14 +84,12 @@ namespace TTTbook
       page_c::index_t page_index = unpublished_pages.front();
       unpublished_pages.pop_front();
       if(pages[page_index]->status.is_playable())
-        for(move_c::coordinate_t y = 0; y < pages[page_index]->size; y++)
-          for(move_c::coordinate_t x = 0; x < pages[page_index]->size; x++)
-            if(pages[page_index]->fields[x][y].is_empty())
-            {
-              board_c board_copy = board_c((board_c)*pages[page_index]);
-              board_copy.play(move_c(x, y));
-              pages[page_index]->go_to_indexes[x][y] = find_page(board_copy, true);
-            }
+        for(move_c& move : pages[page_index]->all_moves_on_empty)
+        {
+          board_c board_copy = board_c((board_c)*pages[page_index]);
+          board_copy.play(move);
+          pages[page_index]->go_to_indexes[move.x][move.y] = find_page(board_copy, true);
+        }
     }
   }
 

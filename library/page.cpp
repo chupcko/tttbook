@@ -5,9 +5,8 @@ namespace TTTbook
 
   void page_c::init() noexcept
   {
-    for(move_c::coordinate_t y = 0; y < size; y++)
-      for(move_c::coordinate_t x = 0; x < size; x++)
-        go_to_indexes[x][y] = null_index;
+    for(move_c& move : all_moves)
+      go_to_indexes[move.x][move.y] = null_index;
     page_index = null_index;
     shuffle_index = null_index;
     last_move_is_set = false;
