@@ -9,6 +9,8 @@ namespace TTTbook
   {
     public:
 
+      static const int shuffle_count_max = 10;
+
       std::vector<page_c*> pages;
       std::map<board_c::hash_t, page_c::index_t> shortcuts_before_play;
       std::map<board_c::hash_t, page_c::index_t> shortcuts_after_play;
@@ -18,13 +20,13 @@ namespace TTTbook
       bool showing_last_move;
       bool showing_marks;
       int shuffle_count;
-      page_c::index_t shuffle_begin_index;
 
     private:
 
       page_c::index_t find_page(board_c&, bool) noexcept;
       void fill_init_book_as_first() noexcept;
       void fill_init_book_as_second() noexcept;
+      void shuffle(page_c::index_t) noexcept;
 
     public:
 
@@ -33,8 +35,7 @@ namespace TTTbook
         book_play_second();
         do_not_show_last_move();
         do_not_show_marks();
-        shuffle_count = -1;
-        shuffle_begin_index = page_c::null_index;
+        set_shuffle_count(-1);
       }
 
       void book_play_first(move_c first_move_init) noexcept
@@ -76,9 +77,15 @@ namespace TTTbook
         showing_marks = false;
       }
 
+      void set_shuffle_count(int shuffle_count_init) noexcept
+      {
+        shuffle_count = shuffle_count_init;
+        if(shuffle_count > shuffle_count_max)
+          shuffle_count = shuffle_count_max;
+      }
+
       void clear() noexcept;
       void fill() noexcept;
-      void shuffle(int) noexcept;
       void write_ps(std::ostream&) const noexcept;
       void info(std::ostream&) const noexcept;
 

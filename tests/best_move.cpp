@@ -25,11 +25,12 @@ int main()
   };
   board_c board;
   solver_c solver;
-  solver.set_best_speed_slow();
   solver.set_select_first();
+  solver.set_speed_slow();
   solver.set_best_weight(1.0);
   solver.set_modest_weight(1.0);
   solver.set_worst_weight(1.0);
+  solver.set_lose_weight(1.0);
 
   for(test_t& test: tests)
   {

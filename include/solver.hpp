@@ -8,6 +8,12 @@ namespace TTTbook
   {
     public:
 
+      enum type_t
+      {
+        TYPE_NORMAL,
+        TYPE_REVERSE
+      };
+
       enum select_t
       {
         SELECT_RANDOM = 0,
@@ -15,36 +21,62 @@ namespace TTTbook
         SELECT_LAST = 2
       };
 
-      enum best_speed_t
+      enum speed_t
       {
-        BEST_SPEED_FAST = 0,
-        BEST_SPEED_SLOW = 1
+        SPEED_FAST = 0,
+        SPEED_SLOW = 1
       };
 
+      type_t type;
       int guaranteed_best;
       double best_weight;
       double modest_weight;
       double worst_weight;
+      double lose_weight;
       select_t select;
-      best_speed_t best_speed;
+      speed_t speed;
 
     private:
 
-      int best_rate(const board_c&) const noexcept;
+      double normalize_weight(double weight) const noexcept
+      {
+        if
+        (
+          std::isnan(weight) ||
+          weight < 0.0
+        )
+          return 0.0;
+        return weight;
+      }
+
+      int rate(const board_c&, move_c*(solver_c::*)(const board_c&) const) const noexcept;
       move_c* best_move(const board_c&) const;
       move_c* modest_move(const board_c&) const;
       move_c* worst_move(const board_c&) const;
+      move_c* lose_move(const board_c&) const;
 
     public:
 
       solver_c() noexcept
       {
+        set_type_normal();
         guaranteed_best = 0;
         set_best_weight(1.0);
         set_modest_weight(0.0);
         set_worst_weight(0.0);
+        set_lose_weight(0.0);
         set_select_random();
-        set_best_speed_fast();
+        set_speed_fast();
+      }
+
+      void set_type_normal() noexcept
+      {
+        type = TYPE_NORMAL;
+      }
+
+      void set_type_reverse() noexcept
+      {
+        type = TYPE_REVERSE;
       }
 
       void set_guaranteed_best(int guaranteed_best_init) noexcept
@@ -54,35 +86,22 @@ namespace TTTbook
 
       void set_best_weight(double weight) noexcept
       {
-        best_weight = weight;
-        if
-        (
-          std::isnan(best_weight) ||
-          best_weight < 0.0
-        )
-          best_weight = 0.0;
+        best_weight = normalize_weight(weight);
       }
 
       void set_modest_weight(double weight) noexcept
       {
-        modest_weight = weight;
-        if
-        (
-          std::isnan(modest_weight) ||
-          modest_weight < 0.0
-        )
-          modest_weight = 0.0;
+        modest_weight = normalize_weight(weight);
       }
 
       void set_worst_weight(double weight) noexcept
       {
-        worst_weight = weight;
-        if
-        (
-          std::isnan(worst_weight) ||
-          worst_weight < 0.0
-        )
-          worst_weight = 0.0;
+        worst_weight = normalize_weight(weight);
+      }
+
+      void set_lose_weight(double weight) noexcept
+      {
+        lose_weight = normalize_weight(weight);
       }
 
       void set_select_random() noexcept
@@ -100,14 +119,24 @@ namespace TTTbook
         select = SELECT_LAST;
       }
 
-      void set_best_speed_fast() noexcept
+      void set_speed_fast() noexcept
       {
-        best_speed = BEST_SPEED_FAST;
+        speed = SPEED_FAST;
       }
 
-      void set_best_speed_slow() noexcept
+      void set_speed_slow() noexcept
       {
-        best_speed = BEST_SPEED_SLOW;
+        speed = SPEED_SLOW;
+      }
+
+      bool is_type_normal() const noexcept
+      {
+        return type == TYPE_NORMAL;
+      }
+
+      bool is_type_reverse() const noexcept
+      {
+        return type == TYPE_REVERSE;
       }
 
       move_c* calculate_move(const board_c&) const;

@@ -13,11 +13,12 @@ int main()
   solver_c solver;
   int input;
 
-  solver.set_best_speed_slow();
   solver.set_select_first();
+  solver.set_speed_slow();
   solver.set_best_weight(0.0);
   solver.set_modest_weight(1.0);
   solver.set_worst_weight(0.0);
+  solver.set_lose_weight(0.0);
 
   for(;;)
   {

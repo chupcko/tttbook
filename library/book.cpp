@@ -37,7 +37,7 @@ namespace TTTbook
     if(move != nullptr)
     {
       pages[page_index]->last_move_is_set = true;
-      pages[page_index]->last_move = *move;
+      pages[page_index]->last_move.set(*move);
       delete move;
     }
     shortcuts_before_play[board_hash_before_play] = page_index;
@@ -52,12 +52,29 @@ namespace TTTbook
     board.play(first_move);
     page_c::index_t page_index = find_page(board, false);
     pages[page_index]->last_move_is_set = true;
-    pages[page_index]->last_move = first_move;
+    pages[page_index]->last_move.set(first_move);
   }
 
   void book_c::fill_init_book_as_second() noexcept
   {
     find_page(*new board_c, false);
+  }
+
+  void book_c::shuffle(page_c::index_t begin_index) noexcept
+  {
+    for(page_c::index_t i = 0; i < (page_c::index_t)(shuffle_count*pages.size()); i++)
+    {
+      page_c::index_t a_index = util_c::random_int(begin_index, pages.size()-1);
+      page_c::index_t b_index = util_c::random_int(begin_index, pages.size()-1);
+      while(a_index == b_index)
+        b_index = util_c::random_int(begin_index, pages.size()-1);
+      page_c::index_t page_index = pages[pages[a_index]->page_index]->shuffle_index;
+      pages[pages[a_index]->page_index]->shuffle_index = pages[pages[b_index]->page_index]->shuffle_index;
+      pages[pages[b_index]->page_index]->shuffle_index = page_index;
+      page_index = pages[a_index]->page_index;
+      pages[a_index]->page_index = pages[b_index]->page_index;
+      pages[b_index]->page_index = page_index;
+    }
   }
 
   void book_c::clear() noexcept
@@ -68,7 +85,6 @@ namespace TTTbook
     shortcuts_before_play.clear();
     shortcuts_after_play.clear();
     unpublished_pages.clear();
-    shuffle_begin_index = page_c::null_index;
   }
 
   void book_c::fill() noexcept
@@ -77,7 +93,7 @@ namespace TTTbook
       fill_init_book_as_first();
     else
       fill_init_book_as_second();
-    shuffle_begin_index = (page_c::index_t)pages.size();
+    page_c::index_t shuffle_begin_index = (page_c::index_t)pages.size();
 
     while(!unpublished_pages.empty())
     {
@@ -91,24 +107,8 @@ namespace TTTbook
           pages[page_index]->go_to_indexes[move.x][move.y] = find_page(board_copy, true);
         }
     }
-  }
-
-  void book_c::shuffle(int count) noexcept
-  {
-    shuffle_count = count;
-    for(page_c::index_t i = 0; i < (page_c::index_t)(shuffle_count*pages.size()); i++)
-    {
-      page_c::index_t a_index = util_c::random_int(shuffle_begin_index, pages.size()-1);
-      page_c::index_t b_index = util_c::random_int(shuffle_begin_index, pages.size()-1);
-      while(a_index == b_index)
-        b_index = util_c::random_int(shuffle_begin_index, pages.size()-1);
-      page_c::index_t page_index = pages[pages[a_index]->page_index]->shuffle_index;
-      pages[pages[a_index]->page_index]->shuffle_index = pages[pages[b_index]->page_index]->shuffle_index;
-      pages[pages[b_index]->page_index]->shuffle_index = page_index;
-      page_index = pages[a_index]->page_index;
-      pages[a_index]->page_index = pages[b_index]->page_index;
-      pages[b_index]->page_index = page_index;
-    }
+    if(shuffle_count > 0)
+      shuffle(shuffle_begin_index);
   }
 
   static const char* ps_header =
@@ -461,7 +461,7 @@ namespace TTTbook
     "newpath TTTbook_page_half 70 moveto ($$VERSION $$DATE) TTTbook_center_show\n"
     "/Helvetica-Bold findfont 7 scalefont setfont\n"
     "0 setgray\n"
-    "newpath TTTbook_page_half 60 moveto (by CHUPCKO) TTTbook_center_show\n"
+    "newpath TTTbook_page_half 60 moveto (by CHUPCKO) TTTbook_center_show\n$$REVERSE"
     "[ /Rect [ 0 0 TTTbook_page_size TTTbook_page_size ] /Border [ 0 0 0 ] /Page TTTbook_page_number_offset /View [ /XYZ null null null ] /LNK pdfmark\n"
     "showpage\n"
     "\n";
@@ -474,6 +474,24 @@ namespace TTTbook
     util_c::string_replace(header, "$$OFFSET", std::to_string(page_offset));
     util_c::string_replace(header, "$$VERSION", TTTBOOK_VERSION);
     util_c::string_replace(header, "$$DATE", TTTBOOK_DATE);
+    switch(type)
+    {
+      case TYPE_NORMAL:
+        util_c::string_replace(header, "$$REVERSE", "");
+        break;
+      case TYPE_REVERSE:
+        util_c::string_replace
+        (
+          header,
+          "$$REVERSE",
+          (
+            "/Helvetica-Bold findfont 7 scalefont setfont\n"
+            "0 setgray\n"
+            "newpath TTTbook_page_half 20 moveto (Reverse) TTTbook_center_show\n"
+          )
+        );
+        break;
+    }
     out << header;
     for(page_c* page: pages)
     {
@@ -489,15 +507,27 @@ namespace TTTbook
       else if(pages[page_index]->status.is_draw())
         out << "Draw!";
       else if(pages[page_index]->status.is_win_x())
-        if(book_is_first)
-          out << "Book (X) win!";
+        if(is_type_normal())
+          if(book_is_first)
+            out << "Book (X) win!";
+          else
+            out << "You (X) win!";
         else
-          out << "You (X) win!";
+          if(book_is_first)
+            out << "You (O) win!";
+          else
+            out << "Book (O) win!";
       else if(pages[page_index]->status.is_win_o())
-        if(book_is_first)
-          out << "You (O) win!";
+        if(is_type_normal())
+          if(book_is_first)
+            out << "You (O) win!";
+          else
+            out << "Book (O) win!";
         else
-          out << "Book (O) win!";
+          if(book_is_first)
+            out << "Book (X) win!";
+          else
+            out << "You (X) win!";
       out << ") TTTbook_status TTTbook_hash\n";
       for(move_c::coordinate_t y : move_c::all_coordinates_c(pages[page_index]->size))
       {
@@ -579,7 +609,8 @@ namespace TTTbook
     out << std::boolalpha <<
       "Book is first: " << self.book_is_first <<
       "\nShowing last move: " << self.showing_last_move <<
-      "\nShuffle begin index: " << self.shuffle_begin_index << "\n\n";
+      "\nShowing marks: " << self.showing_marks <<
+      "\nShuffle count: " << self.shuffle_count << "\n\n";
     page_c::index_t page_index = 0;
     for(page_c* page: self.pages)
       out << "Page " << page_index++ << '\n' << *page << "\n\n";
