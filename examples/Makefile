@@ -3,148 +3,164 @@ PS2PDF = ps2pdf
 
 .DEFAULT_GOAL := all
 .PHONY: all
-all: first_00.pdf first_01.pdf first_02.pdf first_10.pdf first_11.pdf first_12.pdf first_20.pdf first_21.pdf first_22.pdf second.pdf best.pdf modest.pdf worst.pdf lose.pdf
+all: normal reverse
 
-first_00.pdf: $(TTTBOOK)
-	$(TTTBOOK)            \
-	  --first 0,0         \
-	  --last_move         \
-	  --marks             \
-	  --guaranteed_best 2 \
-	  --best_weight 0.9   \
-	  --modest_weight 0.0 \
-	  --worst_weight 0.1  \
-	  --select random     \
-	  --speed fast        \
-	  --shuffle 5         \
-	  | $(PS2PDF) - first_00.pdf
+.PHONY: normal
+normal:                     \
+	normal_first_00.pdf \
+	normal_first_01.pdf \
+	normal_first_02.pdf \
+	normal_first_10.pdf \
+	normal_first_11.pdf \
+	normal_first_12.pdf \
+	normal_first_20.pdf \
+	normal_first_21.pdf \
+	normal_first_22.pdf \
+	normal_second.pdf   \
+	normal_best.pdf     \
+	normal_modest.pdf   \
+	normal_worst.pdf    \
 
-first_01.pdf: $(TTTBOOK)
-	$(TTTBOOK)            \
-	  --first 0,1         \
-	  --last_move         \
-	  --marks             \
-	  --guaranteed_best 2 \
-	  --best_weight 0.9   \
-	  --modest_weight 0.0 \
-	  --worst_weight 0.1  \
-	  --select random     \
-	  --speed fast        \
-	  --shuffle 5         \
-	  | $(PS2PDF) - first_01.pdf
+normal_first_00.pdf: $(TTTBOOK)
+	$(TTTBOOK)             \
+	  --first 0,0          \
+	  --last_move          \
+	  --marks              \
+	  --guaranteed_best 2  \
+	  --best_weight 0.8    \
+	  --modest_weight 0.15 \
+	  --worst_weight 0.05  \
+	  --select random      \
+	  --speed fast         \
+	  --shuffle 5          \
+	  | $(PS2PDF) - $@
 
-first_02.pdf: $(TTTBOOK)
-	$(TTTBOOK)            \
-	  --first 0,2         \
-	  --last_move         \
-	  --marks             \
-	  --guaranteed_best 2 \
-	  --best_weight 0.9   \
-	  --modest_weight 0.0 \
-	  --worst_weight 0.1  \
-	  --select random     \
-	  --speed fast        \
-	  --shuffle 5         \
-	  | $(PS2PDF) - first_02.pdf
+normal_first_01.pdf: $(TTTBOOK)
+	$(TTTBOOK)             \
+	  --first 0,1          \
+	  --last_move          \
+	  --marks              \
+	  --guaranteed_best 2  \
+	  --best_weight 0.8    \
+	  --modest_weight 0.15 \
+	  --worst_weight 0.05  \
+	  --select random      \
+	  --speed fast         \
+	  --shuffle 5          \
+	  | $(PS2PDF) - $@
 
-first_10.pdf: $(TTTBOOK)
-	$(TTTBOOK)            \
-	  --first 1,0         \
-	  --last_move         \
-	  --marks             \
-	  --guaranteed_best 2 \
-	  --best_weight 0.9   \
-	  --modest_weight 0.0 \
-	  --worst_weight 0.1  \
-	  --select random     \
-	  --speed fast        \
-	  --shuffle 5         \
-	  | $(PS2PDF) - first_10.pdf
+normal_first_02.pdf: $(TTTBOOK)
+	$(TTTBOOK)             \
+	  --first 0,2          \
+	  --last_move          \
+	  --marks              \
+	  --guaranteed_best 2  \
+	  --best_weight 0.8    \
+	  --modest_weight 0.15 \
+	  --worst_weight 0.05  \
+	  --select random      \
+	  --speed fast         \
+	  --shuffle 5          \
+	  | $(PS2PDF) - $@
 
-first_11.pdf: $(TTTBOOK)
-	$(TTTBOOK)            \
-	  --first 1,1         \
-	  --last_move         \
-	  --marks             \
-	  --guaranteed_best 2 \
-	  --best_weight 0.9   \
-	  --modest_weight 0.0 \
-	  --worst_weight 0.1  \
-	  --select random     \
-	  --speed fast        \
-	  --shuffle 5         \
-	  | $(PS2PDF) - first_11.pdf
+normal_first_10.pdf: $(TTTBOOK)
+	$(TTTBOOK)             \
+	  --first 1,0          \
+	  --last_move          \
+	  --marks              \
+	  --guaranteed_best 2  \
+	  --best_weight 0.8    \
+	  --modest_weight 0.15 \
+	  --worst_weight 0.05  \
+	  --select random      \
+	  --speed fast         \
+	  --shuffle 5          \
+	  | $(PS2PDF) - $@
 
-first_12.pdf: $(TTTBOOK)
-	$(TTTBOOK)            \
-	  --first 1,2         \
-	  --last_move         \
-	  --marks             \
-	  --guaranteed_best 2 \
-	  --best_weight 0.9   \
-	  --modest_weight 0.0 \
-	  --worst_weight 0.1  \
-	  --select random     \
-	  --speed fast        \
-	  --shuffle 5         \
-	  | $(PS2PDF) - first_12.pdf
+normal_first_11.pdf: $(TTTBOOK)
+	$(TTTBOOK)             \
+	  --first 1,1          \
+	  --last_move          \
+	  --marks              \
+	  --guaranteed_best 2  \
+	  --best_weight 0.8    \
+	  --modest_weight 0.15 \
+	  --worst_weight 0.05  \
+	  --select random      \
+	  --speed fast         \
+	  --shuffle 5          \
+	  | $(PS2PDF) - $@
 
-first_20.pdf: $(TTTBOOK)
-	$(TTTBOOK)            \
-	  --first 2,0         \
-	  --last_move         \
-	  --marks             \
-	  --guaranteed_best 2 \
-	  --best_weight 0.9   \
-	  --modest_weight 0.0 \
-	  --worst_weight 0.1  \
-	  --select random     \
-	  --speed fast        \
-	  --shuffle 5         \
-	  | $(PS2PDF) - first_20.pdf
+normal_first_12.pdf: $(TTTBOOK)
+	$(TTTBOOK)             \
+	  --first 1,2          \
+	  --last_move          \
+	  --marks              \
+	  --guaranteed_best 2  \
+	  --best_weight 0.8    \
+	  --modest_weight 0.15 \
+	  --worst_weight 0.05  \
+	  --select random      \
+	  --speed fast         \
+	  --shuffle 5          \
+	  | $(PS2PDF) - $@
 
-first_21.pdf: $(TTTBOOK)
-	$(TTTBOOK)            \
-	  --first 2,1         \
-	  --last_move         \
-	  --marks             \
-	  --guaranteed_best 2 \
-	  --best_weight 0.9   \
-	  --modest_weight 0.0 \
-	  --worst_weight 0.1  \
-	  --select random     \
-	  --speed fast        \
-	  --shuffle 5         \
-	  | $(PS2PDF) - first_21.pdf
+normal_first_20.pdf: $(TTTBOOK)
+	$(TTTBOOK)             \
+	  --first 2,0          \
+	  --last_move          \
+	  --marks              \
+	  --guaranteed_best 2  \
+	  --best_weight 0.8    \
+	  --modest_weight 0.15 \
+	  --worst_weight 0.05  \
+	  --select random      \
+	  --speed fast         \
+	  --shuffle 5          \
+	  | $(PS2PDF) - $@
 
-first_22.pdf: $(TTTBOOK)
-	$(TTTBOOK)            \
-	  --first 2,2         \
-	  --last_move         \
-	  --marks             \
-	  --guaranteed_best 2 \
-	  --best_weight 0.9   \
-	  --modest_weight 0.0 \
-	  --worst_weight 0.1  \
-	  --select random     \
-	  --speed fast        \
-	  --shuffle 5         \
-	  | $(PS2PDF) - first_22.pdf
+normal_first_21.pdf: $(TTTBOOK)
+	$(TTTBOOK)             \
+	  --first 2,1          \
+	  --last_move          \
+	  --marks              \
+	  --guaranteed_best 2  \
+	  --best_weight 0.8    \
+	  --modest_weight 0.15 \
+	  --worst_weight 0.05  \
+	  --select random      \
+	  --speed fast         \
+	  --shuffle 5          \
+	  | $(PS2PDF) - $@
 
-second.pdf: $(TTTBOOK)
-	$(TTTBOOK)            \
-	  --last_move         \
-	  --marks             \
-	  --guaranteed_best 2 \
-	  --best_weight 0.9   \
-	  --modest_weight 0.0 \
-	  --worst_weight 0.1  \
-	  --select random     \
-	  --speed fast        \
-	  --shuffle 5         \
-	  | $(PS2PDF) - second.pdf
+normal_first_22.pdf: $(TTTBOOK)
+	$(TTTBOOK)             \
+	  --first 2,2          \
+	  --last_move          \
+	  --marks              \
+	  --guaranteed_best 2  \
+	  --best_weight 0.8    \
+	  --modest_weight 0.15 \
+	  --worst_weight 0.05  \
+	  --select random      \
+	  --speed fast         \
+	  --shuffle 5          \
+	  | $(PS2PDF) - $@
 
-best.pdf: $(TTTBOOK)
+normal_second.pdf: $(TTTBOOK)
+	$(TTTBOOK)             \
+	  --last_move          \
+	  --marks              \
+	  --guaranteed_best 2  \
+	  --best_weight 0.8    \
+	  --modest_weight 0.15 \
+	  --worst_weight 0.05  \
+	  --select random      \
+	  --speed fast         \
+	  --shuffle 5          \
+	  | $(PS2PDF) - $@
+
+normal_best.pdf: $(TTTBOOK)
 	$(TTTBOOK)            \
 	  --marks             \
 	  --best_weight 1.0   \
@@ -152,9 +168,9 @@ best.pdf: $(TTTBOOK)
 	  --worst_weight 0.0  \
 	  --select first      \
 	  --speed slow        \
-	  | $(PS2PDF) - best.pdf
+	  | $(PS2PDF) - $@
 
-modest.pdf: $(TTTBOOK)
+normal_modest.pdf: $(TTTBOOK)
 	$(TTTBOOK)            \
 	  --marks             \
 	  --guaranteed_best 2 \
@@ -162,18 +178,183 @@ modest.pdf: $(TTTBOOK)
 	  --modest_weight 1.0 \
 	  --worst_weight 0.0  \
 	  --select first      \
-	  | $(PS2PDF) - modest.pdf
+	  | $(PS2PDF) - $@
 
-worst.pdf: $(TTTBOOK)
+normal_worst.pdf: $(TTTBOOK)
 	$(TTTBOOK)            \
 	  --marks             \
 	  --best_weight 0.0   \
 	  --modest_weight 0.0 \
 	  --worst_weight 1.0  \
 	  --select random     \
-	  | $(PS2PDF) - worst.pdf
+	  | $(PS2PDF) - $@
 
-lose.pdf: $(TTTBOOK)
+.PHONY: reverse
+reverse:                     \
+	reverse_first_00.pdf \
+	reverse_first_01.pdf \
+	reverse_first_02.pdf \
+	reverse_first_10.pdf \
+	reverse_first_11.pdf \
+	reverse_first_12.pdf \
+	reverse_first_20.pdf \
+	reverse_first_21.pdf \
+	reverse_first_22.pdf \
+	reverse_second.pdf   \
+	reverse_best.pdf     \
+	reverse_modest.pdf   \
+	reverse_worst.pdf    \
+
+reverse_first_00.pdf: $(TTTBOOK)
+	$(TTTBOOK)             \
+	  --reverse            \
+	  --first 0,0          \
+	  --last_move          \
+	  --marks              \
+	  --guaranteed_best 2  \
+	  --best_weight 0.8    \
+	  --modest_weight 0.15 \
+	  --worst_weight 0.05  \
+	  --select random      \
+	  --speed fast         \
+	  --shuffle 5          \
+	  | $(PS2PDF) - $@
+
+reverse_first_01.pdf: $(TTTBOOK)
+	$(TTTBOOK)             \
+	  --reverse            \
+	  --first 0,1          \
+	  --last_move          \
+	  --marks              \
+	  --guaranteed_best 2  \
+	  --best_weight 0.8    \
+	  --modest_weight 0.15 \
+	  --worst_weight 0.05  \
+	  --select random      \
+	  --speed fast         \
+	  --shuffle 5          \
+	  | $(PS2PDF) - $@
+
+reverse_first_02.pdf: $(TTTBOOK)
+	$(TTTBOOK)             \
+	  --reverse            \
+	  --first 0,2          \
+	  --last_move          \
+	  --marks              \
+	  --guaranteed_best 2  \
+	  --best_weight 0.8    \
+	  --modest_weight 0.15 \
+	  --worst_weight 0.05  \
+	  --select random      \
+	  --speed fast         \
+	  --shuffle 5          \
+	  | $(PS2PDF) - $@
+
+reverse_first_10.pdf: $(TTTBOOK)
+	$(TTTBOOK)             \
+	  --reverse            \
+	  --first 1,0          \
+	  --last_move          \
+	  --marks              \
+	  --guaranteed_best 2  \
+	  --best_weight 0.8    \
+	  --modest_weight 0.15 \
+	  --worst_weight 0.05  \
+	  --select random      \
+	  --speed fast         \
+	  --shuffle 5          \
+	  | $(PS2PDF) - $@
+
+reverse_first_11.pdf: $(TTTBOOK)
+	$(TTTBOOK)             \
+	  --reverse            \
+	  --first 1,1          \
+	  --last_move          \
+	  --marks              \
+	  --guaranteed_best 2  \
+	  --best_weight 0.8    \
+	  --modest_weight 0.15 \
+	  --worst_weight 0.05  \
+	  --select random      \
+	  --speed fast         \
+	  --shuffle 5          \
+	  | $(PS2PDF) - $@
+
+reverse_first_12.pdf: $(TTTBOOK)
+	$(TTTBOOK)             \
+	  --reverse            \
+	  --first 1,2          \
+	  --last_move          \
+	  --marks              \
+	  --guaranteed_best 2  \
+	  --best_weight 0.8    \
+	  --modest_weight 0.15 \
+	  --worst_weight 0.05  \
+	  --select random      \
+	  --speed fast         \
+	  --shuffle 5          \
+	  | $(PS2PDF) - $@
+
+reverse_first_20.pdf: $(TTTBOOK)
+	$(TTTBOOK)             \
+	  --reverse            \
+	  --first 2,0          \
+	  --last_move          \
+	  --marks              \
+	  --guaranteed_best 2  \
+	  --best_weight 0.8    \
+	  --modest_weight 0.15 \
+	  --worst_weight 0.05  \
+	  --select random      \
+	  --speed fast         \
+	  --shuffle 5          \
+	  | $(PS2PDF) - $@
+
+reverse_first_21.pdf: $(TTTBOOK)
+	$(TTTBOOK)             \
+	  --reverse            \
+	  --first 2,1          \
+	  --last_move          \
+	  --marks              \
+	  --guaranteed_best 2  \
+	  --best_weight 0.8    \
+	  --modest_weight 0.15 \
+	  --worst_weight 0.05  \
+	  --select random      \
+	  --speed fast         \
+	  --shuffle 5          \
+	  | $(PS2PDF) - $@
+
+reverse_first_22.pdf: $(TTTBOOK)
+	$(TTTBOOK)             \
+	  --reverse            \
+	  --first 2,2          \
+	  --last_move          \
+	  --marks              \
+	  --guaranteed_best 2  \
+	  --best_weight 0.8    \
+	  --modest_weight 0.15 \
+	  --worst_weight 0.05  \
+	  --select random      \
+	  --speed fast         \
+	  --shuffle 5          \
+	  | $(PS2PDF) - $@
+
+reverse_second.pdf: $(TTTBOOK)
+	$(TTTBOOK)             \
+	  --reverse            \
+	  --last_move          \
+	  --marks              \
+	  --guaranteed_best 2  \
+	  --best_weight 0.8    \
+	  --modest_weight 0.15 \
+	  --worst_weight 0.05  \
+	  --select random      \
+	  --speed fast         \
+	  --shuffle 5          \
+	  | $(PS2PDF) - $@
+
+reverse_best.pdf: $(TTTBOOK)
 	$(TTTBOOK)            \
 	  --reverse           \
 	  --marks             \
@@ -182,10 +363,28 @@ lose.pdf: $(TTTBOOK)
 	  --worst_weight 0.0  \
 	  --select first      \
 	  --speed slow        \
-	  | $(PS2PDF) - lose.pdf
+	  | $(PS2PDF) - $@
 
-.PHONY: debug
-debug: all
+reverse_modest.pdf: $(TTTBOOK)
+	$(TTTBOOK)            \
+	  --reverse           \
+	  --marks             \
+	  --guaranteed_best 2 \
+	  --best_weight 0.0   \
+	  --modest_weight 1.0 \
+	  --worst_weight 0.0  \
+	  --select first      \
+	  | $(PS2PDF) - $@
+
+reverse_worst.pdf: $(TTTBOOK)
+	$(TTTBOOK)            \
+	  --reverse           \
+	  --marks             \
+	  --best_weight 0.0   \
+	  --modest_weight 0.0 \
+	  --worst_weight 1.0  \
+	  --select random     \
+	  | $(PS2PDF) - $@
 
 .PHONY: clean
 clean:

@@ -1,19 +1,18 @@
 .DEFAULT_GOAL := all
 .PHONY: all
-all: source- tests-
+all: source-
 
 .PHONY: debug
 debug: source-debug tests-debug
 
-.PHONY: clean
-clean: library-clean source-clean tests-clean examples-clean
+.PHONY: tests
+tests: tests-
 
 .PHONY: examples
 examples: examples-
 
-.PHONY: do_tests
-do_tests: tests-clean tests-debug
-	tools/do_tests
+.PHONY: clean
+clean: library-clean source-clean tests-clean examples-clean
 
 define GENERATE_GOALS_CORE =
   GOALS += $(1)-$(2:all=)

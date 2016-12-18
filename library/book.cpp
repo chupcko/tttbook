@@ -85,6 +85,9 @@ namespace TTTbook
     shortcuts_before_play.clear();
     shortcuts_after_play.clear();
     unpublished_pages.clear();
+    statistic_draw = 0;
+    statistic_win_x = 0;
+    statistic_win_o = 0;
   }
 
   void book_c::fill() noexcept
@@ -106,6 +109,12 @@ namespace TTTbook
           board_copy.play(move);
           pages[page_index]->go_to_indexes[move.x][move.y] = find_page(board_copy, true);
         }
+      else if(pages[page_index]->status.is_draw())
+        statistic_draw++;
+      else if(pages[page_index]->status.is_win_x())
+        statistic_win_x++;
+      else if(pages[page_index]->status.is_win_o())
+        statistic_win_o++;
     }
     if(shuffle_count > 0)
       shuffle(shuffle_begin_index);
@@ -122,65 +131,6 @@ namespace TTTbook
     "/TTTbook_init\n"
     "{\n"
     "  72 25.4 div dup scale\n"
-    "} def\n"
-    "\n"
-    "%%EndResource\n"
-    "%%BeginResource: TTTbook_center_show\n"
-    "\n"
-    "/TTTbook_center_show\n"
-    "{\n"
-    "  3 dict begin\n"
-    "    /text exch def\n"
-    "    text stringwidth\n"
-    "    /height exch def\n"
-    "    /width exch def\n"
-    "    width 2 div neg 0 rmoveto text show\n"
-    "  end\n"
-    "} def\n"
-    "\n"
-    "%%EndResource\n"
-    "%%BeginResource: TTTbook_watermark\n"
-    "\n"
-    "/TTTbook_watermark\n"
-    "{\n"
-    "  4 dict begin\n"
-    "    gsave\n"
-    "      TTTbook_page_half TTTbook_page_half translate\n"
-    "      45 rotate\n"
-    "      TTTbook_watermark_font setfont\n"
-    "      newpath 0 0 moveto TTTbook_watermark_text true charpath pathbbox\n"
-    "      /ury exch def /urx exch def /lly exch def /llx exch def\n"
-    "      TTTbook_watermark_gray setgray\n"
-    "      newpath llx urx add 2 div neg lly ury add 2 div neg moveto TTTbook_watermark_text show\n"
-    "    grestore\n"
-    "  end\n"
-    "} def\n"
-    "\n"
-    "%%EndResource\n"
-    "%%BeginResource: TTTbook_footer\n"
-    "\n"
-    "/TTTbook_footer\n"
-    "{\n"
-    "  4 dict begin\n"
-    "    gsave\n"
-    "      TTTbook_footer_font setfont\n"
-    "      TTTbook_footer_gray setgray\n"
-    "      newpath TTTbook_margin_size TTTbook_margin_size moveto TTTbook_footer_text show\n"
-    "      newpath TTTbook_margin_size TTTbook_margin_size moveto TTTbook_footer_text true charpath pathbbox\n"
-    "      /ury exch def /urx exch def /lly exch def /llx exch def\n"
-    "      [ /Rect [ 0 0 urx TTTbook_margin_size add ury TTTbook_margin_size add ] /Border [ 0 0 0 ] /Page TTTbook_page_number_offset /View [ /XYZ null null null ] /LNK pdfmark\n"
-    "    grestore\n"
-    "  end\n"
-    "} def\n"
-    "\n"
-    "%%EndResource\n"
-    "%%BeginResource: TTTbook_page\n"
-    "\n"
-    "/TTTbook_page\n"
-    "{\n"
-    "  TTTbook_init\n"
-    "  TTTbook_watermark\n"
-    "  TTTbook_footer\n"
     "} def\n"
     "\n"
     "%%EndResource\n"
@@ -206,6 +156,106 @@ namespace TTTbook
     "} def\n"
     "\n"
     "%%EndResource\n"
+    "%%BeginResource: TTTbook_watermark\n"
+    "\n"
+    "/TTTbook_watermark\n"
+    "{\n"
+    "  5 dict begin\n"
+    "    gsave\n"
+    "      TTTbook_page_half TTTbook_page_half translate\n"
+    "      45 rotate\n"
+    "      TTTbook_font_bold 25 selectfont\n"
+    "      /text (CHUPCKO) def\n"
+    "      newpath 0 0 moveto text true charpath pathbbox\n"
+    "      /ury exch def /urx exch def /lly exch def /llx exch def\n"
+    "      0.95 setgray\n"
+    "      newpath llx urx add 2 div neg lly ury add 2 div neg moveto text show\n"
+    "    grestore\n"
+    "  end\n"
+    "} def\n"
+    "\n"
+    "%%EndResource\n"
+    "%%BeginResource: TTTbook_footer\n"
+    "\n"
+    "/TTTbook_footer\n"
+    "{\n"
+    "  gsave\n"
+    "    0.75 setgray\n"
+    "    TTTbook_font 2 selectfont\n"
+    "    newpath TTTbook_margin_size TTTbook_margin_size moveto (TTTbook $$VERSION $$DATE by CHUPCKO) show\n"
+    "  grestore\n"
+    "} def\n"
+    "\n"
+    "%%EndResource\n"
+    "%%BeginResource: TTTbook_go_to_begin\n"
+    "\n"
+    "/TTTbook_go_to_begin\n"
+    "{\n"
+    "  [ /Rect [ 0 0 TTTbook_page_size TTTbook_page_size ] /Border [ 0 0 0 ] /Page TTTbook_page_number_offset /View [ /XYZ null null null ] /LNK pdfmark\n"
+    "} def\n"
+    "\n"
+    "%%EndResource\n"
+    "%%BeginResource: TTTbook_center_show\n"
+    "\n"
+    "/TTTbook_center_show\n"
+    "{\n"
+    "  3 dict begin\n"
+    "    /text exch def\n"
+    "    text stringwidth\n"
+    "    /height exch def\n"
+    "    /width exch def\n"
+    "    width 2 div neg 0 rmoveto text show\n"
+    "  end\n"
+    "} def\n"
+    "\n"
+    "%%EndResource\n"
+    "%%BeginResource: TTTbook_top_left_show\n"
+    "\n"
+    "/TTTbook_top_left_show\n"
+    "{\n"
+    "  8 dict begin\n"
+    "    /text exch def\n"
+    "    /line_space exch def\n"
+    "    /y exch def\n"
+    "    /x exch def\n"
+    "    /first_line\n"
+    "    {\n"
+    "      text (\n) search\n"
+    "      {\n"
+    "        3 1 roll\n"
+    "        pop\n"
+    "        pop\n"
+    "      } if\n"
+    "    } bind def\n"
+    "    newpath 0 0 moveto first_line true charpath pathbbox\n"
+    "    /ury exch def /urx exch def /lly exch def /llx exch def\n"
+    "    x y ury sub moveto\n"
+    "    {\n"
+    "      4 dict begin\n"
+    "        /next_char exch def\n"
+    "        /last_char exch def\n"
+    "        last_char (\n) 0 get eq\n"
+    "        {\n"
+    "          currentpoint\n"
+    "          /cy exch def /cx exch def\n"
+    "          x cy line_space sub moveto\n"
+    "        } if\n"
+    "      end\n"
+    "    } text kshow\n"
+    "  end\n"
+    "} def\n"
+    "\n"
+    "%%EndResource\n"
+    "%%BeginResource: TTTbook_page\n"
+    "\n"
+    "/TTTbook_page\n"
+    "{\n"
+    "  TTTbook_init\n"
+    "  TTTbook_watermark\n"
+    "  TTTbook_footer\n"
+    "} def\n"
+    "\n"
+    "%%EndResource\n"
     "%%BeginResource: TTTbook_page_number\n"
     "\n"
     "/TTTbook_page_number\n"
@@ -213,10 +263,10 @@ namespace TTTbook
     "  5 dict begin\n"
     "    /page_number exch def\n"
     "    gsave\n"
-    "      TTTbook_page_number_font setfont\n"
+    "      TTTbook_font_bold TTTbook_font_size selectfont\n"
     "      newpath 0 0 moveto page_number true charpath pathbbox\n"
     "      /ury exch def /urx exch def /lly exch def /llx exch def\n"
-    "      TTTbook_page_number_gray setgray\n"
+    "      TTTbook_gray setgray\n"
     "      newpath TTTbook_margin_right urx sub TTTbook_margin_size moveto page_number show\n"
     "    grestore\n"
     "  end\n"
@@ -230,11 +280,11 @@ namespace TTTbook
     "  5 dict begin\n"
     "    /status exch def\n"
     "    gsave\n"
-    "      TTTbook_status_font setfont\n"
+    "      TTTbook_font_bold TTTbook_font_size selectfont\n"
     "      newpath 0 0 moveto status true charpath pathbbox\n"
     "      /ury exch def /urx exch def /lly exch def /llx exch def\n"
-    "      TTTbook_status_gray setgray\n"
-    "      newpath TTTbook_margin_size llx sub TTTbook_margin_right ury sub moveto status show\n"
+    "      TTTbook_gray setgray\n"
+    "      newpath TTTbook_margin_size TTTbook_margin_right ury sub moveto status show\n"
     "    grestore\n"
     "  end\n"
     "} def\n"
@@ -287,10 +337,10 @@ namespace TTTbook
     "    /go_to exch def\n"
     "    gsave\n"
     "      TTTbook_find translate\n"
-    "      TTTbook_go_to_font setfont\n"
+    "      TTTbook_font_bold TTTbook_font_size selectfont\n"
     "      newpath 0 0 moveto go_to true charpath pathbbox\n"
     "      /ury exch def /urx exch def /lly exch def /llx exch def\n"
-    "      TTTbook_go_to_gray setgray\n"
+    "      TTTbook_gray setgray\n"
     "      newpath llx urx add 2 div neg lly ury add 2 div neg moveto go_to show\n"
     "      [ /Rect [ TTTbook_go_to_half neg TTTbook_go_to_half neg TTTbook_go_to_half TTTbook_go_to_half ] /Border [ 0 0 0 ] /Page go_to cvi TTTbook_page_number_offset add /View [ /XYZ null null null ] /LNK pdfmark\n"
     "    grestore\n"
@@ -415,28 +465,9 @@ namespace TTTbook
     "      }\n"
     "      {\n"
     "        newpath TTTbook_board_left TTTbook_board_left moveto TTTbook_board_right TTTbook_board_right lineto stroke\n"
-    "      }\n"
-    "      ifelse\n"
+    "      } ifelse\n"
     "    grestore\n"
     "} def\n"
-    "\n"
-    "%%EndResource\n"
-    "%%BeginResource: TTTbook_info_proc\n"
-    "\n"
-    "/TTTbook_info_proc\n"
-    "{{\n"
-    "  1 dict begin\n"
-    "    pop\n"
-    "    10 eq\n"
-    "    {\n"
-    "      currentpoint\n"
-    "      /y exch def\n"
-    "      pop\n"
-    "      TTTbook_info_margin y TTTbook_info_line_space sub moveto\n"
-    "    }\n"
-    "    if\n"
-    "  end\n"
-    "}} def\n"
     "\n"
     "%%EndResource\n"
     "%%EndProlog\n"
@@ -445,30 +476,21 @@ namespace TTTbook
     "\n"
     "/TTTbook_page_size 120 def\n"
     "/TTTbook_margin_size 7.5 def\n"
+    "/TTTbook_gray 0 def\n"
+    "/TTTbook_font /Helvetica def"
+    "/TTTbook_font_bold /Helvetica-Bold def"
+    "/TTTbook_font_size 5 def"
     "/TTTbook_field_size 25 def\n"
     "/TTTbook_symbol_size 15 def\n"
     "/TTTbook_page_number_offset $$OFFSET def\n"
-    "/TTTbook_watermark_text (CHUPCKO) def\n"
-    "/TTTbook_watermark_font /Helvetica-Bold findfont 25 scalefont def\n"
-    "/TTTbook_watermark_gray 0.95 def\n"
-    "/TTTbook_footer_text (TTTbook $$VERSION $$DATE by CHUPCKO) def\n"
-    "/TTTbook_footer_font /Helvetica findfont 2 scalefont def\n"
-    "/TTTbook_footer_gray 0.75 def\n"
-    "/TTTbook_page_number_font /Helvetica-Bold findfont 5 scalefont def\n"
-    "/TTTbook_page_number_gray 0 def\n"
-    "/TTTbook_status_font /Helvetica-Bold findfont 5 scalefont def\n"
-    "/TTTbook_status_gray 0 def\n"
     "/TTTbook_hash_width 2 def\n"
     "/TTTbook_hash_gray 0 def\n"
-    "/TTTbook_go_to_font /Helvetica-Bold findfont 5 scalefont def\n"
-    "/TTTbook_go_to_gray 0 def\n"
     "/TTTbook_symbol_width 2 def\n"
     "/TTTbook_symbol_gray 0 def\n"
     "/TTTbook_symbol_last_outline 0.5 def\n"
     "/TTTbook_symbol_last_gray 0.75 def\n"
     "/TTTbook_mark_width 1 def\n"
     "/TTTbook_mark_gray 0.5 def\n"
-    "/TTTbook_info_font_size 5 def\n"
     "\n"
     "/TTTbook_page_half TTTbook_page_size 2 div def\n"
     "/TTTbook_margin_right TTTbook_page_size TTTbook_margin_size sub def\n"
@@ -481,41 +503,54 @@ namespace TTTbook
     "/TTTbook_go_to_half TTTbook_field_size TTTbook_hash_width sub TTTbook_hash_width sub 2 div def\n"
     "/TTTbook_symbol_half TTTbook_symbol_size 2 div def\n"
     "/TTTbook_symbol_last_width TTTbook_symbol_width TTTbook_symbol_last_outline sub def\n"
-    "/TTTbook_info_line_space TTTbook_info_font_size 1.2 mul def\n"
-    "/TTTbook_info_margin TTTbook_margin_size 2 mul def\n"
     "\n"
     "<< /PageSize [ TTTbook_page_size 72 mul 25.4 div dup ] >> setpagedevice\n"
-    "/pdfmark where {pop} {userdict /pdfmark /cleartomark load put} ifelse\n"
+    "/pdfmark where\n"
+    "{\n"
+    "  pop\n"
+    "}\n"
+    "{\n"
+    "  userdict /pdfmark /cleartomark load put\n"
+    "} ifelse\n"
     "[ /Title (TTTbook) /Author (CHUPCKO) /Subject () /Keywords () /Creator (TTTbook) /DOCINFO pdfmark\n"
     "\n"
     "%%EndSetup\n"
     "\n"
     "%%Page: 1 1\n"
     "TTTbook_init\n"
-    "/Helvetica-Bold findfont 21 scalefont setfont\n"
-    "0 setgray\n"
-    "newpath TTTbook_page_half 80 moveto (TTTbook) TTTbook_center_show\n"
-    "/Helvetica findfont 7 scalefont setfont\n"
-    "0 setgray\n"
-    "newpath TTTbook_page_half 70 moveto ($$VERSION $$DATE) TTTbook_center_show\n"
-    "/Helvetica-Bold findfont 7 scalefont setfont\n"
-    "0 setgray\n"
-    "newpath TTTbook_page_half 60 moveto (by CHUPCKO) TTTbook_center_show\n"
-    "/Helvetica findfont 5 scalefont setfont\n"
-    "0 setgray\n"
-    "newpath TTTbook_page_half 21 moveto ($$TYPE edition) TTTbook_center_show\n"
-    "/Helvetica findfont 5 scalefont setfont\n"
-    "0 setgray\n"
-    "newpath TTTbook_page_half 15 moveto ($$FIRST play first at page 0) TTTbook_center_show\n"
-    "[ /Rect [ 0 0 TTTbook_page_size TTTbook_page_size ] /Border [ 0 0 0 ] /Page TTTbook_page_number_offset /View [ /XYZ null null null ] /LNK pdfmark\n"
+    "gsave\n"
+    "  TTTbook_gray setgray\n"
+    "  TTTbook_font_bold 21 selectfont\n"
+    "  newpath TTTbook_page_half 80 moveto (TTTbook) TTTbook_center_show\n"
+    "  TTTbook_font 7 selectfont\n"
+    "  newpath TTTbook_page_half 70 moveto ($$VERSION $$DATE) TTTbook_center_show\n"
+    "  newpath TTTbook_page_half 60 moveto (by CHUPCKO) TTTbook_center_show\n"
+    "  TTTbook_font TTTbook_font_size selectfont\n"
+    "  newpath TTTbook_page_half 21 moveto ($$TYPE edition) TTTbook_center_show\n"
+    "  newpath TTTbook_page_half 15 moveto ($$FIRST play first at page 0) TTTbook_center_show\n"
+    "grestore\n"
+    "TTTbook_go_to_begin\n"
+    "showpage\n"
+    "\n"
+    "%%Page: 2 2\n"
+    "TTTbook_page (-1) TTTbook_page_number\n"
+    "gsave\n"
+    "  TTTbook_gray setgray\n"
+    "  TTTbook_font TTTbook_font_size selectfont\n"
+    "  newpath\n"
+    "    TTTbook_margin_size TTTbook_margin_right TTTbook_font_size 1.2 mul\n"
+    "    ($$INFO)\n"
+    "  TTTbook_top_left_show\n"
+    "grestore\n"
+    "TTTbook_go_to_begin\n"
     "showpage\n"
     "\n";
 
   void book_c::write_ps(std::ostream& out) const noexcept
   {
-    const page_c::index_t page_offset = 2;
+    const page_c::index_t page_offset = 3;
     std::string header = ps_header;
-    util_c::string_replace(header, "$$PAGES", std::to_string(pages.size()+page_offset));
+    util_c::string_replace(header, "$$PAGES", std::to_string(pages.size()+page_offset-1));
     util_c::string_replace(header, "$$OFFSET", std::to_string(page_offset));
     util_c::string_replace(header, "$$VERSION", TTTBOOK_VERSION);
     util_c::string_replace(header, "$$DATE", TTTBOOK_DATE);
@@ -532,10 +567,28 @@ namespace TTTbook
       util_c::string_replace(header, "$$FIRST", "Book");
     else
       util_c::string_replace(header, "$$FIRST", "You");
+
+    std::ostringstream info_string;
+    info(info_string);
+    int you_win;
+    int book_win;
+    if(book_is_first)
+    {
+      book_win = statistic_win_x;
+      you_win = statistic_win_o;
+    }
+    else
+    {
+      you_win = statistic_win_x;
+      book_win = statistic_win_o;
+    }
+    info_string <<
+      "\nYou can win " << you_win << " times\n" <<
+      "Can be a draw " << statistic_draw << " times\n" <<
+      "Book can win " << book_win << " times\n";
+    util_c::string_replace(header, "$$INFO", info_string.str());
     out << header;
-    int you_win = 0;
-    int draw = 0;
-    int book_win = 0;
+
     for(page_c* page: pages)
     {
       page_c::index_t page_index = page->shuffle_index;
@@ -548,58 +601,29 @@ namespace TTTbook
         else
           out << "Play as X, go to page:";
       else if(pages[page_index]->status.is_draw())
-      {
         out << "Draw!";
-        draw++;
-      }
       else if(pages[page_index]->status.is_win_x())
-      {
         if(is_type_normal())
           if(book_is_first)
-          {
             out << "Book (X) win!";
-            book_win++;
-          }
           else
-          {
             out << "You (X) win!";
-            you_win++;
-          }
         else
           if(book_is_first)
-          {
             out << "You (O) win!";
-            you_win++;
-          }
           else
-          {
             out << "Book (O) win!";
-            book_win++;
-          }
-      }
       else if(pages[page_index]->status.is_win_o())
         if(is_type_normal())
           if(book_is_first)
-          {
             out << "You (O) win!";
-            you_win++;
-          }
           else
-          {
             out << "Book (O) win!";
-            book_win++;
-          }
         else
           if(book_is_first)
-          {
             out << "Book (X) win!";
-            book_win++;
-          }
           else
-          {
             out << "You (X) win!";
-            you_win++;
-          }
       out << ") TTTbook_status TTTbook_hash\n";
       for(move_c::coordinate_t y : move_c::all_coordinates_c(pages[page_index]->size))
       {
@@ -650,26 +674,11 @@ namespace TTTbook
         if(pages[page_index]->is_win_in_diagonal(1))
           out << "1 TTTbook_mark_diagonal\n";
       }
+      if(!pages[page_index]->status.is_playable())
+        out << "TTTbook_go_to_begin\n";
       out << "showpage\n\n";
     }
-    std::ostringstream info_string;
-    info(info_string);
-    out <<
-      "%%Page: " << pages.size()+page_offset << ' ' << pages.size()+page_offset <<
-      "\nTTTbook_init\n"
-      "TTTbook_watermark\n"
-      "/Helvetica findfont TTTbook_info_font_size scalefont setfont\n"
-      "0 setgray\n"
-      "newpath\n"
-      "  TTTbook_info_margin TTTbook_page_size TTTbook_info_margin sub TTTbook_info_line_space sub moveto\n"
-      "  TTTbook_info_proc (" << info_string.str() <<
-      "\nYou win " << you_win << " times\n" <<
-      "Draw " << draw << " times\n" <<
-      "Book win " << book_win << " times\n)\n"
-      "kshow\n"
-      "showpage\n"
-      "\n"
-      "%%EOF\n";
+    out << "%%EOF\n";
   }
 
   void book_c::info(std::ostream& out) const noexcept

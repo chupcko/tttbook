@@ -209,7 +209,7 @@ namespace TTTbook
   {
     out <<
       "Status: " << self.status <<
-      "\nMoves number: " << self.moves_number;
+      "\nMoves number: " << self.moves_number << '\n';
     if(self.status.is_playable())
       out << "Next player: " << self.next_player << '\n';
     for(move_c::coordinate_t y : move_c::all_coordinates_c(self.size))

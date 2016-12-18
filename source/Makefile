@@ -16,7 +16,6 @@ all: $(TARGET)
 debug: COMPILER_FLAGS += -g
 debug: $(TARGET)
 
-
 .PHONY: clean
 clean:
 	rm -rf $(TARGET)
