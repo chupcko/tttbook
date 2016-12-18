@@ -14,7 +14,6 @@ first_00.pdf: $(TTTBOOK)
 	  --best_weight 0.9   \
 	  --modest_weight 0.0 \
 	  --worst_weight 0.1  \
-	  --lose_weight 0.0   \
 	  --select random     \
 	  --speed fast        \
 	  --shuffle 5         \
@@ -29,7 +28,6 @@ first_01.pdf: $(TTTBOOK)
 	  --best_weight 0.9   \
 	  --modest_weight 0.0 \
 	  --worst_weight 0.1  \
-	  --lose_weight 0.0   \
 	  --select random     \
 	  --speed fast        \
 	  --shuffle 5         \
@@ -44,7 +42,6 @@ first_02.pdf: $(TTTBOOK)
 	  --best_weight 0.9   \
 	  --modest_weight 0.0 \
 	  --worst_weight 0.1  \
-	  --lose_weight 0.0   \
 	  --select random     \
 	  --speed fast        \
 	  --shuffle 5         \
@@ -59,7 +56,6 @@ first_10.pdf: $(TTTBOOK)
 	  --best_weight 0.9   \
 	  --modest_weight 0.0 \
 	  --worst_weight 0.1  \
-	  --lose_weight 0.0   \
 	  --select random     \
 	  --speed fast        \
 	  --shuffle 5         \
@@ -74,7 +70,6 @@ first_11.pdf: $(TTTBOOK)
 	  --best_weight 0.9   \
 	  --modest_weight 0.0 \
 	  --worst_weight 0.1  \
-	  --lose_weight 0.0   \
 	  --select random     \
 	  --speed fast        \
 	  --shuffle 5         \
@@ -89,7 +84,6 @@ first_12.pdf: $(TTTBOOK)
 	  --best_weight 0.9   \
 	  --modest_weight 0.0 \
 	  --worst_weight 0.1  \
-	  --lose_weight 0.0   \
 	  --select random     \
 	  --speed fast        \
 	  --shuffle 5         \
@@ -104,7 +98,6 @@ first_20.pdf: $(TTTBOOK)
 	  --best_weight 0.9   \
 	  --modest_weight 0.0 \
 	  --worst_weight 0.1  \
-	  --lose_weight 0.0   \
 	  --select random     \
 	  --speed fast        \
 	  --shuffle 5         \
@@ -119,7 +112,6 @@ first_21.pdf: $(TTTBOOK)
 	  --best_weight 0.9   \
 	  --modest_weight 0.0 \
 	  --worst_weight 0.1  \
-	  --lose_weight 0.0   \
 	  --select random     \
 	  --speed fast        \
 	  --shuffle 5         \
@@ -134,7 +126,6 @@ first_22.pdf: $(TTTBOOK)
 	  --best_weight 0.9   \
 	  --modest_weight 0.0 \
 	  --worst_weight 0.1  \
-	  --lose_weight 0.0   \
 	  --select random     \
 	  --speed fast        \
 	  --shuffle 5         \
@@ -148,7 +139,6 @@ second.pdf: $(TTTBOOK)
 	  --best_weight 0.9   \
 	  --modest_weight 0.0 \
 	  --worst_weight 0.1  \
-	  --lose_weight 0.0   \
 	  --select random     \
 	  --speed fast        \
 	  --shuffle 5         \
@@ -160,7 +150,6 @@ best.pdf: $(TTTBOOK)
 	  --best_weight 1.0   \
 	  --modest_weight 0.0 \
 	  --worst_weight 0.0  \
-	  --lose_weight 0.0   \
 	  --select first      \
 	  --speed slow        \
 	  | $(PS2PDF) - best.pdf
@@ -172,7 +161,6 @@ modest.pdf: $(TTTBOOK)
 	  --best_weight 0.0   \
 	  --modest_weight 1.0 \
 	  --worst_weight 0.0  \
-	  --lose_weight 0.0   \
 	  --select first      \
 	  | $(PS2PDF) - modest.pdf
 
@@ -182,7 +170,6 @@ worst.pdf: $(TTTBOOK)
 	  --best_weight 0.0   \
 	  --modest_weight 0.0 \
 	  --worst_weight 1.0  \
-	  --lose_weight 0.0   \
 	  --select random     \
 	  | $(PS2PDF) - worst.pdf
 
@@ -190,10 +177,9 @@ lose.pdf: $(TTTBOOK)
 	$(TTTBOOK)            \
 	  --reverse           \
 	  --marks             \
-	  --best_weight 0.0   \
+	  --best_weight 1.0   \
 	  --modest_weight 0.0 \
 	  --worst_weight 0.0  \
-	  --lose_weight 1.0   \
 	  --select first      \
 	  --speed slow        \
 	  | $(PS2PDF) - lose.pdf

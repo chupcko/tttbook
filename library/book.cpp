@@ -139,11 +139,10 @@ namespace TTTbook
     "} def\n"
     "\n"
     "%%EndResource\n"
-    "%%BeginResource: TTTbook_page\n"
+    "%%BeginResource: TTTbook_watermark\n"
     "\n"
-    "/TTTbook_page\n"
+    "/TTTbook_watermark\n"
     "{\n"
-    "  TTTbook_init\n"
     "  4 dict begin\n"
     "    gsave\n"
     "      TTTbook_page_half TTTbook_page_half translate\n"
@@ -154,6 +153,15 @@ namespace TTTbook
     "      TTTbook_watermark_gray setgray\n"
     "      newpath llx urx add 2 div neg lly ury add 2 div neg moveto TTTbook_watermark_text show\n"
     "    grestore\n"
+    "  end\n"
+    "} def\n"
+    "\n"
+    "%%EndResource\n"
+    "%%BeginResource: TTTbook_footer\n"
+    "\n"
+    "/TTTbook_footer\n"
+    "{\n"
+    "  4 dict begin\n"
     "    gsave\n"
     "      TTTbook_footer_font setfont\n"
     "      TTTbook_footer_gray setgray\n"
@@ -163,6 +171,16 @@ namespace TTTbook
     "      [ /Rect [ 0 0 urx TTTbook_margin_size add ury TTTbook_margin_size add ] /Border [ 0 0 0 ] /Page TTTbook_page_number_offset /View [ /XYZ null null null ] /LNK pdfmark\n"
     "    grestore\n"
     "  end\n"
+    "} def\n"
+    "\n"
+    "%%EndResource\n"
+    "%%BeginResource: TTTbook_page\n"
+    "\n"
+    "/TTTbook_page\n"
+    "{\n"
+    "  TTTbook_init\n"
+    "  TTTbook_watermark\n"
+    "  TTTbook_footer\n"
     "} def\n"
     "\n"
     "%%EndResource\n"
@@ -403,6 +421,24 @@ namespace TTTbook
     "} def\n"
     "\n"
     "%%EndResource\n"
+    "%%BeginResource: TTTbook_info_proc\n"
+    "\n"
+    "/TTTbook_info_proc\n"
+    "{{\n"
+    "  1 dict begin\n"
+    "    pop\n"
+    "    10 eq\n"
+    "    {\n"
+    "      currentpoint\n"
+    "      /y exch def\n"
+    "      pop\n"
+    "      TTTbook_info_margin y TTTbook_info_line_space sub moveto\n"
+    "    }\n"
+    "    if\n"
+    "  end\n"
+    "}} def\n"
+    "\n"
+    "%%EndResource\n"
     "%%EndProlog\n"
     "\n"
     "%%BeginSetup\n"
@@ -432,6 +468,7 @@ namespace TTTbook
     "/TTTbook_symbol_last_gray 0.75 def\n"
     "/TTTbook_mark_width 1 def\n"
     "/TTTbook_mark_gray 0.5 def\n"
+    "/TTTbook_info_font_size 5 def\n"
     "\n"
     "/TTTbook_page_half TTTbook_page_size 2 div def\n"
     "/TTTbook_margin_right TTTbook_page_size TTTbook_margin_size sub def\n"
@@ -444,6 +481,8 @@ namespace TTTbook
     "/TTTbook_go_to_half TTTbook_field_size TTTbook_hash_width sub TTTbook_hash_width sub 2 div def\n"
     "/TTTbook_symbol_half TTTbook_symbol_size 2 div def\n"
     "/TTTbook_symbol_last_width TTTbook_symbol_width TTTbook_symbol_last_outline sub def\n"
+    "/TTTbook_info_line_space TTTbook_info_font_size 1.2 mul def\n"
+    "/TTTbook_info_margin TTTbook_margin_size 2 mul def\n"
     "\n"
     "<< /PageSize [ TTTbook_page_size 72 mul 25.4 div dup ] >> setpagedevice\n"
     "/pdfmark where {pop} {userdict /pdfmark /cleartomark load put} ifelse\n"
@@ -456,12 +495,18 @@ namespace TTTbook
     "/Helvetica-Bold findfont 21 scalefont setfont\n"
     "0 setgray\n"
     "newpath TTTbook_page_half 80 moveto (TTTbook) TTTbook_center_show\n"
-    "/Helvetica-Bold findfont 7 scalefont setfont\n"
+    "/Helvetica findfont 7 scalefont setfont\n"
     "0 setgray\n"
     "newpath TTTbook_page_half 70 moveto ($$VERSION $$DATE) TTTbook_center_show\n"
     "/Helvetica-Bold findfont 7 scalefont setfont\n"
     "0 setgray\n"
-    "newpath TTTbook_page_half 60 moveto (by CHUPCKO) TTTbook_center_show\n$$REVERSE"
+    "newpath TTTbook_page_half 60 moveto (by CHUPCKO) TTTbook_center_show\n"
+    "/Helvetica findfont 5 scalefont setfont\n"
+    "0 setgray\n"
+    "newpath TTTbook_page_half 21 moveto ($$TYPE edition) TTTbook_center_show\n"
+    "/Helvetica findfont 5 scalefont setfont\n"
+    "0 setgray\n"
+    "newpath TTTbook_page_half 15 moveto ($$FIRST play first at page 0) TTTbook_center_show\n"
     "[ /Rect [ 0 0 TTTbook_page_size TTTbook_page_size ] /Border [ 0 0 0 ] /Page TTTbook_page_number_offset /View [ /XYZ null null null ] /LNK pdfmark\n"
     "showpage\n"
     "\n";
@@ -470,29 +515,27 @@ namespace TTTbook
   {
     const page_c::index_t page_offset = 2;
     std::string header = ps_header;
-    util_c::string_replace(header, "$$PAGES", std::to_string(pages.size()+page_offset-1));
+    util_c::string_replace(header, "$$PAGES", std::to_string(pages.size()+page_offset));
     util_c::string_replace(header, "$$OFFSET", std::to_string(page_offset));
     util_c::string_replace(header, "$$VERSION", TTTBOOK_VERSION);
     util_c::string_replace(header, "$$DATE", TTTBOOK_DATE);
     switch(type)
     {
       case TYPE_NORMAL:
-        util_c::string_replace(header, "$$REVERSE", "");
+        util_c::string_replace(header, "$$TYPE", "Normal");
         break;
       case TYPE_REVERSE:
-        util_c::string_replace
-        (
-          header,
-          "$$REVERSE",
-          (
-            "/Helvetica-Bold findfont 7 scalefont setfont\n"
-            "0 setgray\n"
-            "newpath TTTbook_page_half 20 moveto (Reverse) TTTbook_center_show\n"
-          )
-        );
+        util_c::string_replace(header, "$$TYPE", "Reverse");
         break;
     }
+    if(book_is_first)
+      util_c::string_replace(header, "$$FIRST", "Book");
+    else
+      util_c::string_replace(header, "$$FIRST", "You");
     out << header;
+    int you_win = 0;
+    int draw = 0;
+    int book_win = 0;
     for(page_c* page: pages)
     {
       page_c::index_t page_index = page->shuffle_index;
@@ -505,29 +548,58 @@ namespace TTTbook
         else
           out << "Play as X, go to page:";
       else if(pages[page_index]->status.is_draw())
+      {
         out << "Draw!";
+        draw++;
+      }
       else if(pages[page_index]->status.is_win_x())
+      {
         if(is_type_normal())
           if(book_is_first)
+          {
             out << "Book (X) win!";
+            book_win++;
+          }
           else
+          {
             out << "You (X) win!";
+            you_win++;
+          }
         else
           if(book_is_first)
+          {
             out << "You (O) win!";
+            you_win++;
+          }
           else
+          {
             out << "Book (O) win!";
+            book_win++;
+          }
+      }
       else if(pages[page_index]->status.is_win_o())
         if(is_type_normal())
           if(book_is_first)
+          {
             out << "You (O) win!";
+            you_win++;
+          }
           else
+          {
             out << "Book (O) win!";
+            book_win++;
+          }
         else
           if(book_is_first)
+          {
             out << "Book (X) win!";
+            book_win++;
+          }
           else
+          {
             out << "You (X) win!";
+            you_win++;
+          }
       out << ") TTTbook_status TTTbook_hash\n";
       for(move_c::coordinate_t y : move_c::all_coordinates_c(pages[page_index]->size))
       {
@@ -580,7 +652,24 @@ namespace TTTbook
       }
       out << "showpage\n\n";
     }
-    out << "%%EOF\n";
+    std::ostringstream info_string;
+    info(info_string);
+    out <<
+      "%%Page: " << pages.size()+page_offset << ' ' << pages.size()+page_offset <<
+      "\nTTTbook_init\n"
+      "TTTbook_watermark\n"
+      "/Helvetica findfont TTTbook_info_font_size scalefont setfont\n"
+      "0 setgray\n"
+      "newpath\n"
+      "  TTTbook_info_margin TTTbook_page_size TTTbook_info_margin sub TTTbook_info_line_space sub moveto\n"
+      "  TTTbook_info_proc (" << info_string.str() <<
+      "\nYou win " << you_win << " times\n" <<
+      "Draw " << draw << " times\n" <<
+      "Book win " << book_win << " times\n)\n"
+      "kshow\n"
+      "showpage\n"
+      "\n"
+      "%%EOF\n";
   }
 
   void book_c::info(std::ostream& out) const noexcept
@@ -597,16 +686,17 @@ namespace TTTbook
       out << "Show marks\n";
     else
       out << "Do not show marks\n";
-    solver_c::info(out);
     if(shuffle_count > 0)
       out << "Shuffle " << shuffle_count << " times\n";
     else
       out << "Do not shuffle\n";
+    solver_c::info(out);
   }
 
   std::ostream& operator<<(std::ostream& out, const book_c& self)
   {
-    out << std::boolalpha <<
+    out <<
+      (solver_c)self << std::boolalpha <<
       "Book is first: " << self.book_is_first <<
       "\nShowing last move: " << self.showing_last_move <<
       "\nShowing marks: " << self.showing_marks <<

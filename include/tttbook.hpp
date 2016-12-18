@@ -8,6 +8,7 @@
 #include <iostream>
 #include <map>
 #include <random>
+#include <sstream>
 #include <string>
 #include <vector>
 
@@ -22,7 +23,7 @@
 #include "page.hpp"
 #include "book.hpp"
 
-#define TTTBOOK_VERSION "0.5"
+#define TTTBOOK_VERSION "0.6w"
 #define TTTBOOK_DATE    "2016-12-17"
 
 #endif

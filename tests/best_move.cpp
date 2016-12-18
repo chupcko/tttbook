@@ -30,7 +30,6 @@ int main()
   solver.set_best_weight(1.0);
   solver.set_modest_weight(1.0);
   solver.set_worst_weight(1.0);
-  solver.set_lose_weight(1.0);
 
   for(test_t& test: tests)
   {

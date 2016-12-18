@@ -8,6 +8,8 @@ namespace TTTbook
   {
     public:
 
+      typedef int rate_t;
+
       enum type_t
       {
         TYPE_NORMAL,
@@ -32,7 +34,6 @@ namespace TTTbook
       double best_weight;
       double modest_weight;
       double worst_weight;
-      double lose_weight;
       select_t select;
       speed_t speed;
 
@@ -49,11 +50,12 @@ namespace TTTbook
         return weight;
       }
 
-      int rate(const board_c&, move_c*(solver_c::*)(const board_c&) const) const noexcept;
+      rate_t rate(const board_c&) const noexcept;
+      bool compare_rate(rate_t, rate_t) const noexcept;
       move_c* best_move(const board_c&) const;
-      move_c* modest_move(const board_c&) const;
+      move_c* modest_normal_move(const board_c&) const;
+      move_c* modest_reverse_move(const board_c&) const;
       move_c* worst_move(const board_c&) const;
-      move_c* lose_move(const board_c&) const;
 
     public:
 
@@ -64,7 +66,6 @@ namespace TTTbook
         set_best_weight(1.0);
         set_modest_weight(0.0);
         set_worst_weight(0.0);
-        set_lose_weight(0.0);
         set_select_random();
         set_speed_fast();
       }
@@ -97,11 +98,6 @@ namespace TTTbook
       void set_worst_weight(double weight) noexcept
       {
         worst_weight = normalize_weight(weight);
-      }
-
-      void set_lose_weight(double weight) noexcept
-      {
-        lose_weight = normalize_weight(weight);
       }
 
       void set_select_random() noexcept
@@ -141,6 +137,8 @@ namespace TTTbook
 
       move_c* calculate_move(const board_c&) const;
       void info(std::ostream&) const noexcept;
+
+      friend std::ostream& operator<<(std::ostream&, const solver_c&);
   };
 
 }

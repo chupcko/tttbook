@@ -3,7 +3,7 @@
 namespace TTTbook
 {
 
-  int solver_c::rate(const board_c& board, move_c* (solver_c::*caller)(const board_c&) const) const noexcept
+  solver_c::rate_t solver_c::rate(const board_c& board) const noexcept
   {
     if(board.status.is_draw())
       return 0;
@@ -38,10 +38,10 @@ namespace TTTbook
     }
 
     board_c board_copy(board);
-    move_c* move = (this->*caller)(board_copy);
+    move_c* move = best_move(board_copy);
     board_copy.play(*move);
     delete move;
-    int new_rate = rate(board_copy, caller);
+    rate_t new_rate = rate(board_copy);
     switch(speed)
     {
       case SPEED_FAST:
@@ -60,17 +60,24 @@ namespace TTTbook
     return -new_rate;
   }
 
+  bool solver_c::compare_rate(solver_c::rate_t rate_1, solver_c::rate_t rate_2) const noexcept
+  {
+    if(type == TYPE_NORMAL)
+      return rate_1 > rate_2;
+    return rate_1 < rate_2;
+  }
+
   move_c* solver_c::best_move(const board_c& board) const
   {
     if(!board.status.is_playable())
       throw error_not_playable();
 
-    int scores[board.size][board.size];
+    rate_t rates[board.size][board.size];
     for(move_c& move : board.all_moves_on_empty)
     {
       board_c board_copy(board);
       board_copy.play(move);
-      scores[move.x][move.y] = rate(board_copy, &solver_c::best_move);
+      rates[move.x][move.y] = rate(board_copy);
     }
 
     move_c moves[board.size*board.size];
@@ -81,18 +88,15 @@ namespace TTTbook
         moves[0].set(move);
         moves_number = 1;
       }
-      else
+      else if(compare_rate(rates[move.x][move.y], rates[moves[0].x][moves[0].y]))
       {
-        if(scores[move.x][move.y] > scores[moves[0].x][moves[0].y])
-        {
-          moves[0].set(move);
-          moves_number = 1;
-        }
-        else if(scores[move.x][move.y] == scores[moves[0].x][moves[0].y])
-        {
-          moves[moves_number].set(move);
-          moves_number++;
-        }
+        moves[0].set(move);
+        moves_number = 1;
+      }
+      else if(rates[move.x][move.y] == rates[moves[0].x][moves[0].y])
+      {
+        moves[moves_number].set(move);
+        moves_number++;
       }
 
     move_c* move;
@@ -111,7 +115,7 @@ namespace TTTbook
     return move;
   }
 
-  move_c* solver_c::modest_move(const board_c& board) const
+  move_c* solver_c::modest_normal_move(const board_c& board) const
   {
     if(!board.status.is_playable())
       throw error_not_playable();
@@ -205,6 +209,57 @@ namespace TTTbook
     return worst_move(board);
   }
 
+  move_c* solver_c::modest_reverse_move(const board_c& board) const
+  {
+    if(!board.status.is_playable())
+      throw error_not_playable();
+
+    move_c moves[board.size*board.size];
+    int moves_number = 0;
+    for(move_c& move : board.all_moves_on_empty)
+    {
+      board_c board_copy(board);
+      board_copy.play(move);
+      switch(board.next_player.player)
+      {
+        case player_c::PLAYER_X:
+          if(!board_copy.status.is_win_x())
+          {
+            moves[moves_number].set(move);
+            moves_number++;
+          }
+          break;
+        case player_c::PLAYER_O:
+          if(!board_copy.status.is_win_o())
+          {
+            moves[moves_number].set(move);
+            moves_number++;
+          }
+          break;
+      }
+    }
+
+    if(moves_number > 0)
+    {
+      move_c* move;
+      switch(select)
+      {
+        case SELECT_RANDOM:
+          move = new move_c(moves[util_c::random_int(0, moves_number-1)]);
+          break;
+        case SELECT_FIRST:
+          move = new move_c(moves[0]);
+          break;
+        case SELECT_LAST:
+          move = new move_c(moves[moves_number-1]);
+          break;
+      }
+      return move;
+    }
+
+    return worst_move(board);
+  }
+
   move_c* solver_c::worst_move(const board_c& board) const
   {
     if(!board.status.is_playable())
@@ -234,75 +289,24 @@ namespace TTTbook
     return move;
   }
 
-  move_c* solver_c::lose_move(const board_c& board) const
-  {
-    if(!board.status.is_playable())
-      throw error_not_playable();
-
-    int scores[board.size][board.size];
-    for(move_c& move : board.all_moves_on_empty)
-    {
-      board_c board_copy(board);
-      board_copy.play(move);
-      scores[move.x][move.y] = rate(board_copy, &solver_c::lose_move);
-    }
-
-    move_c moves[board.size*board.size];
-    int moves_number = 0;
-    for(move_c& move : board.all_moves_on_empty)
-      if(moves_number == 0)
-      {
-        moves[0].set(move);
-        moves_number = 1;
-      }
-      else
-      {
-        if(scores[move.x][move.y] < scores[moves[0].x][moves[0].y])
-        {
-          moves[0].set(move);
-          moves_number = 1;
-        }
-        else if(scores[move.x][move.y] == scores[moves[0].x][moves[0].y])
-        {
-          moves[moves_number].set(move);
-          moves_number++;
-        }
-      }
-
-    move_c* move;
-    switch(select)
-    {
-      case SELECT_RANDOM:
-        move = new move_c(moves[util_c::random_int(0, moves_number-1)]);
-        break;
-      case SELECT_FIRST:
-        move = new move_c(moves[0]);
-        break;
-      case SELECT_LAST:
-        move = new move_c(moves[moves_number-1]);
-        break;
-    }
-    return move;
-  }
-
-
   move_c* solver_c::calculate_move(const board_c& board) const
   {
     if(board.moves_number < guaranteed_best*2)
       return best_move(board);
-    double bid = util_c::random_double(0.0, best_weight+modest_weight+worst_weight+lose_weight);
-    if(bid < best_weight)
-      return best_move(board);
-    if(bid < best_weight+modest_weight)
-      return modest_move(board);
-    if(bid < best_weight+modest_weight+worst_weight)
+    double bid = util_c::random_double(0.0, worst_weight+modest_weight+best_weight);
+    if(bid < worst_weight)
       return worst_move(board);
-    return lose_move(board);
+    if(bid < worst_weight+modest_weight)
+      if(type == TYPE_NORMAL)
+        return modest_normal_move(board);
+      else
+        return modest_reverse_move(board);
+    return best_move(board);
   }
 
   void solver_c::info(std::ostream& out) const noexcept
   {
-    out << "Type: ";
+    out << "Type is ";
     switch(type)
     {
       case TYPE_NORMAL:
@@ -313,13 +317,12 @@ namespace TTTbook
         break;
     }
     out <<
-      "\nGuaranteed best: " << guaranteed_best <<
+      "\nGuaranteed best is " << guaranteed_best <<
       std::fixed << std::setprecision(5) <<
-      "\nBest weitgh: " << best_weight <<
-      "\nModest weitgh: " << modest_weight <<
-      "\nWorst weitgh: " << worst_weight <<
-      "\nLose weitgh: " << lose_weight <<
-      "\nSelect: ";
+      "\nBest weigth is " << best_weight <<
+      "\nModest weigth is " << modest_weight <<
+      "\nWorst weigth is " << worst_weight <<
+      "\nSelect is ";
     switch(select)
     {
       case SELECT_RANDOM:
@@ -332,7 +335,7 @@ namespace TTTbook
         out << "last";
         break;
     }
-    out << "\nSpeed: ";
+    out << "\nSpeed is ";
     switch(speed)
     {
       case SPEED_FAST:
@@ -343,6 +346,12 @@ namespace TTTbook
         break;
     }
     out << '\n';
+  }
+
+  std::ostream& operator<<(std::ostream& out, const solver_c& self)
+  {
+    self.info(out);
+    return out;
   }
 
 }

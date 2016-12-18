@@ -71,7 +71,6 @@ enum long_options_target_t
   BEST_WEIGHT,
   MODEST_WEIGHT,
   WORST_WEIGHT,
-  LOSE_WEIGHT,
   SELECT,
   SPEED,
   SHUFFLE
@@ -89,7 +88,6 @@ struct option long_options[] =
   {"best_weight",     required_argument, NULL, BEST_WEIGHT    },
   {"modest_weight",   required_argument, NULL, MODEST_WEIGHT  },
   {"worst_weight",    required_argument, NULL, WORST_WEIGHT   },
-  {"lose_weight",     required_argument, NULL, LOSE_WEIGHT    },
   {"select",          required_argument, NULL, SELECT         },
   {"speed",           required_argument, NULL, SPEED          },
   {"shuffle",         required_argument, NULL, SHUFFLE        },
@@ -161,9 +159,6 @@ int main(int arguments_number, char* arguments_values[])
         break;
       case WORST_WEIGHT:
         book.set_worst_weight(atof(optarg));
-        break;
-      case LOSE_WEIGHT:
-        book.set_lose_weight(atof(optarg));
         break;
       case SELECT:
         switch(*optarg)
