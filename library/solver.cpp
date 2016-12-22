@@ -318,7 +318,7 @@ namespace TTTbook
     }
     out <<
       "\nGuaranteed best is " << guaranteed_best <<
-      std::fixed << std::setprecision(5) <<
+      std::fixed << std::setprecision(2) <<
       "\nBest weigth is " << best_weight <<
       "\nModest weigth is " << modest_weight <<
       "\nWorst weigth is " << worst_weight <<
