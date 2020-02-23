@@ -168,7 +168,7 @@ namespace TTTbook
     "      /text (CHUPCKO) def\n"
     "      newpath 0 0 moveto text true charpath pathbbox\n"
     "      /ury exch def /urx exch def /lly exch def /llx exch def\n"
-    "      0.95 setgray\n"
+    "      0.975 setgray\n"
     "      newpath llx urx add 2 div neg lly ury add 2 div neg moveto text show\n"
     "    grestore\n"
     "  end\n"
@@ -595,15 +595,32 @@ namespace TTTbook
     info(info_string);
     int you_win;
     int book_win;
-    if(book_is_first)
+    switch(type)
     {
-      book_win = statistic_win_x;
-      you_win = statistic_win_o;
-    }
-    else
-    {
-      you_win = statistic_win_x;
-      book_win = statistic_win_o;
+      case TYPE_NORMAL:
+       if(book_is_first)
+       {
+         you_win = statistic_win_o;
+         book_win = statistic_win_x;
+       }
+       else
+       {
+         you_win = statistic_win_x;
+         book_win = statistic_win_o;
+       }
+        break;
+      case TYPE_REVERSE:
+        if(book_is_first)
+        {
+          you_win = statistic_win_x;
+          book_win = statistic_win_o;
+        }
+        else
+        {
+          you_win = statistic_win_o;
+          book_win = statistic_win_x;
+        }
+        break;
     }
     info_string <<
       "\nYou can win " << you_win << " times\n" <<
@@ -626,27 +643,37 @@ namespace TTTbook
       else if(pages[page_index]->status.is_draw())
         out << "Draw!";
       else if(pages[page_index]->status.is_win_x())
-        if(is_type_normal())
-          if(book_is_first)
-            out << "Book (X) win!";
-          else
-            out << "You (X) win!";
-        else
-          if(book_is_first)
-            out << "You (O) win!";
-          else
-            out << "Book (O) win!";
+        switch(type)
+        {
+          case TYPE_NORMAL:
+            if(book_is_first)
+              out << "Book (X) win!";
+            else
+              out << "You (X) win!";
+            break;
+          case TYPE_REVERSE:
+            if(book_is_first)
+              out << "You (O) win!";
+            else
+              out << "Book (O) win!";
+            break;
+        }
       else if(pages[page_index]->status.is_win_o())
-        if(is_type_normal())
-          if(book_is_first)
-            out << "You (O) win!";
-          else
-            out << "Book (O) win!";
-        else
-          if(book_is_first)
-            out << "Book (X) win!";
-          else
-            out << "You (X) win!";
+        switch(type)
+        {
+          case TYPE_NORMAL:
+            if(book_is_first)
+              out << "You (O) win!";
+            else
+              out << "Book (O) win!";
+            break;
+          case TYPE_REVERSE:
+            if(book_is_first)
+              out << "Book (X) win!";
+            else
+              out << "You (X) win!";
+            break;
+        }
       out << ") TTTbook_status TTTbook_hash\n";
       for(move_c::coordinate_t y : move_c::all_coordinates_c(pages[page_index]->size))
       {

@@ -1,5 +1,6 @@
 TTTBOOK = ../source/tttbook
 PS2PDF = ps2pdf
+NAME_PREFIX = TTTbook_
 
 .DEFAULT_GOAL := all
 .PHONY: all
@@ -33,7 +34,7 @@ normal_first_00.pdf: $(TTTBOOK)
 	  --select random      \
 	  --speed fast         \
 	  --shuffle 5          \
-	  | $(PS2PDF) - $@
+	  | $(PS2PDF) - $(NAME_PREFIX)$@
 
 normal_first_01.pdf: $(TTTBOOK)
 	$(TTTBOOK)             \
@@ -47,7 +48,7 @@ normal_first_01.pdf: $(TTTBOOK)
 	  --select random      \
 	  --speed fast         \
 	  --shuffle 5          \
-	  | $(PS2PDF) - $@
+	  | $(PS2PDF) - $(NAME_PREFIX)$@
 
 normal_first_02.pdf: $(TTTBOOK)
 	$(TTTBOOK)             \
@@ -61,7 +62,7 @@ normal_first_02.pdf: $(TTTBOOK)
 	  --select random      \
 	  --speed fast         \
 	  --shuffle 5          \
-	  | $(PS2PDF) - $@
+	  | $(PS2PDF) - $(NAME_PREFIX)$@
 
 normal_first_10.pdf: $(TTTBOOK)
 	$(TTTBOOK)             \
@@ -75,7 +76,7 @@ normal_first_10.pdf: $(TTTBOOK)
 	  --select random      \
 	  --speed fast         \
 	  --shuffle 5          \
-	  | $(PS2PDF) - $@
+	  | $(PS2PDF) - $(NAME_PREFIX)$@
 
 normal_first_11.pdf: $(TTTBOOK)
 	$(TTTBOOK)             \
@@ -89,7 +90,7 @@ normal_first_11.pdf: $(TTTBOOK)
 	  --select random      \
 	  --speed fast         \
 	  --shuffle 5          \
-	  | $(PS2PDF) - $@
+	  | $(PS2PDF) - $(NAME_PREFIX)$@
 
 normal_first_12.pdf: $(TTTBOOK)
 	$(TTTBOOK)             \
@@ -103,7 +104,7 @@ normal_first_12.pdf: $(TTTBOOK)
 	  --select random      \
 	  --speed fast         \
 	  --shuffle 5          \
-	  | $(PS2PDF) - $@
+	  | $(PS2PDF) - $(NAME_PREFIX)$@
 
 normal_first_20.pdf: $(TTTBOOK)
 	$(TTTBOOK)             \
@@ -117,7 +118,7 @@ normal_first_20.pdf: $(TTTBOOK)
 	  --select random      \
 	  --speed fast         \
 	  --shuffle 5          \
-	  | $(PS2PDF) - $@
+	  | $(PS2PDF) - $(NAME_PREFIX)$@
 
 normal_first_21.pdf: $(TTTBOOK)
 	$(TTTBOOK)             \
@@ -131,7 +132,7 @@ normal_first_21.pdf: $(TTTBOOK)
 	  --select random      \
 	  --speed fast         \
 	  --shuffle 5          \
-	  | $(PS2PDF) - $@
+	  | $(PS2PDF) - $(NAME_PREFIX)$@
 
 normal_first_22.pdf: $(TTTBOOK)
 	$(TTTBOOK)             \
@@ -145,7 +146,7 @@ normal_first_22.pdf: $(TTTBOOK)
 	  --select random      \
 	  --speed fast         \
 	  --shuffle 5          \
-	  | $(PS2PDF) - $@
+	  | $(PS2PDF) - $(NAME_PREFIX)$@
 
 normal_second.pdf: $(TTTBOOK)
 	$(TTTBOOK)             \
@@ -158,7 +159,7 @@ normal_second.pdf: $(TTTBOOK)
 	  --select random      \
 	  --speed fast         \
 	  --shuffle 5          \
-	  | $(PS2PDF) - $@
+	  | $(PS2PDF) - $(NAME_PREFIX)$@
 
 normal_best.pdf: $(TTTBOOK)
 	$(TTTBOOK)            \
@@ -168,7 +169,7 @@ normal_best.pdf: $(TTTBOOK)
 	  --worst_weight 0.0  \
 	  --select first      \
 	  --speed slow        \
-	  | $(PS2PDF) - $@
+	  | $(PS2PDF) - $(NAME_PREFIX)$@
 
 normal_modest.pdf: $(TTTBOOK)
 	$(TTTBOOK)            \
@@ -178,7 +179,7 @@ normal_modest.pdf: $(TTTBOOK)
 	  --modest_weight 1.0 \
 	  --worst_weight 0.0  \
 	  --select first      \
-	  | $(PS2PDF) - $@
+	  | $(PS2PDF) - $(NAME_PREFIX)$@
 
 normal_worst.pdf: $(TTTBOOK)
 	$(TTTBOOK)            \
@@ -187,7 +188,7 @@ normal_worst.pdf: $(TTTBOOK)
 	  --modest_weight 0.0 \
 	  --worst_weight 1.0  \
 	  --select random     \
-	  | $(PS2PDF) - $@
+	  | $(PS2PDF) - $(NAME_PREFIX)$@
 
 .PHONY: reverse
 reverse:                     \
@@ -218,7 +219,7 @@ reverse_first_00.pdf: $(TTTBOOK)
 	  --select random      \
 	  --speed fast         \
 	  --shuffle 5          \
-	  | $(PS2PDF) - $@
+	  | $(PS2PDF) - $(NAME_PREFIX)$@
 
 reverse_first_01.pdf: $(TTTBOOK)
 	$(TTTBOOK)             \
@@ -233,7 +234,7 @@ reverse_first_01.pdf: $(TTTBOOK)
 	  --select random      \
 	  --speed fast         \
 	  --shuffle 5          \
-	  | $(PS2PDF) - $@
+	  | $(PS2PDF) - $(NAME_PREFIX)$@
 
 reverse_first_02.pdf: $(TTTBOOK)
 	$(TTTBOOK)             \
@@ -248,7 +249,7 @@ reverse_first_02.pdf: $(TTTBOOK)
 	  --select random      \
 	  --speed fast         \
 	  --shuffle 5          \
-	  | $(PS2PDF) - $@
+	  | $(PS2PDF) - $(NAME_PREFIX)$@
 
 reverse_first_10.pdf: $(TTTBOOK)
 	$(TTTBOOK)             \
@@ -263,7 +264,7 @@ reverse_first_10.pdf: $(TTTBOOK)
 	  --select random      \
 	  --speed fast         \
 	  --shuffle 5          \
-	  | $(PS2PDF) - $@
+	  | $(PS2PDF) - $(NAME_PREFIX)$@
 
 reverse_first_11.pdf: $(TTTBOOK)
 	$(TTTBOOK)             \
@@ -278,7 +279,7 @@ reverse_first_11.pdf: $(TTTBOOK)
 	  --select random      \
 	  --speed fast         \
 	  --shuffle 5          \
-	  | $(PS2PDF) - $@
+	  | $(PS2PDF) - $(NAME_PREFIX)$@
 
 reverse_first_12.pdf: $(TTTBOOK)
 	$(TTTBOOK)             \
@@ -293,7 +294,7 @@ reverse_first_12.pdf: $(TTTBOOK)
 	  --select random      \
 	  --speed fast         \
 	  --shuffle 5          \
-	  | $(PS2PDF) - $@
+	  | $(PS2PDF) - $(NAME_PREFIX)$@
 
 reverse_first_20.pdf: $(TTTBOOK)
 	$(TTTBOOK)             \
@@ -308,7 +309,7 @@ reverse_first_20.pdf: $(TTTBOOK)
 	  --select random      \
 	  --speed fast         \
 	  --shuffle 5          \
-	  | $(PS2PDF) - $@
+	  | $(PS2PDF) - $(NAME_PREFIX)$@
 
 reverse_first_21.pdf: $(TTTBOOK)
 	$(TTTBOOK)             \
@@ -323,7 +324,7 @@ reverse_first_21.pdf: $(TTTBOOK)
 	  --select random      \
 	  --speed fast         \
 	  --shuffle 5          \
-	  | $(PS2PDF) - $@
+	  | $(PS2PDF) - $(NAME_PREFIX)$@
 
 reverse_first_22.pdf: $(TTTBOOK)
 	$(TTTBOOK)             \
@@ -338,7 +339,7 @@ reverse_first_22.pdf: $(TTTBOOK)
 	  --select random      \
 	  --speed fast         \
 	  --shuffle 5          \
-	  | $(PS2PDF) - $@
+	  | $(PS2PDF) - $(NAME_PREFIX)$@
 
 reverse_second.pdf: $(TTTBOOK)
 	$(TTTBOOK)             \
@@ -352,7 +353,7 @@ reverse_second.pdf: $(TTTBOOK)
 	  --select random      \
 	  --speed fast         \
 	  --shuffle 5          \
-	  | $(PS2PDF) - $@
+	  | $(PS2PDF) - $(NAME_PREFIX)$@
 
 reverse_best.pdf: $(TTTBOOK)
 	$(TTTBOOK)            \
@@ -363,7 +364,7 @@ reverse_best.pdf: $(TTTBOOK)
 	  --worst_weight 0.0  \
 	  --select first      \
 	  --speed slow        \
-	  | $(PS2PDF) - $@
+	  | $(PS2PDF) - $(NAME_PREFIX)$@
 
 reverse_modest.pdf: $(TTTBOOK)
 	$(TTTBOOK)            \
@@ -374,7 +375,7 @@ reverse_modest.pdf: $(TTTBOOK)
 	  --modest_weight 1.0 \
 	  --worst_weight 0.0  \
 	  --select first      \
-	  | $(PS2PDF) - $@
+	  | $(PS2PDF) - $(NAME_PREFIX)$@
 
 reverse_worst.pdf: $(TTTBOOK)
 	$(TTTBOOK)            \
@@ -384,7 +385,7 @@ reverse_worst.pdf: $(TTTBOOK)
 	  --modest_weight 0.0 \
 	  --worst_weight 1.0  \
 	  --select random     \
-	  | $(PS2PDF) - $@
+	  | $(PS2PDF) - $(NAME_PREFIX)$@
 
 .PHONY: clean
 clean:
